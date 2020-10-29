@@ -8,6 +8,8 @@ import hand from './img/hand.png';
 import ico_chart from './img/ico_chart.png';
 import social_icons from './img/social_icons.png';
 import logo_footer from './img/logo_footer.png';
+import Description from './Description';
+import LoginForm from './LoginForm';
 import {
   BrowserRouter as Router,
   Switch,
@@ -107,6 +109,9 @@ export default class App extends Component {
               <Link to="/description">HOW IT WORKS</Link>
             </li>
             <li>
+              <Link to="login">Login </Link>
+            </li>
+            <li>
               <Link to="/blog">Blog</Link>
             </li>
              <li>
@@ -133,7 +138,9 @@ export default class App extends Component {
           <Route path="/contact">
             <Contact />
           </Route>
-
+          <Route path="/login">
+            <LoginForm />
+          </Route>
           <Route path="/description">
             <Description />
           </Route>
@@ -281,10 +288,6 @@ function Home() {
 
     </div>
   );
-}
-
-function Description() {
-  return <h2>This is how it works...</h2>;
 }
 
 function Blog() {
