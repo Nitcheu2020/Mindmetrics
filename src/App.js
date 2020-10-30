@@ -8,6 +8,8 @@ import hand from './img/hand.png';
 import ico_chart from './img/ico_chart.png';
 import social_icons from './img/social_icons.png';
 import logo_footer from './img/logo_footer.png';
+import Description from './Description';
+import LoginForm from './LoginForm';
 import {
   BrowserRouter as Router,
   Switch,
@@ -20,9 +22,9 @@ const divStyle = {
   backgroundColor: '#d3d3d3',
   //'font-weight': 'bold',
    display: 'flex',
-  'flex-direction':'row',
-  'justify-content':'space-around',
-  'align-items':'center'
+  'flexDirection':'row',
+  'justifyContent':'space-around',
+  'alignItems':'center'
 };
 
 const numberCircle ={
@@ -98,13 +100,16 @@ export default class App extends Component {
           <ul style={divStyle}>
 
         <img
-        style={{display: 'flex','margin-left': 50,padding:10}}
+        style={{display: 'flex','marginLeft': 50,padding:10}}
         src={logo} alt="Logo" />
             <li>
               <Link to="/">HOME</Link>
             </li>
             <li>
               <Link to="/description">HOW IT WORKS</Link>
+            </li>
+            <li>
+              <Link to="login">Login </Link>
             </li>
             <li>
               <Link to="/blog">Blog</Link>
@@ -117,8 +122,8 @@ export default class App extends Component {
             </li>
             <button style={{
               color:'white',
-              'background-color':'#FF6347',
-              'border-radius':20,
+              'backgroundColor':'#FF6347',
+              'borderRadius':20,
               padding: 10,
             }}>TAKE TEST</button>
           </ul>
@@ -133,7 +138,9 @@ export default class App extends Component {
           <Route path="/contact">
             <Contact />
           </Route>
-
+          <Route path="/login">
+            <LoginForm />
+          </Route>
           <Route path="/description">
             <Description />
           </Route>
@@ -155,9 +162,9 @@ export default class App extends Component {
 
 function Home() {
   return (
-    <div style={{display: 'flex','align-items':'center','justify-content':'center','flex-direction':'column'}}>
+    <div style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column'}}>
     <h1>Your True Personality Revealed</h1>
-    <label style={{display: 'flex','align-items':'center','justify-content':'center','flex-direction':'column',}}>
+    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column',}}>
     <label> We use your writing and social media profiles to build you a detailed </label>
     <label  >and accurate Personality report </label>
     </label>
@@ -174,20 +181,20 @@ function Home() {
     <img
         style={{display: 'flex','margin-left': 50,padding:10}}
         src={faces} alt="faces" />
-    <label style={{display: 'flex','align-items':'center','justify-content':'center','flex-direction':'column','margin-top':20,'font-size':25}}>
+    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','margin-top':20,'font-size':25}}>
       <label> What Your Words  </label>
       <label>Says About You</label>
     </label>
 
-    <label style={{display: 'flex','align-items':'center','justify-content':'center','flex-direction':'column','margin-top':20,}}>
+    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','margin-top':20,}}>
       <label> Your writing is a sample of how you think.Studying the patterns we've found in the way certain people of </label>
       <label>certain personalities use words, we can use your writing to determine using data,what kind of Personality</label>
       <label>you have exactly.</label>
        <label style={{color:'pink','margin-top':10}}>find more.... </label>
     </label>
 
-    <nav style={{display:'flex','flex-direction':'row'}}>
-    <label style={{display: 'flex','align-items':'center','justify-content':'center','flex-direction':'column','margin-top':20,}}>
+    <nav style={{display:'flex','flexDirection':'row'}}>
+    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','margin-top':20,}}>
       <label> Data Driven and Scientific  </label>
       <label style={{width:305}}>Using data and natural language processing we're able to predict your Personality based on the most popular Personality model used in the psychology community, the Five Factor Personality model</label>
        <label style={{color:'pink','margin-top':10}}>find more.... </label>
@@ -197,12 +204,12 @@ function Home() {
         src={scheme_small} alt="scheme" />
     </nav>
 
-    <nav style={{display:'flex','flex-direction':'row'}}>
+    <nav style={{display:'flex','flexDirection':'row'}}>
     <img
         style={{display: 'flex','margin-top': 50,padding:10,}}
         src={hand} alt="hand" />
 
-    <label style={{display: 'flex','align-items':'center','justify-content':'center','flex-direction':'column','margin-top':20,}}>
+    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','margin-top':20,}}>
       <label> Easy to Use  </label>
       <label style={{width:310}}> Faster than any other personality analysis out there. Just choose where and what you want us to analyze: your twitter , Facebook or Copy and paste  you blog, We'll have it analyzed in seconds.</label>
        <label style={{color:'pink','margin-top':10,}}>find more.... </label>
@@ -210,8 +217,8 @@ function Home() {
 
     </nav>
 
-    <nav style={{display:'flex','flex-direction':'row'}}>
-    <label style={{display: 'flex','align-items':'center','justify-content':'center','flex-direction':'column','margin-top':20,padding:20}}>
+    <nav style={{display:'flex','flexDirection':'row'}}>
+    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','margin-top':20,padding:20}}>
       <label> Detailed Personality Reports  </label>
         <label style={{width:310}}>Free reports includes your personality profile, including 5 majors traits, values , and needs and text summary as well as graph representation of who you are </label>
          <label style={{color:'pink','margin-top':10,}}>Try out.... </label>
@@ -220,7 +227,7 @@ function Home() {
         style={{display: 'flex','margin-top': 50,padding:10, transform: [{ rotate: '14deg' }],}}
         src={ico_chart} alt="ico_chart" />
     </nav>
-       <div style ={{display: 'flex','align-items':'center','justify-content':'center','flex-direction':'column',width:'100%','background-color':'#d3d3d3',padding:20
+       <div style ={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column',width:'100%','background-color':'#d3d3d3',padding:20
         }
       }>
          <label style ={{padding:20,'font-size':18,'font-weight':'bold'}}>Discover who You are....</label>
@@ -237,18 +244,18 @@ function Home() {
       //    backgroundColor: '#d3d3d3',
   //'font-weight': 'bold',
    display: 'flex',
-  'flex-direction':'row',
-  'justify-content':'center',
-  'align-items':'center',
+  'flexDirection':'row',
+  'justifyContent':'center',
+  'alignItems':'center',
   width:'100%',
         }}>
           <nav style={{
              flex:1,
   //'font-weight': 'bold',
    display: 'flex',
-  'flex-direction':'row',
-  'justify-content':'space-around',
-  'align-items':'center'
+  'flexDirection':'row',
+  'justifyContent':'space-around',
+  'alignItems':'center'
           }}>
             <li>
               <Link to="/">HOME</Link>
@@ -271,7 +278,7 @@ function Home() {
         src={social_icons} alt="social_icons" />
           </ul>
 
-        <div style={{display:'flex','flex-direction':'row','align-items':'center','justify-content':'center'}}>
+        <div style={{display:'flex','flexDirection':'row','alignItems':'center','justifyContent':'center'}}>
           <label style={numberCircle}> R</label>
         <label> Mindmetrics Technology. All rights reserved.</label>
       <img
@@ -281,10 +288,6 @@ function Home() {
 
     </div>
   );
-}
-
-function Description() {
-  return <h2>This is how it works...</h2>;
 }
 
 function Blog() {
