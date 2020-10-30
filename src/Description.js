@@ -304,15 +304,13 @@ class Description extends Component {
           }}
         >
           <label>{JSON.stringify(this.state.answers)}</label>
-          <tbody style={styles.tbody}>
-                <tr>
+                <tr style={styles.tbody}>
                     {response.map((elmnt) => (
                         <td key={elmnt.key}>
                         <label style={{ padding: 5 }}> {elmnt.valeur}</label>
                         </td>
                     ))}
                 </tr>
-            </tbody>
        </div>
         <div style={{
                 display:'flex',
@@ -331,13 +329,11 @@ class Description extends Component {
               <label style={styles.button,{fontWeight: "bold",display: 'flex',}}>
                 {elemnt.val}
               </label>
-               <tbody style={styles.tbody}>
-                    <tr>
+                    <tr style={styles.tbody}>
                         {
                             qcm(key)
                         }
                     </tr>
-                </tbody>
             </div>
           ))}
         </div>

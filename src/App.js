@@ -1,3 +1,4 @@
+
 import ReactDOM from "react-dom";
 import React, { Component } from "react";
 import logo from "./img/logo.png";
@@ -16,11 +17,11 @@ import {
   Route,
   Link
 } from "react-router-dom";
-
+import Blog from './Blog';
 const divStyle = {
   flex:1,
   backgroundColor: '#d3d3d3',
-  //'font-weight': 'bold',
+  //'fontWeight': 'bold',
    display: 'flex',
   'flexDirection':'row',
   'justifyContent':'space-around',
@@ -28,17 +29,18 @@ const divStyle = {
 };
 
 const numberCircle ={
-    'border-radius': '50%',
+    'borderRadius': '50%',
     width: 36,
     height: 36,
     padding: 8,
     background: '#fff',
     color: '#666',
-    'text-align': 'center',
+    'textAlign': 'center',
 };
 const imgStyle = {
   margin:'20'
 };
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -152,7 +154,7 @@ export default class App extends Component {
           </Route>
         </Switch>
       </div>
-    </Router>
+      </Router>
       </div>
     );
   }
@@ -169,72 +171,72 @@ function Home() {
     <label  >and accurate Personality report </label>
     </label>
     <button style={{
-              'margin-top':20,
+              'marginTop':20,
               color:'white',
-              'background-color':'#FF6347',
-              'border-radius':20,
+              'backgroundColor':'#FF6347',
+              'borderRadius':20,
               padding: 10,
             }}>GET FREE ANALYSIS</button>
     <img
-        style={{display: 'flex','margin-left': 50,padding:10}}
+        style={{display: 'flex','marginLeft': 50,padding:10}}
         src={result} alt="result" />
     <img
-        style={{display: 'flex','margin-left': 50,padding:10}}
+        style={{display: 'flex','marginLeft': 50,padding:10}}
         src={faces} alt="faces" />
-    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','margin-top':20,'font-size':25}}>
+    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','marginTop':20,'fontSize':25}}>
       <label> What Your Words  </label>
       <label>Says About You</label>
     </label>
 
-    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','margin-top':20,}}>
+    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','marginTop':20,}}>
       <label> Your writing is a sample of how you think.Studying the patterns we've found in the way certain people of </label>
       <label>certain personalities use words, we can use your writing to determine using data,what kind of Personality</label>
       <label>you have exactly.</label>
-       <label style={{color:'pink','margin-top':10}}>find more.... </label>
+       <label style={{color:'pink','marginTop':10}}>find more.... </label>
     </label>
 
     <nav style={{display:'flex','flexDirection':'row'}}>
-    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','margin-top':20,}}>
+    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','marginTop':20,}}>
       <label> Data Driven and Scientific  </label>
       <label style={{width:305}}>Using data and natural language processing we're able to predict your Personality based on the most popular Personality model used in the psychology community, the Five Factor Personality model</label>
-       <label style={{color:'pink','margin-top':10}}>find more.... </label>
+       <label style={{color:'pink','marginTop':10}}>find more.... </label>
     </label>
     <img
-        style={{display: 'flex','margin-top': 50,padding:10}}
+        style={{display: 'flex','marginTop': 50,padding:10}}
         src={scheme_small} alt="scheme" />
     </nav>
 
     <nav style={{display:'flex','flexDirection':'row'}}>
     <img
-        style={{display: 'flex','margin-top': 50,padding:10,}}
+        style={{display: 'flex','marginTop': 50,padding:10,}}
         src={hand} alt="hand" />
 
-    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','margin-top':20,}}>
+    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','marginTop':20,}}>
       <label> Easy to Use  </label>
       <label style={{width:310}}> Faster than any other personality analysis out there. Just choose where and what you want us to analyze: your twitter , Facebook or Copy and paste  you blog, We'll have it analyzed in seconds.</label>
-       <label style={{color:'pink','margin-top':10,}}>find more.... </label>
+       <label style={{color:'pink','marginTop':10,}}>find more.... </label>
     </label>
 
     </nav>
 
     <nav style={{display:'flex','flexDirection':'row'}}>
-    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','margin-top':20,padding:20}}>
+    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','marginTop':20,padding:20}}>
       <label> Detailed Personality Reports  </label>
         <label style={{width:310}}>Free reports includes your personality profile, including 5 majors traits, values , and needs and text summary as well as graph representation of who you are </label>
-         <label style={{color:'pink','margin-top':10,}}>Try out.... </label>
+         <label style={{color:'pink','marginTop':10,}}>Try out.... </label>
       </label>
       <img
-        style={{display: 'flex','margin-top': 50,padding:10, transform: [{ rotate: '14deg' }],}}
+        style={{display: 'flex','marginTop': 50,padding:10, transform: [{ rotate: '14deg' }],}}
         src={ico_chart} alt="ico_chart" />
     </nav>
-       <div style ={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column',width:'100%','background-color':'#d3d3d3',padding:20
+       <div style ={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column',width:'100%','backgroundColor':'#d3d3d3',padding:20
         }
       }>
-         <label style ={{padding:20,'font-size':18,'font-weight':'bold'}}>Discover who You are....</label>
+         <label style ={{padding:20,'fontSize':18,'fontWeight':'bold'}}>Discover who You are....</label>
           <button style={{
               color:'white',
-              'background-color':'#FF6347',
-              'border-radius':20,
+              'backgroundColor':'#FF6347',
+              'borderRadius':20,
               padding: 10,
             }}>GET FREE ANALYSIS
           </button>
@@ -242,7 +244,7 @@ function Home() {
 
         <ul style={{
       //    backgroundColor: '#d3d3d3',
-  //'font-weight': 'bold',
+  //'fontWeight': 'bold',
    display: 'flex',
   'flexDirection':'row',
   'justifyContent':'center',
@@ -251,7 +253,7 @@ function Home() {
         }}>
           <nav style={{
              flex:1,
-  //'font-weight': 'bold',
+  //'fontWeight': 'bold',
    display: 'flex',
   'flexDirection':'row',
   'justifyContent':'space-around',
@@ -274,7 +276,7 @@ function Home() {
             </li>
           </nav>
         <img
-        style={{display: 'flex','margin-left': 50,padding:10,'margin-right':20}}
+        style={{display: 'flex','marginLeft': 50,padding:10,'marginRight':20}}
         src={social_icons} alt="social_icons" />
           </ul>
 
@@ -282,16 +284,12 @@ function Home() {
           <label style={numberCircle}> R</label>
         <label> Mindmetrics Technology. All rights reserved.</label>
       <img
-        style={{display: 'flex','margin-top': 50,padding:10, transform: [{ rotate: '14deg' }],}}
+        style={{display: 'flex','marginTop': 50,padding:10, transform: [{ rotate: '14deg' }],}}
         src={logo_footer} alt="logo_footer" />
     </div>
 
     </div>
   );
-}
-
-function Blog() {
-  return <h2>Blog</h2>;
 }
 
 function Research() {
