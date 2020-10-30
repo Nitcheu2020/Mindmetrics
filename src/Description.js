@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import ErrorBoundary from './ErrorBoundary';
 const Questions = [
   {
     key: "1",
@@ -201,7 +201,9 @@ const Questions = [
 class Description extends Component {
   state = {
     selected: "",
-    answers: []
+    answers: [],
+    site: '',
+      address: ''
   };
   render() {
     let response = [
@@ -247,102 +249,117 @@ class Description extends Component {
         </label>
 */
 
-    const handleClick = (question,elmnt) => {
-        let answers = [...this.state.answers];
-        console.log("addasdsa");
-        let rslt = {
-            keyresponse: elmnt.key,
-            question: Questions[question].val,
-            response: response[elmnt.key-1].valeur,
-            category: Questions[question].category,
-            score: Questions[question].category>0 ? response[elmnt.key-1].key:response[elmnt.key-1].quote,
-        };
-        answers[question] = rslt;
-        this.setState({ selected: elmnt.key, answers });
+    const onSiteChanged = (e) => {
+        this.setState({
+        site: e.currentTarget.value
+        });
     }
 
+    const onAddressChanged =(e) => {
+        this.setState({
+        address: e.currentTarget.value
+        });
+    }
+
+    const handleClick = (question,elmnt) => {
+        try {
+            let answers = [...this.state.answers];
+            console.log("addasdsa");
+            let rslt = {
+                keyresponse: elmnt.key,
+                question: Questions[question].val,
+                response: response[elmnt.key-1].valeur,
+                category: Questions[question].category,
+                score: Questions[question].category>0 ? response[elmnt.key-1].key:response[elmnt.key-1].quote,
+            };
+            answers[question] = rslt;
+            this.setState({ selected: elmnt.key, answers });
+
+        } catch (error) {
+        this.setState({ error });
+        }
+    }
     const qcm = (question) => {
         let answers = [...this.state.answers];
       return response.map((elmnt) => (
-        <div key={elmnt.key} style={{ padding: 5 }}>
-          {(answers[question])  && answers[question].keyresponse === elmnt.key ? (
-            <button
-              style={[styles.button, {'background-color': "red" }]}
-            >
-              <label>clique {elmnt.key}</label>
-            </button>
-          ) : (
-            <button
-              onClick={() => {
-                let answers = [...this.state.answers];
-                console.log("addasdsa");
-                let rslt = {
-                    keyresponse: elmnt.key,
-                    question: Questions[question].val,
-                    response: response[elmnt.key-1].valeur,
-                    category: Questions[question].category,
-                    score: Questions[question].category>0 ? response[elmnt.key-1].key:response[elmnt.key-1].quote,
-                };
-                answers[question] = rslt;
-               // this.setState({ selected: elmnt.key, answers });
-                console.log(answers);
-                }
-              }
-              style={styles.button}
-            >
-              <label>image </label>
-            </button>
-          )}
-        </div>
+        <td key={elmnt.key} style={{ padding: 5 }}>
+                 <input type="radio" name = {Questions[question].val}
+                            value={elmnt.valeur}
+                            checked={(answers[question])  && answers[question].keyresponse === elmnt.key}
+                            onChange={() => handleClick(question,elmnt)}
+                 />
+
+        </td>
       ));
     };
+
     return (
-      <>
+      <ErrorBoundary>
+      <div style={{justifyContent:'center'}}>
         <div
           style={{
-           'justify-content': "space-around",
+           'justifyContent': "space-around",
             display:'flex',
-            'flex-direction':'row'
+            'flexDirection':'row'
           }}
         >
           <label>{JSON.stringify(this.state.answers)}</label>
-          {response.map((elmnt) => (
-            <div key={elmnt.key}>
-              <label style={{ padding: 5 }}> {elmnt.valeur}</label>
-            </div>
-          ))}
-        </div>
+          <tbody style={styles.tbody}>
+                <tr>
+                    {response.map((elmnt) => (
+                        <td key={elmnt.key}>
+                        <label style={{ padding: 5 }}> {elmnt.valeur}</label>
+                        </td>
+                    ))}
+                </tr>
+            </tbody>
+       </div>
         <div style={{
                 display:'flex',
-                'flex-direction': "column"
+                'flexDirection': "column"
              }}>
           {Questions.map((elemnt, key) => (
             <div
+              key={key}
               style={{
-               'justify-content': "space-between",
+               'justifyContent': "space-between",
                 padding: 10,
                 display:'flex',
-                'flex-direction':'row'
+                'flexDirection':'row'
               }}
             >
               <label style={styles.button,{fontWeight: "bold",display: 'flex',}}>
                 {elemnt.val}
               </label>
-              {qcm(key)}
+               <tbody style={styles.tbody}>
+                    <tr>
+                        {
+                            qcm(key)
+                        }
+                    </tr>
+                </tbody>
             </div>
           ))}
         </div>
-      </>
+        </div>
+      </ErrorBoundary>
     );
   }
 }
 // style={[styles.button, {fontWeight: "bold", flex: 1 }]}
 const styles = {
   button: {
-    'align-items': "center",
-    'background-color': "#DDDDDD",
+    'alignItems': "center",
+    'backgroundColor': "#DDDDDD",
      padding: 10,
-    'margin-horizontal': 1
+    'marginHorizontal': 1
+  },
+  tbody:{
+      'justifyContent': "center",
+    'backgroundColor': "blue",
+    width:'50%'
+     //padding: 10,
+    //'marginHorizontal': 1
   }
 };
 
