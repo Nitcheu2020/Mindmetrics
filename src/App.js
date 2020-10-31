@@ -11,6 +11,8 @@ import social_icons from './img/social_icons.png';
 import logo_footer from './img/logo_footer.png';
 import Description from './Description';
 import LoginForm from './LoginForm';
+import Canvas from './Canvas';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -122,6 +124,9 @@ export default class App extends Component {
              <li>
               <Link to="/contact">CONTACT</Link>
             </li>
+            <li>
+              <Link to="/canvas">Canvas</Link>
+            </li>
             <button style={{
               color:'white',
               'backgroundColor':'#FF6347',
@@ -139,6 +144,9 @@ export default class App extends Component {
           </Route>
           <Route path="/contact">
             <Contact />
+          </Route>
+          <Route path="/canvas">
+            <Canvas />
           </Route>
           <Route path="/login">
             <LoginForm />
@@ -274,6 +282,10 @@ function Home() {
              <li>
               <Link to="/contact">CONTACT</Link>
             </li>
+            <li>
+              <Link to="/canvas">Canvas</Link>
+            </li>
+            
           </nav>
         <img
         style={{display: 'flex','marginLeft': 50,padding:10,'marginRight':20}}

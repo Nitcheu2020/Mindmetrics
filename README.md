@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+# Mindmetrics
+This repo is the sole proprietary of MindMetrics LLC as long as the share of the corporation are legally respected 40% for Pascal Nitcheu and 60% for Austin Tse respectfully
+=======
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -66,3 +70,4 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+>>>>>>> 4b5ba12b0a7d7f590519660eeff0f163cd6b2b1c
