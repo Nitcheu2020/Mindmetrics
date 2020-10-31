@@ -19,6 +19,7 @@ import "firebase/auth";
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
 
+
 const numberCircle ={
     'borderRadius': '50%',
     width: 36,
@@ -34,6 +35,7 @@ export default class LoginForm extends React.Component {
     super(props);
     this.state = {value: '',
         message:'message',
+        perc:'null',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -67,10 +69,28 @@ export default class LoginForm extends React.Component {
       else this.setState({message: errorMessage});
     });
   };
+   percentile = (p)=> {
+    let data = [1.9 , 1.7 , 2 , 2.3 , 1.8 , 2 , 2.4 , 2.1 , 2.4 , 0.9 , 1.2 , 1 , 1.7 , 1.3 , 1.3 ];
+    data = data.sort((a, b) =>{
+      return a - b;
+    });
+    let n = data.length;
+    let valeur =  Math.ceil(p*n/100);
+    //this.setState({perc:data[valeur+1]})
+    this.setState({perc:data[valeur-1]})
+   // return ;
+ }  
 
   render() {
     return (
         <>
+        <label> {
+           this.state.perc
+        }</label>
+        
+      <button onClick={()=>this.percentile(60)}>
+        percentile
+        </button>
         <label> {
            this.state.message
         }</label>
