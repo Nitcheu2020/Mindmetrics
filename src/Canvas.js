@@ -25,16 +25,24 @@ const Canvas = props => {
     const render = () => {
       frameCount++
       draw(context, frameCount)
-      animationFrameId = window.requestAnimationFrame(render)
-    }
+      //animationFrameId = window.requestAnimationFrame(render)
+      let data = [20000, 14000, 12000, 15000, 18000, 19000, 22000];
+      let labels =  ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+      var myChart = new Chart(context, {
+          type: 'line',
+          data: {
+              labels: labels,
+              datasets: [{
+                  label: 'Ranking',
+                  data: data,
+              }]
+          },
+      });
+      }
 
     render()
     
-    return () => {
-      window.cancelAnimationFrame(animationFrameId)
-    }
-  }, [draw])
-  
+  }, [])
   return (<canvas ref={canvasRef} {...props}/>);
 }
 
