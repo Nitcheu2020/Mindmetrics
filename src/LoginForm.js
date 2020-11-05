@@ -53,7 +53,7 @@ export default class LoginForm extends React.Component {
 
   loginFunc = () =>{
     firebase.auth()
-    .createUserWithEmailAndPassword("email@email.com", "password")
+    .createUserWithEmailAndPassword("sddfsdfsd@gmail.com", "password")
     .then(() => this.setState({message:'Sign In Successful'}))
     .catch((error) =>{
     console.log(error);
