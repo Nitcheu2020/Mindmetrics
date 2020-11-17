@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+label span {
+  padding: 10px 20px;
+  border: 1px solid #23d500;
+  cursor: pointer;
+  z-index: 90;
+  border-radius: 50%;
+  background: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  color: #d50032;
+  display: flex;
+  float: left;
+  margin: 5px 10px 5px 0;
+}

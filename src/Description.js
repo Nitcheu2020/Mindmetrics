@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import ErrorBoundary from './ErrorBoundary';
-const Questions = [
+
+import faces from './img/faces.png';
+import './App.css';
+//CATEGORY REMAINS THE SAME ON ABSOLUTE VALUE MEANNIG POSITIVE AND NEGATIVE BELONG TO THE SAME SET....
+
+const Questionnaire = [
   {
     key: "1",
     val: "Am the life of the party.",
@@ -198,13 +203,47 @@ const Questions = [
   { key: "50", val: "Am full of ideas.", category: 5, pondere: 7 }
 ];
 
+var debut = 1;
+var  fin = 5;
+var Questions = Questionnaire.slice(debut-1,fin);
+const numberCircle ={
+  display:'flex',
+  'borderRadius': '50%',
+  width: 36,
+  height: 36,
+  padding: 8,
+  background: '#fff',
+  color: '#666',
+  'textAlign': 'center',
+  alignSelf:'center',
+  alignItems: 'center',
+};
+
 class Description extends Component {
   state = {
     selected: "",
     answers: [],
     site: '',
-      address: ''
+      address: '',
+      debut: 1,
+      fin:5,
+      somme: debut + fin,
   };
+
+
+  submitAnswers = () =>{
+    /*let userId = firebase.auth.currentUser.uid();
+    let saveData = this.state.answers;
+    firebase.database().ref('users/' + userId).set({
+      saveData
+    });*/
+  };
+
+  nextQuestionSet = () =>{
+    const {debut,fin} = this.state;
+    this.setState({debut: debut+ 5, fin: fin+ 5});
+  };
+
   render() {
     let response = [
       {
@@ -273,28 +312,55 @@ class Description extends Component {
                 score: Questions[question].category>0 ? response[elmnt.key-1].key:response[elmnt.key-1].quote,
             };
             answers[question] = rslt;
-            this.setState({ selected: elmnt.key, answers });
+            this.setState({ selected: elmnt.key, answers });  
 
         } catch (error) {
         this.setState({ error });
         }
     }
-    const qcm = (question) => {
-        let answers = [...this.state.answers];
-      return response.map((elmnt) => (
-        <td key={elmnt.key} style={{ padding: 5 }}>
-                 <input type="radio" name = {Questions[question].val}
+
+    /*
+   <input type="radio" 
+                  style={{width: 10,
+                          display:'flex',
+                          marginRight:105,
+                        }} 
+                name = {Questions[question].val}
                             value={elmnt.valeur}
                             checked={(answers[question])  && answers[question].keyresponse === elmnt.key}
                             onChange={() => handleClick(question,elmnt)}
                  />
-
+    */
+    const qcm = (question) => {
+        let answers = [...this.state.answers];
+      return response.map((elmnt) => (
+        <td key={elmnt.key} style={{ padding: 5 }}>
+          <button style={(answers[question])  && answers[question].keyresponse === elmnt.key ? styles['radioButtonClicked' + elmnt.key] : styles['radioButton' + elmnt.key]} 
+                  onClick={()=>handleClick(question,elmnt)}
+          />
         </td>
       ));
     };
 
     return (
       <ErrorBoundary>
+        <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column'}}>
+          <img
+            style={{display: 'flex','marginLeft': 50,padding:10}}
+          src={faces} alt="faces"/>
+            <form  style={numberCircle} onSubmit={this.handleSubmit}>
+              <label>
+                email
+                <input type="email" value={this.state.email} onChange={this.setEmail} />
+              </label>
+              <label>
+                 password
+                <input type="password" value={this.state.password} onChange={this.setPassword} />
+              </label>
+              <input type="submit" value="Log In" />
+        </form>
+        </div>
+         
       <div style={{justifyContent:'center'}}>
         <div
           style={{
@@ -302,15 +368,8 @@ class Description extends Component {
             display:'flex',
             'flexDirection':'row'
           }}
-        >
-          <label>{JSON.stringify(this.state.answers)}</label>
-                <tr style={styles.tbody}>
-                    {response.map((elmnt) => (
-                        <td key={elmnt.key}>
-                        <label style={{ padding: 5 }}> {elmnt.valeur}</label>
-                        </td>
-                    ))}
-                </tr>
+        >   
+
        </div>
         <div style={{
                 display:'flex',
@@ -323,25 +382,58 @@ class Description extends Component {
                'justifyContent': "space-between",
                 padding: 10,
                 display:'flex',
-                'flexDirection':'row'
+                'flexDirection':'column',
+                alignItems:'center',
+                borderBottom : "thin solid #DCDCDC",
+                width: '30%',
+                alignSelf:'center'
               }}
             >
-              <label style={styles.button,{fontWeight: "bold",display: 'flex',}}>
+              <label style={styles.button,{display: 'flex'}}>
                 {elemnt.val}
               </label>
-                    <tr style={styles.tbody}>
+                    <tr style={{justifyContent:'space-around',alignItems:'center',display:'flex'}}>
+                        <label style={{display:'flex',padding:10,color:'#7FFFD4',fontWeight:'bold'}}>Agree</label>
                         {
                             qcm(key)
                         }
+                        <label style={{display:'flex',padding:10,color:'#8B008B',fontWeight:'bold'}}>Disagree</label>
                     </tr>
             </div>
           ))}
         </div>
         </div>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'center',padding:15}}>
+            
+       <button style={{
+              display:'flex',
+              alignSelf:'center',
+              color:'white',
+              'backgroundColor':'#FF6347',
+              'borderRadius':20,
+              padding: 10,
+            }}
+            onClick ={this.submitAnswers}
+            >SUBMIT ANSWERS</button>
+
+<button style={{
+              display:'flex',
+              alignSelf:'center',
+              color:'white',
+              'backgroundColor':'#FF6347',
+              'borderRadius':20,
+              padding: 10,
+            }}
+            onClick ={this.nextQuestionSet}
+            >NEXT SET</button>
+        </div>
+            
+          <label>{JSON.stringify(this.state.answers)}</label>
       </ErrorBoundary>
     );
   }
 }
+//
 // style={[styles.button, {fontWeight: "bold", flex: 1 }]}
 const styles = {
   button: {
@@ -352,11 +444,106 @@ const styles = {
   },
   tbody:{
       'justifyContent': "center",
-    'backgroundColor': "blue",
+   // 'backgroundColor': "blue",
     width:'50%'
      //padding: 10,
     //'marginHorizontal': 1
-  }
+  },
+  radioButton: {
+    width: '20px',
+    height: '20px',
+    'border-radius': '50%',
+},
+radioButtonClicked: {
+  width: '20px',
+  height: '20px',
+  'border-radius': '50%',
+  backgroundColor:'red',
+  borderColor: 'pink',
+},
+radioButton1: {
+  width: '35px',
+  height: '35px',
+  'border-radius': '50%',
+  borderColor:'#00FA9A'
+},
+radioButtonClicked1: {
+width: '35px',
+height: '35px',
+'border-radius': '50%',
+backgroundColor:'green',
+},
+radioButton2: {
+  width: '30px',
+  height: '30px',
+  'border-radius': '50%',
+  borderColor:'#00FA9A'
+},
+radioButtonClicked2: {
+width: '30px',
+height: '30px',
+'border-radius': '50%',
+backgroundColor:'purple',
+},
+radioButton3: {
+  width: '25px',
+  height: '25px',
+  'border-radius': '50%',
+  borderColor:'#00FA9A'
+},
+radioButtonClicked3: {
+width: '25px',
+height: '25px',
+'border-radius': '50%',
+backgroundColor:'blue',
+},
+radioButton4: {
+  width: '20px',
+  height: '20px',
+  'border-radius': '50%',
+},
+radioButtonClicked4: {
+width: '20px',
+height: '20px',
+'border-radius': '50%',
+backgroundColor:'gray',
+},
+radioButton5: {
+  width: '25px',
+  height: '25px',
+  'border-radius': '50%',
+  borderColor: '#8B008B',
+},
+radioButtonClicked5: {
+width: '25px',
+height: '25px',
+'border-radius': '50%',
+backgroundColor:'orange',
+},
+radioButton6: {
+  width: '30px',
+  height: '30px',
+  'border-radius': '50%',
+  borderColor: '#8B008B',
+},
+radioButtonClicked6: {
+width: '30px',
+height: '30px',
+'border-radius': '50%',
+backgroundColor:'black',
+},
+radioButton7: {
+  width: '35px',
+  height: '35px',
+  'border-radius': '50%',
+  borderColor: '#8B008B',
+},
+radioButtonClicked7: {
+width: '35px',
+height: '35px',
+'border-radius': '50%',
+backgroundColor:'brown',
+}
 };
 
 export default Description;
