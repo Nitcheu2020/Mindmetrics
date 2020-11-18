@@ -1,9 +1,8 @@
 import React from "react";
+import firebaseService from './firebaseService';
 
-import firebase from "firebase/app";
+/*import firebase from "firebase/app";
 import "firebase/auth";
-
-
 
  var firebaseConfig = {
     apiKey: "AIzaSyCk53C9GH0UU3z2Wnur8uEKVdiKaGPm7go",
@@ -16,7 +15,7 @@ import "firebase/auth";
     measurementId: "G-Q4HCH2M962"
   };
     // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(firebaseConfig);*/
 
 
 const numberCircle ={
@@ -58,7 +57,7 @@ export default class LoginForm extends React.Component {
   }
 
   handleSubmit(event) {
-    firebase.auth()
+    firebaseService.auth()
     .createUserWithEmailAndPassword(this.state.email, this.state.password)
     .then(() => this.setState({message:'User Account created successfully'}))
     .catch((error) =>{
@@ -67,7 +66,7 @@ export default class LoginForm extends React.Component {
       var errorMessage = error.message;
       if (errorMessage === "The email address is already in use by another account.")
       {this.setState({message: "Email has already been created"});
-         firebase.auth()
+      firebaseService.auth()
         .signInWithEmailAndPassword(this.state.email, this.state.password)
         .then(() => this.setState({message:'Sign In Successful because account has been created alreay'}))
         .catch( error => this.setState({message: error.message}))
@@ -78,8 +77,14 @@ export default class LoginForm extends React.Component {
   }
 
   loginFunc = () =>{
-    
-    firebase.auth()
+    var database = firebaseService.database();
+
+    database.ref('users/').set({
+      username: "name",
+      email: "email",
+      profile_picture : "imageUrl"
+    });
+   /* firebaseService.auth()
     .createUserWithEmailAndPassword(this.state.email, this.state.password)
     .then(() => this.setState({message:'User Account created successfully'}))
     .catch((error) =>{
@@ -88,13 +93,13 @@ export default class LoginForm extends React.Component {
       var errorMessage = error.message;
       if (errorMessage === "The email address is already in use by another account.")
       {this.setState({message: "Email has already been created"});
-         firebase.auth()
+      firebaseService.auth()
         .signInWithEmailAndPassword(this.state.email, this.state.password)
         .then(() => this.setState({message:'Sign In Successful because account has been created alreay'}))
         .catch( error => this.setState({message: error.message}))
       }
       else this.setState({message: errorMessage});
-    });
+    });*/
   };
 
    percentile = (p)=> {
