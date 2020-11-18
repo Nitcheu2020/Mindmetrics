@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ErrorBoundary from './ErrorBoundary';
-
+import firebaseService from './firebaseService';
 import faces from './img/faces.png';
 import './App.css';
 //CATEGORY REMAINS THE SAME ON ABSOLUTE VALUE MEANNIG POSITIVE AND NEGATIVE BELONG TO THE SAME SET....
@@ -208,15 +208,16 @@ var  fin = 5;
 var Questions = Questionnaire.slice(debut-1,fin);
 const numberCircle ={
   display:'flex',
-  'borderRadius': '50%',
-  width: 36,
+  flex:1,
+ width: 36,
   height: 36,
-  padding: 8,
-  background: '#fff',
+ // padding: 8,
+ // background: '#fff',
   color: '#666',
   'textAlign': 'center',
   alignSelf:'center',
   alignItems: 'center',
+  flexDirection:'column'
 };
 
 class Description extends Component {
@@ -320,16 +321,17 @@ class Description extends Component {
     }
 
     /*
-   <input type="radio" 
-                  style={{width: 10,
-                          display:'flex',
-                          marginRight:105,
-                        }} 
-                name = {Questions[question].val}
-                            value={elmnt.valeur}
-                            checked={(answers[question])  && answers[question].keyresponse === elmnt.key}
-                            onChange={() => handleClick(question,elmnt)}
-                 />
+ const array1 = [1, 2, 3, 4,-2,-5,5];
+//console.log(array1.filter( x => x%2 ===0).reduce((accumulative,currentValue) => accumulative + currentValue));
+let sommation = array1.map( element =>   { 
+    let filtre = array1.filter( x => Math.abs(x) === element);
+    
+  if (filtre.length !== 0)  return { 
+        [element]: filtre
+       // array1.filter( x => Math.abs(x) === element)
+    }
+})
+console.log(sommation.filter( x => x !== undefined));
     */
     const qcm = (question) => {
         let answers = [...this.state.answers];
@@ -341,23 +343,34 @@ class Description extends Component {
         </td>
       ));
     };
-
+    // background: `url(${faces})`, padding:20
     return (
       <ErrorBoundary>
+        <label> asds{Math.abs(-10)}</label>
         <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column'}}>
           <img
             style={{display: 'flex','marginLeft': 50,padding:10}}
           src={faces} alt="faces"/>
+          
+          <label style={{display:'flex',alignSelf:'center',padding:10}}>Please enter your information to take the exam</label>
             <form  style={numberCircle} onSubmit={this.handleSubmit}>
-              <label>
-                email
-                <input type="email" value={this.state.email} onChange={this.setEmail} />
-              </label>
-              <label>
-                 password
-                <input type="password" value={this.state.password} onChange={this.setPassword} />
-              </label>
-              <input type="submit" value="Log In" />
+              <input type="text" value={this.state.firstName} onChange={this.setFirstName} style={{borderColor:'transparent',borderRadius:3,margin:5,padding:5}} placeholder="FIRST NAME" />
+              <input type="text" value={this.state.lastName} onChange={this.setLastName} style={{borderColor:'transparent',borderRadius:3,margin:5}} placeholder="LAST NAME" />
+              <input type="email" value={this.state.email} onChange={this.setEmail} style={{borderColor:'transparent',borderRadius:3,margin:5}} placeholder="EMAIL ADDRESS" />
+               <input type="password" value={this.state.password} onChange={this.setPassword}  style={{borderColor:'transparent',borderRadius:3,margin:5}} placeholder="PASSWORD"/>
+              <input type="submit" value="Begin The Exam &rarr;"  
+                style={{
+                  display:'flex',
+                  alignSelf:'center',
+                  color:'white',
+                  'backgroundColor':'#FF6347',
+                  'borderRadius':20,
+                  padding: 7,
+                  marginTop:5,
+                  marginBottom:15,
+                  borderColor:'transparent'
+                }}
+              />
         </form>
         </div>
          
@@ -412,6 +425,7 @@ class Description extends Component {
               'backgroundColor':'#FF6347',
               'borderRadius':20,
               padding: 10,
+              borderColor:'transparent'
             }}
             onClick ={this.submitAnswers}
             >SUBMIT ANSWERS</button>
@@ -424,7 +438,14 @@ class Description extends Component {
               'borderRadius':20,
               padding: 10,
             }}
-            onClick ={this.nextQuestionSet}
+            onClick ={() => {
+             // const userId = firebaseService.auth().currentUser.uid;
+              const {answers} = this.state;
+             // firebaseService.database().ref('answers/' +userId ).set(
+              firebaseService.database().ref('answers/').push(
+                answers
+              );
+            }}
             >NEXT SET</button>
         </div>
             
