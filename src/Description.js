@@ -321,17 +321,25 @@ class Description extends Component {
     }
 
     /*
- const array1 = [1, 2, 3, 4,-2,-5,5];
-//console.log(array1.filter( x => x%2 ===0).reduce((accumulative,currentValue) => accumulative + currentValue));
+
+    let sorted =[];
 let sommation = array1.map( element =>   { 
-    let filtre = array1.filter( x => Math.abs(x) === element);
+    let filtre = array1.filter( x => Math.abs(x.category) === element.category);
     
-  if (filtre.length !== 0)  return { 
-        [element]: filtre
-       // array1.filter( x => Math.abs(x) === element)
-    }
-})
-console.log(sommation.filter( x => x !== undefined));
+  if ((filtre.length !== 0) &&  !sorted.includes(element.category)) 
+  {      
+      let score = 0;
+      score =  filtre.map ( val => Number(val.score)).reduce ( (acc,curr) => acc + curr) ;
+     sorted.push(element.category);
+      return { 
+         [element.category]: filtre,
+         score:score
+        // array1.filter( x => Math.abs(x) === element)
+     }
+ }
+ })
+  let rsultFinal = sommation.filter( x => x !== undefined);
+  console.log(JSON.stringify(rsultFinal));
     */
     const qcm = (question) => {
         let answers = [...this.state.answers];
