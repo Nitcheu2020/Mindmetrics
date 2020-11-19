@@ -3,6 +3,7 @@ import ErrorBoundary from './ErrorBoundary';
 import firebaseService from './firebaseService';
 import faces from './img/faces.png';
 import './App.css';
+import firebase from "firebase/app";
 //CATEGORY REMAINS THE SAME ON ABSOLUTE VALUE MEANNIG POSITIVE AND NEGATIVE BELONG TO THE SAME SET....
 
 const Questionnaire = [
@@ -221,23 +222,94 @@ const numberCircle ={
 };
 
 class Description extends Component {
-  state = {
-    selected: "",
-    answers: [],
-    site: '',
-      address: '',
-      debut: 1,
-      fin:5,
-      somme: debut + fin,
-  };
+  constructor (props){
+    super(props);
+    this.state = {
+      selected: "",
+      answers: [],
+      site: '',
+        address: '',
+        debut: 1,
+        fin:5,
+        somme: debut + fin,
+        resultat:{},
+        message:'',
+        email:'',
+        password:'',
+        showExam:false,
+        user:null
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.setPassword = this.setPassword.bind(this);
+    this.setEmail = this.setEmail.bind(this);
+    
+}
 
+componentDidMount() {
+	this.authSubscription = firebaseService.auth().onAuthStateChanged((user) => {
+    this.setState({
+      loading: false,
+      user,
+    });
+  });
+}
+
+componentWillUnmount() {
+  this.authSubscription();
+}
+
+
+
+  
+setPassword(event) {
+  console.log('password', event.target.value);
+  this.setState({password: event.target.value});
+}
+setEmail (event) {
+  console.log('email', event.target.value);
+  this.setState({email: event.target.value});
+}
+
+handleSubmit(event) {
+  firebaseService.auth()
+  .createUserWithEmailAndPassword(this.state.email, this.state.password)
+  /*firebaseService.auth().setPersistence(firebaseService.auth.Auth.Persistence.SESSION)
+  .then(function() {
+    return firebaseService.auth()
+    .createUserWithEmailAndPassword(this.state.email, this.state.password);
+  })*/
+  .then(() => this.setState({message:'User Account created successfully', showExam:true}))
+  .catch((error) =>{
+  console.log(error);
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    if (errorMessage === "The email address is already in use by another account.")
+    {this.setState({message: "Email has already been created"});
+
+   // firebaseService.auth()
+    //  .signInWithEmailAndPassword(this.state.email, this.state.password) 
+    //firebase.auth.Auth.Persistence.SESSION
+     firebaseService.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    .then(()  =>{
+     firebaseService.auth()
+    .signInWithEmailAndPassword(this.state.email, this.state.password);
+  }) 
+    .then(() => this.setState({message:'Sign In Successful because account has been created alreay',showExam:true}))
+    .catch( error => this.setState({message: "???????????????????????" + error.message}))
+    }
+    else this.setState({message: "!!!!!!!!!!!!!!!!!!!!!!!!!" + errorMessage});
+  });
+  event.preventDefault();
+}
 
   submitAnswers = () =>{
-    /*let userId = firebase.auth.currentUser.uid();
+    let userId = firebaseService.auth.currentUser.uid();
     let saveData = this.state.answers;
-    firebase.database().ref('users/' + userId).set({
-      saveData
-    });*/
+    var ref = firebaseService.database().ref("answers/" + userId);
+    ref.once("value")
+    .then(function(snapshot) {
+      this.setState({resultat: snapshot.val()})
+  });
   };
 
   nextQuestionSet = () =>{
@@ -321,18 +393,28 @@ class Description extends Component {
     }
 
     /*
- const array1 = [1, 2, 3, 4,-2,-5,5];
-//console.log(array1.filter( x => x%2 ===0).reduce((accumulative,currentValue) => accumulative + currentValue));
+
+    let sorted =[];
 let sommation = array1.map( element =>   { 
-    let filtre = array1.filter( x => Math.abs(x) === element);
+    let filtre = array1.filter( x => Math.abs(x.category) === element.category);
     
-  if (filtre.length !== 0)  return { 
-        [element]: filtre
-       // array1.filter( x => Math.abs(x) === element)
-    }
-})
-console.log(sommation.filter( x => x !== undefined));
+  if ((filtre.length !== 0) &&  !sorted.includes(element.category)) 
+  {      
+      let score = 0;
+      score =  filtre.map ( val => Number(val.score)).reduce ( (acc,curr) => acc + curr) ;
+     sorted.push(element.category);
+      return { 
+         [element.category]: filtre,
+         score:score
+        // array1.filter( x => Math.abs(x) === element)
+     }
+ }
+ })
+  let rsultFinal = sommation.filter( x => x !== undefined);
+  console.log(JSON.stringify(rsultFinal));
     */
+
+ // persisting the authentication....... 
     const qcm = (question) => {
         let answers = [...this.state.answers];
       return response.map((elmnt) => (
@@ -346,13 +428,17 @@ console.log(sommation.filter( x => x !== undefined));
     // background: `url(${faces})`, padding:20
     return (
       <ErrorBoundary>
-        <label> asds{Math.abs(-10)}</label>
+        <label> {this.state.email} asdad {this.state.password}</label>
+        <label>Here is the result {JSON.stringify(this.state.resultat)}</label>
         <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column'}}>
           <img
             style={{display: 'flex','marginLeft': 50,padding:10}}
           src={faces} alt="faces"/>
-          
-          <label style={{display:'flex',alignSelf:'center',padding:10}}>Please enter your information to take the exam</label>
+             <label style={{color:'red',alignSelf:'center'}}> {
+                this.state.message
+             }</label>
+             {!this.state.user ? <> 
+              <label style={{display:'flex',alignSelf:'center',padding:10}}>Please enter your information to take the exam</label>
             <form  style={numberCircle} onSubmit={this.handleSubmit}>
               <input type="text" value={this.state.firstName} onChange={this.setFirstName} style={{borderColor:'transparent',borderRadius:3,margin:5,padding:5}} placeholder="FIRST NAME" />
               <input type="text" value={this.state.lastName} onChange={this.setLastName} style={{borderColor:'transparent',borderRadius:3,margin:5}} placeholder="LAST NAME" />
@@ -372,9 +458,11 @@ console.log(sommation.filter( x => x !== undefined));
                 }}
               />
         </form>
-        </div>
+             </> : null}
          
-      <div style={{justifyContent:'center'}}>
+        </div>
+      {this.state.user ? <>
+        <div style={{justifyContent:'center'}}>
         <div
           style={{
            'justifyContent': "space-around",
@@ -430,7 +518,7 @@ console.log(sommation.filter( x => x !== undefined));
             onClick ={this.submitAnswers}
             >SUBMIT ANSWERS</button>
 
-<button style={{
+            <button style={{
               display:'flex',
               alignSelf:'center',
               color:'white',
@@ -439,17 +527,18 @@ console.log(sommation.filter( x => x !== undefined));
               padding: 10,
             }}
             onClick ={() => {
-             // const userId = firebaseService.auth().currentUser.uid;
+              const userId = firebaseService.auth().currentUser.uid;
               const {answers} = this.state;
-             // firebaseService.database().ref('answers/' +userId ).set(
-              firebaseService.database().ref('answers/').push(
+              firebaseService.database().ref('answers/' +userId ).set(
+             // firebaseService.database().ref('answers/').push(
                 answers
               );
             }}
             >NEXT SET</button>
-        </div>
-            
-          <label>{JSON.stringify(this.state.answers)}</label>
+        </div> 
+          <label>{JSON.stringify(this.state.answers)}</label> 
+      </> : null }   
+     
       </ErrorBoundary>
     );
   }
