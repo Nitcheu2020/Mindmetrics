@@ -3,6 +3,7 @@ import ErrorBoundary from './ErrorBoundary';
 import firebaseService from './firebaseService';
 import faces from './img/faces.png';
 import './App.css';
+import firebase from "firebase/app";
 //CATEGORY REMAINS THE SAME ON ABSOLUTE VALUE MEANNIG POSITIVE AND NEGATIVE BELONG TO THE SAME SET....
 
 const Questionnaire = [
@@ -232,15 +233,33 @@ class Description extends Component {
         fin:5,
         somme: debut + fin,
         resultat:{},
-        message:'message',
+        message:'',
         email:'',
         password:'',
         showExam:false,
+        user:null
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.setPassword = this.setPassword.bind(this);
     this.setEmail = this.setEmail.bind(this);
+    
 }
+
+componentDidMount() {
+	this.authSubscription = firebaseService.auth().onAuthStateChanged((user) => {
+    this.setState({
+      loading: false,
+      user,
+    });
+  });
+}
+
+componentWillUnmount() {
+  this.authSubscription();
+}
+
+
+
   
 setPassword(event) {
   console.log('password', event.target.value);
@@ -254,6 +273,11 @@ setEmail (event) {
 handleSubmit(event) {
   firebaseService.auth()
   .createUserWithEmailAndPassword(this.state.email, this.state.password)
+  /*firebaseService.auth().setPersistence(firebaseService.auth.Auth.Persistence.SESSION)
+  .then(function() {
+    return firebaseService.auth()
+    .createUserWithEmailAndPassword(this.state.email, this.state.password);
+  })*/
   .then(() => this.setState({message:'User Account created successfully', showExam:true}))
   .catch((error) =>{
   console.log(error);
@@ -262,22 +286,18 @@ handleSubmit(event) {
     if (errorMessage === "The email address is already in use by another account.")
     {this.setState({message: "Email has already been created"});
 
-  /*  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-  .then(function() {
-    // Existing and future Auth states are now persisted in the current
-    // session only. Closing the window would clear any existing state even
-    // if a user forgets to sign out.
-    // ...
-    // New sign-in will be persisted with session persistence.
-    return firebase.auth().signInWithEmailAndPassword(email, password);
-  })
-  */
-    firebaseService.auth()
-      .signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then(() => this.setState({message:'Sign In Successful because account has been created alreay',showExam:true}))
-      .catch( error => this.setState({message: error.message}))
+   // firebaseService.auth()
+    //  .signInWithEmailAndPassword(this.state.email, this.state.password) 
+    //firebase.auth.Auth.Persistence.SESSION
+     firebaseService.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    .then(()  =>{
+     firebaseService.auth()
+    .signInWithEmailAndPassword(this.state.email, this.state.password);
+  }) 
+    .then(() => this.setState({message:'Sign In Successful because account has been created alreay',showExam:true}))
+    .catch( error => this.setState({message: "???????????????????????" + error.message}))
     }
-    else this.setState({message: errorMessage});
+    else this.setState({message: "!!!!!!!!!!!!!!!!!!!!!!!!!" + errorMessage});
   });
   event.preventDefault();
 }
@@ -408,6 +428,7 @@ let sommation = array1.map( element =>   {
     // background: `url(${faces})`, padding:20
     return (
       <ErrorBoundary>
+        <label> {this.state.email} asdad {this.state.password}</label>
         <label>Here is the result {JSON.stringify(this.state.resultat)}</label>
         <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column'}}>
           <img
@@ -416,7 +437,8 @@ let sommation = array1.map( element =>   {
              <label style={{color:'red',alignSelf:'center'}}> {
                 this.state.message
              }</label>
-          <label style={{display:'flex',alignSelf:'center',padding:10}}>Please enter your information to take the exam</label>
+             {!this.state.user ? <> 
+              <label style={{display:'flex',alignSelf:'center',padding:10}}>Please enter your information to take the exam</label>
             <form  style={numberCircle} onSubmit={this.handleSubmit}>
               <input type="text" value={this.state.firstName} onChange={this.setFirstName} style={{borderColor:'transparent',borderRadius:3,margin:5,padding:5}} placeholder="FIRST NAME" />
               <input type="text" value={this.state.lastName} onChange={this.setLastName} style={{borderColor:'transparent',borderRadius:3,margin:5}} placeholder="LAST NAME" />
@@ -436,8 +458,10 @@ let sommation = array1.map( element =>   {
                 }}
               />
         </form>
+             </> : null}
+         
         </div>
-      {this.state.showExam ? <>
+      {this.state.user ? <>
         <div style={{justifyContent:'center'}}>
         <div
           style={{
