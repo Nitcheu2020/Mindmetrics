@@ -221,23 +221,75 @@ const numberCircle ={
 };
 
 class Description extends Component {
-  state = {
-    selected: "",
-    answers: [],
-    site: '',
-      address: '',
-      debut: 1,
-      fin:5,
-      somme: debut + fin,
-  };
+  constructor (props){
+    super(props);
+    this.state = {
+      selected: "",
+      answers: [],
+      site: '',
+        address: '',
+        debut: 1,
+        fin:5,
+        somme: debut + fin,
+        resultat:{},
+        message:'message',
+        email:'',
+        password:'',
+        showExam:false,
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.setPassword = this.setPassword.bind(this);
+    this.setEmail = this.setEmail.bind(this);
+}
+  
+setPassword(event) {
+  console.log('password', event.target.value);
+  this.setState({password: event.target.value});
+}
+setEmail (event) {
+  console.log('email', event.target.value);
+  this.setState({email: event.target.value});
+}
 
+handleSubmit(event) {
+  firebaseService.auth()
+  .createUserWithEmailAndPassword(this.state.email, this.state.password)
+  .then(() => this.setState({message:'User Account created successfully', showExam:true}))
+  .catch((error) =>{
+  console.log(error);
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    if (errorMessage === "The email address is already in use by another account.")
+    {this.setState({message: "Email has already been created"});
+
+  /*  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+  .then(function() {
+    // Existing and future Auth states are now persisted in the current
+    // session only. Closing the window would clear any existing state even
+    // if a user forgets to sign out.
+    // ...
+    // New sign-in will be persisted with session persistence.
+    return firebase.auth().signInWithEmailAndPassword(email, password);
+  })
+  */
+    firebaseService.auth()
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then(() => this.setState({message:'Sign In Successful because account has been created alreay',showExam:true}))
+      .catch( error => this.setState({message: error.message}))
+    }
+    else this.setState({message: errorMessage});
+  });
+  event.preventDefault();
+}
 
   submitAnswers = () =>{
-    /*let userId = firebase.auth.currentUser.uid();
+    let userId = firebaseService.auth.currentUser.uid();
     let saveData = this.state.answers;
-    firebase.database().ref('users/' + userId).set({
-      saveData
-    });*/
+    var ref = firebaseService.database().ref("answers/" + userId);
+    ref.once("value")
+    .then(function(snapshot) {
+      this.setState({resultat: snapshot.val()})
+  });
   };
 
   nextQuestionSet = () =>{
@@ -341,6 +393,8 @@ let sommation = array1.map( element =>   {
   let rsultFinal = sommation.filter( x => x !== undefined);
   console.log(JSON.stringify(rsultFinal));
     */
+
+ // persisting the authentication....... 
     const qcm = (question) => {
         let answers = [...this.state.answers];
       return response.map((elmnt) => (
@@ -354,12 +408,14 @@ let sommation = array1.map( element =>   {
     // background: `url(${faces})`, padding:20
     return (
       <ErrorBoundary>
-        <label> asds{Math.abs(-10)}</label>
+        <label>Here is the result {JSON.stringify(this.state.resultat)}</label>
         <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column'}}>
           <img
             style={{display: 'flex','marginLeft': 50,padding:10}}
           src={faces} alt="faces"/>
-          
+             <label style={{color:'red',alignSelf:'center'}}> {
+                this.state.message
+             }</label>
           <label style={{display:'flex',alignSelf:'center',padding:10}}>Please enter your information to take the exam</label>
             <form  style={numberCircle} onSubmit={this.handleSubmit}>
               <input type="text" value={this.state.firstName} onChange={this.setFirstName} style={{borderColor:'transparent',borderRadius:3,margin:5,padding:5}} placeholder="FIRST NAME" />
@@ -381,8 +437,8 @@ let sommation = array1.map( element =>   {
               />
         </form>
         </div>
-         
-      <div style={{justifyContent:'center'}}>
+      {this.state.showExam ? <>
+        <div style={{justifyContent:'center'}}>
         <div
           style={{
            'justifyContent': "space-around",
@@ -438,7 +494,7 @@ let sommation = array1.map( element =>   {
             onClick ={this.submitAnswers}
             >SUBMIT ANSWERS</button>
 
-<button style={{
+            <button style={{
               display:'flex',
               alignSelf:'center',
               color:'white',
@@ -447,17 +503,18 @@ let sommation = array1.map( element =>   {
               padding: 10,
             }}
             onClick ={() => {
-             // const userId = firebaseService.auth().currentUser.uid;
+              const userId = firebaseService.auth().currentUser.uid;
               const {answers} = this.state;
-             // firebaseService.database().ref('answers/' +userId ).set(
-              firebaseService.database().ref('answers/').push(
+              firebaseService.database().ref('answers/' +userId ).set(
+             // firebaseService.database().ref('answers/').push(
                 answers
               );
             }}
             >NEXT SET</button>
-        </div>
-            
-          <label>{JSON.stringify(this.state.answers)}</label>
+        </div> 
+          <label>{JSON.stringify(this.state.answers)}</label> 
+      </> : null }   
+     
       </ErrorBoundary>
     );
   }
