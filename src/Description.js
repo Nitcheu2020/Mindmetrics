@@ -206,7 +206,7 @@ const Questionnaire = [
 
 var debut = 1;
 var  fin = 5;
-var Questions = Questionnaire.slice(debut-1,fin);
+//var Questions = Questionnaire.slice(debut-1,fin);
 const numberCircle ={
   display:'flex',
   flex:1,
@@ -242,7 +242,6 @@ class Description extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.setPassword = this.setPassword.bind(this);
     this.setEmail = this.setEmail.bind(this);
-    
 }
 
 componentDidMount() {
@@ -252,6 +251,15 @@ componentDidMount() {
       user,
     });
   });
+
+  /*const {answers} = this.state;
+  const userId = firebaseService.auth().currentUser.uid;
+  var ref = firebaseService.database().ref('users/' + userId + '/answers');
+  ref.once('value', (snapshot) =>{
+    console.log(snapshot.val());
+    this.setState({answers:snapshot.val()})
+  });*/
+  
 }
 
 componentWillUnmount() {
@@ -271,13 +279,13 @@ setEmail (event) {
 }
 
 handleSubmit(event) {
-  firebaseService.auth()
-  .createUserWithEmailAndPassword(this.state.email, this.state.password)
-  /*firebaseService.auth().setPersistence(firebaseService.auth.Auth.Persistence.SESSION)
-  .then(function() {
-    return firebaseService.auth()
+  /*firebaseService.auth()
+  .createUserWithEmailAndPassword(this.state.email, this.state.password)*/
+  firebaseService.auth().setPersistence(firebaseService.auth.Auth.Persistence.SESSION)
+  .then(() => {
+     firebaseService.auth()
     .createUserWithEmailAndPassword(this.state.email, this.state.password);
-  })*/
+  })
   .then(() => this.setState({message:'User Account created successfully', showExam:true}))
   .catch((error) =>{
   console.log(error);
@@ -302,19 +310,19 @@ handleSubmit(event) {
   event.preventDefault();
 }
 
-  submitAnswers = () =>{
-    let userId = firebaseService.auth.currentUser.uid();
-    let saveData = this.state.answers;
-    var ref = firebaseService.database().ref("answers/" + userId);
-    ref.once("value")
-    .then(function(snapshot) {
-      this.setState({resultat: snapshot.val()})
-  });
+  submitAnswerss (){
+    
+   
   };
 
-  nextQuestionSet = () =>{
-    const {debut,fin} = this.state;
-    this.setState({debut: debut+ 5, fin: fin+ 5});
+  submitAnswers = () =>{
+    const {answers} = this.state;
+    const userId = firebaseService.auth().currentUser.uid;
+    var ref = firebaseService.database().ref('users/' + userId + '/answers');
+    ref.once('value', (snapshot) =>{
+      console.log(snapshot.val());
+      this.setState({answers:snapshot.val()})
+    });
   };
 
   render() {
@@ -374,17 +382,24 @@ handleSubmit(event) {
     }
 
     const handleClick = (question,elmnt) => {
+      const {debut,fin} =  this.state;
+      let Questions = Questionnaire.slice(debut-1,fin);
+      //etant donnee que je slice par groupe de 5 les index iront tjrs jusk 4 et par consequent je devrais prendre la cle de la question.... 
         try {
             let answers = [...this.state.answers];
-            console.log("addasdsa");
             let rslt = {
                 keyresponse: elmnt.key,
-                question: Questions[question].val,
+               // question: Questions[question].val,
+                question: Questionnaire[question].val,
                 response: response[elmnt.key-1].valeur,
-                category: Questions[question].category,
-                score: Questions[question].category>0 ? response[elmnt.key-1].key:response[elmnt.key-1].quote,
+                //category: Questions[question].category,
+                category: Questionnaire[question].category,
+                //score: Questions[question].category>0 ? response[elmnt.key-1].key:response[elmnt.key-1].quote,
+                score: Questionnaire[question].category>0 ? response[elmnt.key-1].key:response[elmnt.key-1].quote,
             };
             answers[question] = rslt;
+           // answers[Questions[question].key-1] = rslt;
+           //answers[Questions[question].key] = rslt;
             this.setState({ selected: elmnt.key, answers });  
 
         } catch (error) {
@@ -413,14 +428,16 @@ let sommation = array1.map( element =>   {
   let rsultFinal = sommation.filter( x => x !== undefined);
   console.log(JSON.stringify(rsultFinal));
     */
-
+//answers[Questions[question].key-1] = rslt;
  // persisting the authentication....... 
     const qcm = (question) => {
+      console.log("numero de la question",question);
         let answers = [...this.state.answers];
       return response.map((elmnt) => (
         <td key={elmnt.key} style={{ padding: 5 }}>
           <button style={(answers[question])  && answers[question].keyresponse === elmnt.key ? styles['radioButtonClicked' + elmnt.key] : styles['radioButton' + elmnt.key]} 
-                  onClick={()=>handleClick(question,elmnt)}
+                  onClick={()=> {
+                     handleClick(question,elmnt)}}
           />
         </td>
       ));
@@ -428,7 +445,7 @@ let sommation = array1.map( element =>   {
     // background: `url(${faces})`, padding:20
     return (
       <ErrorBoundary>
-        <label> {this.state.email} asdad {this.state.password}</label>
+        <label> {this.state.email} asdad {this.state.debut}</label>
         <label>Here is the result {JSON.stringify(this.state.resultat)}</label>
         <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column'}}>
           <img
@@ -476,9 +493,9 @@ let sommation = array1.map( element =>   {
                 display:'flex',
                 'flexDirection': "column"
              }}>
-          {Questions.map((elemnt, key) => (
+          {Questionnaire.slice(this.state.debut-1,this.state.fin).map((elemnt, key) => (
             <div
-              key={key}
+              key={elemnt.key}
               style={{
                'justifyContent': "space-between",
                 padding: 10,
@@ -496,7 +513,7 @@ let sommation = array1.map( element =>   {
                     <tr style={{justifyContent:'space-around',alignItems:'center',display:'flex'}}>
                         <label style={{display:'flex',padding:10,color:'#7FFFD4',fontWeight:'bold'}}>Agree</label>
                         {
-                            qcm(key)
+                            qcm(elemnt.key)
                         }
                         <label style={{display:'flex',padding:10,color:'#8B008B',fontWeight:'bold'}}>Disagree</label>
                     </tr>
@@ -505,7 +522,24 @@ let sommation = array1.map( element =>   {
         </div>
         </div>
         <div style={{display:'flex',alignItems:'center',justifyContent:'center',padding:15}}>
-            
+                        
+        <button style={{
+              display:'flex',
+              alignSelf:'center',
+              color:'white',
+              'backgroundColor':'#FF6347',
+              'borderRadius':20,
+              padding: 10,
+            }}
+            onClick ={() => {
+              const {debut,fin} = this.state;
+              this.setState({debut:debut-5,fin:fin-5})
+            }}
+            >
+              Previous Questions
+            </button>
+
+
        <button style={{
               display:'flex',
               alignSelf:'center',
@@ -529,13 +563,55 @@ let sommation = array1.map( element =>   {
             onClick ={() => {
               const userId = firebaseService.auth().currentUser.uid;
               const {answers} = this.state;
-              firebaseService.database().ref('answers/' +userId ).set(
+
+              //ici on va regrouper par category ...
+              let sorted =[];
+              let sommation = answers.map( element =>   { 
+                  let filtre = answers.filter( x => Math.abs(x.category) === element.category);
+                  
+                if ((filtre.length !== 0) &&  !sorted.includes(element.category)) 
+                {      
+                    let score = 0;
+                    score =  filtre.map ( val => Number(val.score)).reduce ( (acc,curr) => acc + curr) ;
+                   sorted.push(element.category);
+                    return { 
+                       [element.category]: filtre,
+                       score:score
+                      // answers.filter( x => Math.abs(x) === element)
+                   }
+               }
+               })
+               //if we only have negative they are not going to be save in the score... which is a problemm.....
+                let rsultFinal = sommation.filter( x => x !== undefined);
+                let resp ={
+                    answers:answers,
+                    groupAnswer: rsultFinal
+                };
+              //Fin regrouper par catgeorie...
+              firebaseService.database().ref('users/' + userId + '/').set(
              // firebaseService.database().ref('answers/').push(
-                answers
+                resp
               );
             }}
-            >NEXT SET</button>
+            >SAVE ANSWERS</button>
+
+            <button style={{
+              display:'flex',
+              alignSelf:'center',
+              color:'white',
+              'backgroundColor':'#FF6347',
+              'borderRadius':20,
+              padding: 10,
+            }}
+            onClick ={() => {
+              const {debut,fin} = this.state;
+              this.setState({debut:debut+5,fin:fin+5})
+            }}
+            >
+              Next questions
+            </button>
         </div> 
+          <label>{this.state.debut} et et et et {this.state.fin}</label>
           <label>{JSON.stringify(this.state.answers)}</label> 
       </> : null }   
      
