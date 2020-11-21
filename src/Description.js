@@ -6,7 +6,24 @@ import './App.css';
 import firebase from "firebase/app";
 //CATEGORY REMAINS THE SAME ON ABSOLUTE VALUE MEANNIG POSITIVE AND NEGATIVE BELONG TO THE SAME SET....
 
-const Questionnaire = [
+function shuffle(arra1) {
+  var ctr = arra1.length, temp, index;
+
+// While there are elements in the array
+  while (ctr > 0) {
+// Pick a random index
+      index = Math.floor(Math.random() * ctr);
+// Decrease ctr by 1
+      ctr--;
+// And swap the last element with it
+      temp = arra1[ctr];
+      arra1[ctr] = arra1[index];
+      arra1[index] = temp;
+  }
+  return arra1;
+}
+
+const QuestionnaireBrute = [
   {
     key: "1",
     val: "Am the life of the party.",
@@ -204,6 +221,8 @@ const Questionnaire = [
   { key: "50", val: "Am full of ideas.", category: 5, pondere: 7 }
 ];
 
+const Questionnaire = shuffle(QuestionnaireBrute);
+
 var debut = 1;
 var  fin = 5;
 //var Questions = Questionnaire.slice(debut-1,fin);
@@ -390,6 +409,7 @@ handleSubmit(event) {
             let rslt = {
                 keyresponse: elmnt.key,
                // question: Questions[question].val,
+                number: question,
                 question: Questionnaire[question].val,
                 response: response[elmnt.key-1].valeur,
                 //category: Questions[question].category,
@@ -397,7 +417,7 @@ handleSubmit(event) {
                 //score: Questions[question].category>0 ? response[elmnt.key-1].key:response[elmnt.key-1].quote,
                 score: Questionnaire[question].category>0 ? response[elmnt.key-1].key:response[elmnt.key-1].quote,
             };
-            answers[question] = rslt;
+            answers[question-1] = rslt;
            // answers[Questions[question].key-1] = rslt;
            //answers[Questions[question].key] = rslt;
             this.setState({ selected: elmnt.key, answers });  
@@ -430,12 +450,13 @@ let sommation = array1.map( element =>   {
     */
 //answers[Questions[question].key-1] = rslt;
  // persisting the authentication....... 
+ //MERGE ARRAY ONCE 5 QUESTIONS ARE ANSWERED??????????????????????????????????????????????????????????????????????????????????????????????????
     const qcm = (question) => {
       console.log("numero de la question",question);
         let answers = [...this.state.answers];
       return response.map((elmnt) => (
         <td key={elmnt.key} style={{ padding: 5 }}>
-          <button style={(answers[question])  && answers[question].keyresponse === elmnt.key ? styles['radioButtonClicked' + elmnt.key] : styles['radioButton' + elmnt.key]} 
+          <button style={(answers[question-1])  && answers[question-1].keyresponse === elmnt.key ? styles['radioButtonClicked' + elmnt.key] : styles['radioButton' + elmnt.key]} 
                   onClick={()=> {
                      handleClick(question,elmnt)}}
           />
@@ -539,6 +560,24 @@ let sommation = array1.map( element =>   {
               Previous Questions
             </button>
 
+          <button style={{
+              display:'flex',
+              alignSelf:'center',
+              color:'white',
+              'backgroundColor':'red',
+              'borderRadius':20,
+              padding: 10,
+            }}
+            onClick ={() => {
+              firebase.auth().signOut().then(function() {
+              // Sign-out successful.
+            }).catch(function(error) {
+              // An error happened.
+            });
+            }}
+            >
+              LOG OUT 
+            </button>
 
        <button style={{
               display:'flex',
@@ -582,9 +621,17 @@ let sommation = array1.map( element =>   {
                }
                })
                //if we only have negative they are not going to be save in the score... which is a problemm.....
+               //desactiver le button next jusk ce que l'utilisateur... finisse de repondre aux questions sur la page...
                 let rsultFinal = sommation.filter( x => x !== undefined);
-                let resp ={
-                    answers:answers,
+
+                rsultFinal.forEach( val =>  {
+                  firebaseService.database().ref('scores/' + 'category' + '/' + [Object.keys(val)[0]]).push(
+                     val.score
+                     );
+
+                });
+                 let resp ={
+                    answers:answers.filter( val => val !==undefined),
                     groupAnswer: rsultFinal
                 };
               //Fin regrouper par catgeorie...
