@@ -26,17 +26,44 @@ const Canvas = props => {
       frameCount++
       draw(context, frameCount)
       //animationFrameId = window.requestAnimationFrame(render)
-      let data = [20000, 14000, 12000, 15000, 18000, 19000, 22000];
-      let labels =  ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+     
       var myChart = new Chart(context, {
           type: 'line',
           data: {
-              labels: labels,
+              labels: props.labels,
               datasets: [{
                   label: 'Ranking',
-                  data: data,
+                  data: props.data,
               }]
           },
+          options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        // Include a dollar sign in the ticks
+                        callback: function(value, index, values) {
+                           // return '$' + value;
+                           return value;
+                        },
+                        beginAtZero:true,
+                        fontColor: 'red',
+                        fontStyle: "bold",
+                    }
+                }],
+                yAxes: [{
+                  ticks: {
+                      // Include a dollar sign in the ticks
+                      callback: function(value, index, values) {
+                         // return '$' + value;
+                         return value;
+                      },
+                      beginAtZero:true,
+                      fontColor: 'blue',
+                      fontStyle: "bold",
+                  }
+              }]
+            },
+        }
       });
       }
 

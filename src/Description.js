@@ -5,6 +5,7 @@ import faces from './img/faces.png';
 import './App.css';
 import firebase from "firebase/app";
 //CATEGORY REMAINS THE SAME ON ABSOLUTE VALUE MEANNIG POSITIVE AND NEGATIVE BELONG TO THE SAME SET....
+import Canvas from './Canvas';
 
 function shuffle(arra1) {
   var ctr = arra1.length, temp, index;
@@ -256,7 +257,8 @@ class Description extends Component {
         email:'',
         password:'',
         showExam:false,
-        user:null
+        user:null,
+        arrayScore: null
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.setPassword = this.setPassword.bind(this);
@@ -298,13 +300,13 @@ setEmail (event) {
 }
 
 handleSubmit(event) {
-  /*firebaseService.auth()
-  .createUserWithEmailAndPassword(this.state.email, this.state.password)*/
-  firebaseService.auth().setPersistence(firebaseService.auth.Auth.Persistence.SESSION)
+  firebaseService.auth()
+  .createUserWithEmailAndPassword(this.state.email, this.state.password)
+ /* firebaseService.auth().setPersistence(firebaseService.auth.Auth.Persistence.SESSION)
   .then(() => {
      firebaseService.auth()
     .createUserWithEmailAndPassword(this.state.email, this.state.password);
-  })
+  })*/
   .then(() => this.setState({message:'User Account created successfully', showExam:true}))
   .catch((error) =>{
   console.log(error);
@@ -341,6 +343,33 @@ handleSubmit(event) {
     ref.once('value', (snapshot) =>{
       console.log(snapshot.val());
       this.setState({answers:snapshot.val()})
+    });
+  };
+
+  arrayOfAnswers = () =>{
+    const userId = firebaseService.auth().currentUser.uid;
+    var ref = firebaseService.database().ref('scores/category/5');
+    ref.once('value', (snapshot) =>{
+      const obj = snapshot.val();
+      const rslt = [];
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          var val = {[key] :obj[key]};
+          rslt.push(val);
+        }
+      }
+       let sortedCategory = rslt.map (x => {
+        let vul = {you:x[Object.keys(x)]};
+        if (Object.keys(x)[0] === userId)  {  
+        return  vul; }
+        return x;
+      }).sort ( (a,b) =>{
+        return a[Object.keys(a)]-b[Object.keys(b)]
+      });
+      let jsonObj ={} ;
+      sortedCategory.forEach( x => jsonObj[Object.keys(x)] = x[Object.keys(x)] )
+      console.log(jsonObj);
+      this.setState({arrayScore: jsonObj})
     });
   };
 
@@ -591,6 +620,20 @@ let sommation = array1.map( element =>   {
             onClick ={this.submitAnswers}
             >SUBMIT ANSWERS</button>
 
+
+   
+            <button style={{
+              display:'flex',
+              alignSelf:'center',
+              color:'white',
+              'backgroundColor':'blue',
+              'borderRadius':20,
+              padding: 10,
+              borderColor:'transparent'
+            }}
+            onClick ={this.arrayOfAnswers}
+            >CHECK THE ANSERS ON CATEGORY 5 </button>
+
             <button style={{
               display:'flex',
               alignSelf:'center',
@@ -620,12 +663,18 @@ let sommation = array1.map( element =>   {
                    }
                }
                })
+               //numero 50 ne prend pas sa valeur....
+               //passer la valeur element.question au lieu de key... puisque la cle change tjrs..s
+               //je dois reintialiser la variabe a 1 quand on ava a une nouvelle page et activez next lorsque le  compte va a 5 et 
+               // lorsque le compte va a 50 on active submit answer ou alors change Next to Submit answers...
                //if we only have negative they are not going to be save in the score... which is a problemm.....
                //desactiver le button next jusk ce que l'utilisateur... finisse de repondre aux questions sur la page...
                 let rsultFinal = sommation.filter( x => x !== undefined);
 
                 rsultFinal.forEach( val =>  {
-                  firebaseService.database().ref('scores/' + 'category' + '/' + [Object.keys(val)[0]]).push(
+                 // let saved = { [userId]: val.score};
+                  firebaseService.database().ref('scores/' + 'category' + '/' + [Object.keys(val)[0]] + '/' + userId).set(
+                   // saved
                      val.score
                      );
 
@@ -634,6 +683,7 @@ let sommation = array1.map( element =>   {
                     answers:answers.filter( val => val !==undefined),
                     groupAnswer: rsultFinal
                 };
+                console.log(resp);
               //Fin regrouper par catgeorie...
               firebaseService.database().ref('users/' + userId + '/').set(
              // firebaseService.database().ref('answers/').push(
@@ -656,12 +706,17 @@ let sommation = array1.map( element =>   {
             }}
             >
               Next questions
-            </button>
+            </button> 
         </div> 
           <label>{this.state.debut} et et et et {this.state.fin}</label>
           <label>{JSON.stringify(this.state.answers)}</label> 
       </> : null }   
-     
+           {this.state.arrayScore && 
+            <div style={{width:'50%'}}>
+            <Canvas   data = {Object.values(this.state.arrayScore)}
+             labels =  {Object.keys(this.state.arrayScore)}/>
+            </div>
+            } 
       </ErrorBoundary>
     );
   }

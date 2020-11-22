@@ -101,7 +101,7 @@ export default class LoginForm extends React.Component {
       else this.setState({message: errorMessage});
     });*/
   };
-
+  
    percentile = (p)=> {
     let data = [1.9 , 1.7 , 2 , 2.3 , 1.8 , 2 , 2.4 , 2.1 , 2.4 , 0.9 , 1.2 , 1 , 1.7 , 1.3 , 1.3 ];
     data = data.sort((a, b) =>{
