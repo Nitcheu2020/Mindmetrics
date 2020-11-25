@@ -109,7 +109,17 @@ export default class LoginForm extends React.Component {
     });
     let n = data.length;
     let valeur =  Math.ceil(p*n/100);
-    //this.setState({perc:data[valeur+1]})
+
+    let donne = [11, 10, 12, 23, 17, 16, 17, 14, 24, 22, 14];
+    donne = donne.sort((a, b) =>{
+      return a - b;
+    });
+    let findees =   donne.lastIndexOf(23);
+    console.log("index of ",findees);
+    let percc = Math.floor(findees +1) *100/donne.length;
+    //valeur = 10* 100/n = p
+    console.log("ICICCICICI percc",percc);
+    
     this.setState({perc:data[valeur-1]})
    // return ;
  }  
@@ -120,6 +130,7 @@ export default class LoginForm extends React.Component {
       <button onClick={()=>this.percentile(60)}>
         percentile
         </button>
+    <label> asdsd {this.state.perc}</label>
         <label> {
            this.state.message
         }</label>

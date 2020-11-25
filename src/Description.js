@@ -346,10 +346,12 @@ handleSubmit(event) {
     });
   };
 
-  arrayOfAnswers = () =>{
+  getValue = (cate,betterthan) => {
     const userId = firebaseService.auth().currentUser.uid;
-    var ref = firebaseService.database().ref('scores/category/5');
+    var ref = firebaseService.database().ref('scores/category/' + cate);
     ref.once('value', (snapshot) =>{
+      console.log(snapshot.val());
+      this.setState({recycle:snapshot.val()});
       const obj = snapshot.val();
       const rslt = [];
       for (var key in obj) {
@@ -358,9 +360,10 @@ handleSubmit(event) {
           rslt.push(val);
         }
       }
-       let sortedCategory = rslt.map (x => {
+      let sortedCategory = rslt.map (x => {
         let vul = {you:x[Object.keys(x)]};
         if (Object.keys(x)[0] === userId)  {  
+          this.setState({[betterthan]:x[Object.keys(x)]});
         return  vul; }
         return x;
       }).sort ( (a,b) =>{
@@ -368,9 +371,17 @@ handleSubmit(event) {
       });
       let jsonObj ={} ;
       sortedCategory.forEach( x => jsonObj[Object.keys(x)] = x[Object.keys(x)] )
-      console.log(jsonObj);
+      console.log('asdasdd',sortedCategory.find( douala => Object.keys(douala) === 'you'));
       this.setState({arrayScore: jsonObj})
     });
+  }
+
+  arrayOfAnswers = () =>{
+    this. getValue(1,'betterthan');
+    this. getValue(2,'betterthan1');
+    this. getValue(3,'betterthan2');
+    this. getValue(4,'betterthan3');
+    this. getValue(5,'betterthan4');
   };
 
   render() {
@@ -481,7 +492,6 @@ let sommation = array1.map( element =>   {
  // persisting the authentication....... 
  //MERGE ARRAY ONCE 5 QUESTIONS ARE ANSWERED??????????????????????????????????????????????????????????????????????????????????????????????????
     const qcm = (question) => {
-      console.log("numero de la question",question);
         let answers = [...this.state.answers];
       return response.map((elmnt) => (
         <td key={elmnt.key} style={{ padding: 5 }}>
@@ -492,10 +502,39 @@ let sommation = array1.map( element =>   {
         </td>
       ));
     };
+
+    const pourcentage = () => {
+      let donne = [11, 10, 12, 23, 17, 16, 17, 14, 24, 22, 14]; 
+      donne = donne.sort((a, b) =>{
+        return a - b;
+      });
+      let findees =   donne.lastIndexOf(23);
+      console.log("index of ",findees);
+      let percc = Math.floor(findees +1) *100/donne.length;
+
+    }
     // background: `url(${faces})`, padding:20
     return (
       <ErrorBoundary>
-        <label> {this.state.email} asdad {this.state.debut}</label>
+        
+    <label> {this.state.email} asdad {this.state.debut} {this.state.betterthan}</label>
+
+        <div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5,marginBottom:5}}>
+            <div style={{height:15,width:this.state.betterthan +"%",backgroundColor:'purple',borderRadius:50,marginBottom:5}}/>
+        </div>
+        <div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5}}>
+            <div style={{height:15,width:this.state.betterthan1 +"%",backgroundColor:'purple',borderRadius:50,marginBottom:5}}/>
+        </div>
+        <div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5}}>
+            <div style={{height:15,width:this.state.betterthan2 +"%",backgroundColor:'purple',borderRadius:50,marginBottom:5}}/>
+        </div>
+        <div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5}}>
+            <div style={{height:15,width:this.state.betterthan3 +"%",backgroundColor:'purple',borderRadius:50,marginBottom:5}}/>
+        </div>
+        <div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5}}>
+            <div style={{height:15,width:this.state.betterthan4 +"%",backgroundColor:'purple',borderRadius:50,marginBottom:5}}/>
+        </div>
+
         <label>Here is the result {JSON.stringify(this.state.resultat)}</label>
         <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column'}}>
           <img
