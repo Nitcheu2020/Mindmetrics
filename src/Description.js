@@ -5,8 +5,26 @@ import faces from './img/faces.png';
 import './App.css';
 import firebase from "firebase/app";
 //CATEGORY REMAINS THE SAME ON ABSOLUTE VALUE MEANNIG POSITIVE AND NEGATIVE BELONG TO THE SAME SET....
+import Canvas from './Canvas';
 
-const Questionnaire = [
+function shuffle(arra1) {
+  var ctr = arra1.length, temp, index;
+
+// While there are elements in the array
+  while (ctr > 0) {
+// Pick a random index
+      index = Math.floor(Math.random() * ctr);
+// Decrease ctr by 1
+      ctr--;
+// And swap the last element with it
+      temp = arra1[ctr];
+      arra1[ctr] = arra1[index];
+      arra1[index] = temp;
+  }
+  return arra1;
+}
+
+const QuestionnaireBrute = [
   {
     key: "1",
     val: "Am the life of the party.",
@@ -204,6 +222,8 @@ const Questionnaire = [
   { key: "50", val: "Am full of ideas.", category: 5, pondere: 7 }
 ];
 
+const Questionnaire = shuffle(QuestionnaireBrute);
+
 var debut = 1;
 var  fin = 5;
 //var Questions = Questionnaire.slice(debut-1,fin);
@@ -237,7 +257,8 @@ class Description extends Component {
         email:'',
         password:'',
         showExam:false,
-        user:null
+        user:null,
+        arrayScore: null
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.setPassword = this.setPassword.bind(this);
@@ -279,13 +300,13 @@ setEmail (event) {
 }
 
 handleSubmit(event) {
-  /*firebaseService.auth()
-  .createUserWithEmailAndPassword(this.state.email, this.state.password)*/
-  firebaseService.auth().setPersistence(firebaseService.auth.Auth.Persistence.SESSION)
+  firebaseService.auth()
+  .createUserWithEmailAndPassword(this.state.email, this.state.password)
+ /* firebaseService.auth().setPersistence(firebaseService.auth.Auth.Persistence.SESSION)
   .then(() => {
      firebaseService.auth()
     .createUserWithEmailAndPassword(this.state.email, this.state.password);
-  })
+  })*/
   .then(() => this.setState({message:'User Account created successfully', showExam:true}))
   .catch((error) =>{
   console.log(error);
@@ -323,6 +344,44 @@ handleSubmit(event) {
       console.log(snapshot.val());
       this.setState({answers:snapshot.val()})
     });
+  };
+
+  getValue = (cate,betterthan) => {
+    const userId = firebaseService.auth().currentUser.uid;
+    var ref = firebaseService.database().ref('scores/category/' + cate);
+    ref.once('value', (snapshot) =>{
+      console.log(snapshot.val());
+      this.setState({recycle:snapshot.val()});
+      const obj = snapshot.val();
+      const rslt = [];
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          var val = {[key] :obj[key]};
+          rslt.push(val);
+        }
+      }
+      let sortedCategory = rslt.map (x => {
+        let vul = {you:x[Object.keys(x)]};
+        if (Object.keys(x)[0] === userId)  {  
+          this.setState({[betterthan]:x[Object.keys(x)]});
+        return  vul; }
+        return x;
+      }).sort ( (a,b) =>{
+        return a[Object.keys(a)]-b[Object.keys(b)]
+      });
+      let jsonObj ={} ;
+      sortedCategory.forEach( x => jsonObj[Object.keys(x)] = x[Object.keys(x)] )
+      console.log('asdasdd',sortedCategory.find( douala => Object.keys(douala) === 'you'));
+      this.setState({arrayScore: jsonObj})
+    });
+  }
+
+  arrayOfAnswers = () =>{
+    this. getValue(1,'betterthan');
+    this. getValue(2,'betterthan1');
+    this. getValue(3,'betterthan2');
+    this. getValue(4,'betterthan3');
+    this. getValue(5,'betterthan4');
   };
 
   render() {
@@ -390,6 +449,7 @@ handleSubmit(event) {
             let rslt = {
                 keyresponse: elmnt.key,
                // question: Questions[question].val,
+                number: question,
                 question: Questionnaire[question].val,
                 response: response[elmnt.key-1].valeur,
                 //category: Questions[question].category,
@@ -397,7 +457,7 @@ handleSubmit(event) {
                 //score: Questions[question].category>0 ? response[elmnt.key-1].key:response[elmnt.key-1].quote,
                 score: Questionnaire[question].category>0 ? response[elmnt.key-1].key:response[elmnt.key-1].quote,
             };
-            answers[question] = rslt;
+            answers[question-1] = rslt;
            // answers[Questions[question].key-1] = rslt;
            //answers[Questions[question].key] = rslt;
             this.setState({ selected: elmnt.key, answers });  
@@ -430,22 +490,51 @@ let sommation = array1.map( element =>   {
     */
 //answers[Questions[question].key-1] = rslt;
  // persisting the authentication....... 
+ //MERGE ARRAY ONCE 5 QUESTIONS ARE ANSWERED??????????????????????????????????????????????????????????????????????????????????????????????????
     const qcm = (question) => {
-      console.log("numero de la question",question);
         let answers = [...this.state.answers];
       return response.map((elmnt) => (
         <td key={elmnt.key} style={{ padding: 5 }}>
-          <button style={(answers[question])  && answers[question].keyresponse === elmnt.key ? styles['radioButtonClicked' + elmnt.key] : styles['radioButton' + elmnt.key]} 
+          <button style={(answers[question-1])  && answers[question-1].keyresponse === elmnt.key ? styles['radioButtonClicked' + elmnt.key] : styles['radioButton' + elmnt.key]} 
                   onClick={()=> {
                      handleClick(question,elmnt)}}
           />
         </td>
       ));
     };
+
+    const pourcentage = () => {
+      let donne = [11, 10, 12, 23, 17, 16, 17, 14, 24, 22, 14]; 
+      donne = donne.sort((a, b) =>{
+        return a - b;
+      });
+      let findees =   donne.lastIndexOf(23);
+      console.log("index of ",findees);
+      let percc = Math.floor(findees +1) *100/donne.length;
+
+    }
     // background: `url(${faces})`, padding:20
     return (
       <ErrorBoundary>
-        <label> {this.state.email} asdad {this.state.debut}</label>
+        
+    <label> {this.state.email} asdad {this.state.debut} {this.state.betterthan}</label>
+
+        <div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5,marginBottom:5}}>
+            <div style={{height:15,width:this.state.betterthan +"%",backgroundColor:'purple',borderRadius:50,marginBottom:5}}/>
+        </div>
+        <div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5}}>
+            <div style={{height:15,width:this.state.betterthan1 +"%",backgroundColor:'purple',borderRadius:50,marginBottom:5}}/>
+        </div>
+        <div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5}}>
+            <div style={{height:15,width:this.state.betterthan2 +"%",backgroundColor:'purple',borderRadius:50,marginBottom:5}}/>
+        </div>
+        <div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5}}>
+            <div style={{height:15,width:this.state.betterthan3 +"%",backgroundColor:'purple',borderRadius:50,marginBottom:5}}/>
+        </div>
+        <div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5}}>
+            <div style={{height:15,width:this.state.betterthan4 +"%",backgroundColor:'purple',borderRadius:50,marginBottom:5}}/>
+        </div>
+
         <label>Here is the result {JSON.stringify(this.state.resultat)}</label>
         <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column'}}>
           <img
@@ -539,6 +628,24 @@ let sommation = array1.map( element =>   {
               Previous Questions
             </button>
 
+          <button style={{
+              display:'flex',
+              alignSelf:'center',
+              color:'white',
+              'backgroundColor':'red',
+              'borderRadius':20,
+              padding: 10,
+            }}
+            onClick ={() => {
+              firebase.auth().signOut().then(function() {
+              // Sign-out successful.
+            }).catch(function(error) {
+              // An error happened.
+            });
+            }}
+            >
+              LOG OUT 
+            </button>
 
        <button style={{
               display:'flex',
@@ -551,6 +658,20 @@ let sommation = array1.map( element =>   {
             }}
             onClick ={this.submitAnswers}
             >SUBMIT ANSWERS</button>
+
+
+   
+            <button style={{
+              display:'flex',
+              alignSelf:'center',
+              color:'white',
+              'backgroundColor':'blue',
+              'borderRadius':20,
+              padding: 10,
+              borderColor:'transparent'
+            }}
+            onClick ={this.arrayOfAnswers}
+            >CHECK THE ANSERS ON CATEGORY 5 </button>
 
             <button style={{
               display:'flex',
@@ -581,12 +702,27 @@ let sommation = array1.map( element =>   {
                    }
                }
                })
+               //numero 50 ne prend pas sa valeur....
+               //passer la valeur element.question au lieu de key... puisque la cle change tjrs..s
+               //je dois reintialiser la variabe a 1 quand on ava a une nouvelle page et activez next lorsque le  compte va a 5 et 
+               // lorsque le compte va a 50 on active submit answer ou alors change Next to Submit answers...
                //if we only have negative they are not going to be save in the score... which is a problemm.....
+               //desactiver le button next jusk ce que l'utilisateur... finisse de repondre aux questions sur la page...
                 let rsultFinal = sommation.filter( x => x !== undefined);
-                let resp ={
-                    answers:answers,
+
+                rsultFinal.forEach( val =>  {
+                 // let saved = { [userId]: val.score};
+                  firebaseService.database().ref('scores/' + 'category' + '/' + [Object.keys(val)[0]] + '/' + userId).set(
+                   // saved
+                     val.score
+                     );
+
+                });
+                 let resp ={
+                    answers:answers.filter( val => val !==undefined),
                     groupAnswer: rsultFinal
                 };
+                console.log(resp);
               //Fin regrouper par catgeorie...
               firebaseService.database().ref('users/' + userId + '/').set(
              // firebaseService.database().ref('answers/').push(
@@ -609,12 +745,17 @@ let sommation = array1.map( element =>   {
             }}
             >
               Next questions
-            </button>
+            </button> 
         </div> 
           <label>{this.state.debut} et et et et {this.state.fin}</label>
           <label>{JSON.stringify(this.state.answers)}</label> 
       </> : null }   
-     
+           {this.state.arrayScore && 
+            <div style={{width:'50%'}}>
+            <Canvas   data = {Object.values(this.state.arrayScore)}
+             labels =  {Object.keys(this.state.arrayScore)}/>
+            </div>
+            } 
       </ErrorBoundary>
     );
   }
