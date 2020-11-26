@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import ErrorBoundary from './ErrorBoundary';
 import firebaseService from './firebaseService';
 import faces from './img/faces.png';
+import logo from './img/logo.png';
+import bgHeader from './img/bg-header.png';
 import './App.css';
 import firebase from "firebase/app";
 //CATEGORY REMAINS THE SAME ON ABSOLUTE VALUE MEANNIG POSITIVE AND NEGATIVE BELONG TO THE SAME SET....
@@ -353,6 +355,12 @@ handleSubmit(event) {
       console.log(snapshot.val());
       this.setState({recycle:snapshot.val()});
       const obj = snapshot.val();
+      
+      let donne = Object.values(obj);
+      donne = donne.sort((a, b) =>{
+        return a - b;
+      });
+        var percentile;
       const rslt = [];
       for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
@@ -363,15 +371,26 @@ handleSubmit(event) {
       let sortedCategory = rslt.map (x => {
         let vul = {you:x[Object.keys(x)]};
         if (Object.keys(x)[0] === userId)  {  
-          this.setState({[betterthan]:x[Object.keys(x)]});
+          percentile = x[Object.keys(x)];
+          
         return  vul; }
         return x;
       }).sort ( (a,b) =>{
         return a[Object.keys(a)]-b[Object.keys(b)]
       });
+
+      //percentile 
+
+      //when logging out i should reset the score.... 
+        
+      let findees =   donne.lastIndexOf(percentile);
+      console.log("index of ",findees);
+      let percc = Math.floor(findees +1) *100/donne.length;
+      this.setState({[betterthan]:percc});
+      console.log("percc!!!!!!!",percc);
+      //end percentile 
       let jsonObj ={} ;
       sortedCategory.forEach( x => jsonObj[Object.keys(x)] = x[Object.keys(x)] )
-      console.log('asdasdd',sortedCategory.find( douala => Object.keys(douala) === 'you'));
       this.setState({arrayScore: jsonObj})
     });
   }
@@ -516,30 +535,19 @@ let sommation = array1.map( element =>   {
     // background: `url(${faces})`, padding:20
     return (
       <ErrorBoundary>
-        
-    <label> {this.state.email} asdad {this.state.debut} {this.state.betterthan}</label>
-
-        <div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5,marginBottom:5}}>
-            <div style={{height:15,width:this.state.betterthan +"%",backgroundColor:'purple',borderRadius:50,marginBottom:5}}/>
+        <label>Open sans bold</label>
+        <label style= {{fontFamily:'Open Sans Bold'}}> Open avec bold</label>
+        <div style={{justifyContent:'center',display:'flex',alignItems:'center'}}>
+        <img  style={{paddingBottom:10,}} src={logo} alt="logo"/>
         </div>
-        <div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5}}>
-            <div style={{height:15,width:this.state.betterthan1 +"%",backgroundColor:'purple',borderRadius:50,marginBottom:5}}/>
-        </div>
-        <div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5}}>
-            <div style={{height:15,width:this.state.betterthan2 +"%",backgroundColor:'purple',borderRadius:50,marginBottom:5}}/>
-        </div>
-        <div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5}}>
-            <div style={{height:15,width:this.state.betterthan3 +"%",backgroundColor:'purple',borderRadius:50,marginBottom:5}}/>
-        </div>
-        <div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5}}>
-            <div style={{height:15,width:this.state.betterthan4 +"%",backgroundColor:'purple',borderRadius:50,marginBottom:5}}/>
-        </div>
-
-        <label>Here is the result {JSON.stringify(this.state.resultat)}</label>
         <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column'}}>
-          <img
-            style={{display: 'flex','marginLeft': 50,padding:10}}
-          src={faces} alt="faces"/>
+          <div style={{backgroundImage: `url(${bgHeader})`,height:470,justifyContent:'center',display:'flex',flexDirection:'column'}}>
+            <div>
+            <label style={{marginLeft:'23%',fontSize:35}}> Take The Personality Test</label>
+            </div>
+            <label style={{width:'27%',marginLeft:'23%'}} > Lipsum Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </label>
+          </div>
+
              <label style={{color:'red',alignSelf:'center'}}> {
                 this.state.message
              }</label>
@@ -578,6 +586,12 @@ let sommation = array1.map( element =>   {
         >   
 
        </div>
+
+
+       <div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5,margin:5,alignItems:'center',alignSelf:'center',width:'30%'}}>
+        <div style={{height:15,width:2 *this.state.fin +"%",backgroundColor:'purple',borderRadius:50,marginBottom:5,display:'flex'}}/>
+      </div>
+
         <div style={{
                 display:'flex',
                 'flexDirection': "column"
@@ -728,6 +742,12 @@ let sommation = array1.map( element =>   {
              // firebaseService.database().ref('answers/').push(
                 resp
               );
+
+              this. getValue(1,'betterthan');
+    this. getValue(2,'betterthan1');
+    this. getValue(3,'betterthan2');
+    this. getValue(4,'betterthan3');
+    this. getValue(5,'betterthan4');
             }}
             >SAVE ANSWERS</button>
 
@@ -756,6 +776,37 @@ let sommation = array1.map( element =>   {
              labels =  {Object.keys(this.state.arrayScore)}/>
             </div>
             } 
+
+
+
+   <div style={{width:'35%', alignItems:'center'}}>
+    <label style={{alignSelf:'center',display:'flex'}}>{this.state.betterthan}%</label>
+<div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5,marginBottom:5}}>
+    <div style={{height:15,width:this.state.betterthan +"%",backgroundColor:'purple',borderRadius:50,marginBottom:5}}/>
+</div>
+
+<label>{this.state.betterthan1}%</label>
+<div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5}}>
+    <div style={{height:15,width:this.state.betterthan1 +"%",backgroundColor:'red',borderRadius:50,marginBottom:5}}/>
+</div>
+
+<label>{this.state.betterthan2}%</label>
+<div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5}}>
+    <div style={{height:15,width:this.state.betterthan2 +"%",backgroundColor:'green',borderRadius:50,marginBottom:5}}/>
+</div>
+
+<label>{this.state.betterthan3}%</label>
+<div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5}}>
+    <div style={{height:15,width:this.state.betterthan3 +"%",backgroundColor:'blue',borderRadius:50,marginBottom:5}}/>
+</div>
+
+<label style={{display:'flex',justifyContent:'center'}}>{this.state.betterthan4}%</label>
+<div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5}}>
+<div style={{height:15,width:this.state.betterthan4 +"%",backgroundColor:'orange',borderRadius:50,marginBottom:5}}/>
+</div>
+</div>
+<label>Here is the result {JSON.stringify(this.state.resultat)}</label>
+
       </ErrorBoundary>
     );
   }
