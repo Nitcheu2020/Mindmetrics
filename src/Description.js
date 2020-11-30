@@ -283,7 +283,7 @@ const onSiteChanged = (e) => {
         let answers = [...this.state.answers];
         if (question === 50) console.log("QUESTION sdfdsfdfs 50 ");
       return response.map((elmnt) => (
-        <td key={elmnt.key} style={{ padding: 5 }}>
+        <td key={elmnt.key} style={{ padding: 12 }}>
           <button style={
             question === 50 ? (answers[question])  && answers[question].keyresponse === elmnt.key ? styles['radioButtonClicked' + elmnt.key] : styles['radioButton' + elmnt.key]:
             (answers[question-1])  && answers[question-1].keyresponse === elmnt.key ? styles['radioButtonClicked' + elmnt.key] : styles['radioButton' + elmnt.key]
@@ -406,7 +406,7 @@ const onSiteChanged = (e) => {
         <div style={{justifyContent:'center'}}>
         <div
           style={{
-           'justifyContent': "space-around",
+           'justifyContent': "space-between",
             display:'flex',
             'flexDirection':'row'
           }}
@@ -414,22 +414,22 @@ const onSiteChanged = (e) => {
 
        </div>
 
-      <div style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',padding:15}}>
-          <div style={{backgroundColor:'#DCDCDC',borderRadius:5,marginLeft:5,margin:5,alignItems:'center',alignSelf:'center',width:'30%', borderTop : "thin solid darkgray",}}>
+      <div style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',padding:10}}>
+          <div style={{backgroundColor:'#DCDCDC',borderRadius:5,marginLeft:5,marginRight:5,alignItems:'center',alignSelf:'center',width:'30%', borderTop : "thin solid darkgray",}}>
             <div style={{height:25,width:this.state.progressBar +"%",backgroundColor:'#86207C',borderRadius:5,display:'flex',flex:1}}/>
           </div>
             <label style={{fontFamily:'Open Sans Bold', fontSize:24,color:'#86207C'}}> {this.state.progressBar +"%"}</label>
       </div>
         <div style={{
                 display:'flex',
-                'flexDirection': "column"
+                'flexDirection': "column",
              }}>
           {Questionnaire.slice(this.state.debut-1,this.state.fin).map((elemnt, key) => (
             <div
               key={elemnt.key}
               style={styles.questionnaire}
             >
-              <label style={styles.button,{display: 'flex',fontFamily:'Open Sans Regular'}}>
+              <label style={styles.button,{display: 'flex',fontFamily:'Open Sans Regular',padding:5}}>
                 {elemnt.val}
               </label>
                     <tr style={{justifyContent:'space-around',alignItems:'center',display:'flex'}}>
