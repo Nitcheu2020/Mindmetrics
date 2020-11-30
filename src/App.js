@@ -13,7 +13,7 @@ import Description from './Description';
 import LoginForm from './LoginForm';
 import Canvas from './Canvas';
 import ErrorBoundary from './ErrorBoundary';
-
+import firebaseService from './firebaseService';
 import {
   BrowserRouter as Router,
   Switch,
@@ -56,6 +56,19 @@ export default class App extends Component {
     this.removeItem = this.removeItem.bind(this);
   }
 
+  componentDidMount() {
+    this.authSubscription = firebaseService.auth().onAuthStateChanged((user) => {
+      this.setState({
+        loading: false,
+        user,
+      });
+    });
+ }
+
+  componentWillUnmount() {
+    this.authSubscription();
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     this.setState((prevState) => ({
@@ -80,11 +93,12 @@ export default class App extends Component {
     return (
         <ErrorBoundary>
             <Router>
-        <div style={divStyle}>
+        {!this.state.user? <div style={divStyle}>
 
         <img
         style={{display: 'flex','marginLeft': 50,padding:10}}
         src={logo} alt="Logo" />
+        
             <label>
               <Link to="/" style={{ textDecoration: 'none' }}>HOME</Link>
             </label>
@@ -114,7 +128,7 @@ export default class App extends Component {
               padding: 10,
               borderColor:'transparent'
             }}>TAKE TEST</button>
-          </div>
+          </div>:null}
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
