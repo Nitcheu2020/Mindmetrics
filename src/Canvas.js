@@ -2,6 +2,7 @@
 import React, { useRef, useEffect } from 'react'
 import Chart from 'chart.js';
 
+
 const Canvas = props => {
   
   const canvasRef = useRef(null)

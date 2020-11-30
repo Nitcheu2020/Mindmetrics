@@ -12,6 +12,7 @@ import logo_footer from './img/logo_footer.png';
 import Description from './Description';
 import LoginForm from './LoginForm';
 import Canvas from './Canvas';
+import ErrorBoundary from './ErrorBoundary';
 
 import {
   BrowserRouter as Router,
@@ -21,13 +22,13 @@ import {
 } from "react-router-dom";
 import Blog from './Blog';
 const divStyle = {
-  flex:1,
+ // flex:1,
   backgroundColor: '#d3d3d3',
   //'fontWeight': 'bold',
    display: 'flex',
   'flexDirection':'row',
-  'justifyContent':'space-around',
-  'alignItems':'center'
+  justifyContent:'space-around',
+  alignItems:'center', 
 };
 
 const numberCircle ={
@@ -40,7 +41,7 @@ const numberCircle ={
     'textAlign': 'center',
 };
 const imgStyle = {
-  margin:'20'
+  padding:'20'
 };
 
 export default class App extends Component {
@@ -76,65 +77,44 @@ export default class App extends Component {
   }
 
   render() {
-    /*<div>
-        <h1>TODO LIST</h1>
-        <form onSubmit={this.handleSubmit}>
-          <input value={this.state.text} onChange={e => this.handleChange(e)} />
-          <button>Add</button>
-          <ol>
-            {this.state.list.map((item, index) => {
-              return (
-                <li key={index}>{item}
-                  <button onClick={() => this.removeItem(index)}>Delete</button>
-                </li>)
-            })}
-          </ol>
-        </form>
-      </div>*/
-      /*backgroundColor: "#F194FF",
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2 */
-    //<Link onClick={this.handleClick.bind(this)} />
     return (
-      <div>
+        <ErrorBoundary>
             <Router>
-      <div >
-        <nav>
-          <ul style={divStyle}>
+        <div style={divStyle}>
 
         <img
         style={{display: 'flex','marginLeft': 50,padding:10}}
         src={logo} alt="Logo" />
-            <li>
-              <Link to="/">HOME</Link>
-            </li>
-            <li>
-              <Link to="/description">HOW IT WORKS</Link>
-            </li>
-            <li>
-              <Link to="login">Login </Link>
-            </li>
-            <li>
-              <Link to="/blog">Blog</Link>
-            </li>
-             <li>
-              <Link to="/research">RESEARCH</Link>
-            </li>
-             <li>
-              <Link to="/contact">CONTACT</Link>
-            </li>
-            <li>
-              <Link to="/canvas">Canvas</Link>
-            </li>
+            <label>
+              <Link to="/" style={{ textDecoration: 'none' }}>HOME</Link>
+            </label>
+            <label>
+              <Link to="/description"  style={{ textDecoration: 'none' }}>HOW IT WORKS</Link>
+            </label>
+            <label>
+              <Link to="login" style={{ textDecoration: 'none' }}>Login </Link>
+            </label>
+            <label>
+              <Link to="/blog" style={{ textDecoration: 'none' }}>Blog</Link>
+            </label>
+             <label style={{display:'flex',}}>
+              <Link to="/research" style={{ textDecoration: 'none' }}>RESEARCH</Link>
+            </label>
+             <label style={{display:'flex',}}>
+              <Link to="/contact" style={{ textDecoration: 'none' }}>CONTACT</Link>
+            </label>
+            <label style={{display:'flex',}}>
+              <Link to="/canvas" style={{ textDecoration: 'none' }}>Canvas</Link>
+            </label>
             <button style={{
+              display:'flex',
               color:'white',
-              'backgroundColor':'#FF6347',
+              'backgroundColor':'#F49608',
               'borderRadius':20,
               padding: 10,
+              borderColor:'transparent'
             }}>TAKE TEST</button>
-          </ul>
-        </nav>
+          </div>
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
@@ -161,9 +141,8 @@ export default class App extends Component {
             <Home />
           </Route>
         </Switch>
-      </div>
       </Router>
-      </div>
+      </ErrorBoundary>
     );
   }
 }
@@ -181,16 +160,25 @@ function Home() {
     <button style={{
               'marginTop':20,
               color:'white',
-              'backgroundColor':'#FF6347',
+              'backgroundColor':'#F49608',
               'borderRadius':20,
               padding: 10,
+              borderColor:'transparent'
             }}>GET FREE ANALYSIS</button>
     <img
-        style={{display: 'flex','marginLeft': 50,padding:10}}
+        style={{
+          display: 'flex',
+          maxWidth: '100%', maxHeight: '100%',padding:10
+          //alignSelf:'center'
+         // 'marginLeft': 50,padding:10
+      }}
         src={result} alt="result" />
     <img
-        style={{display: 'flex','marginLeft': 50,padding:10}}
+        style={{
+           display: 'flex',paddingRight:50,maxWidth: '100%', maxHeight: '100%'
+        }}
         src={faces} alt="faces" />
+
     <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','marginTop':20,'fontSize':25}}>
       <label> What Your Words  </label>
       <label>Says About You</label>
@@ -237,15 +225,16 @@ function Home() {
         style={{display: 'flex','marginTop': 50,padding:10, transform: [{ rotate: '14deg' }],}}
         src={ico_chart} alt="ico_chart" />
     </nav>
-       <div style ={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column',width:'100%','backgroundColor':'#d3d3d3',padding:20
+       <div style ={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column',width:'100%','backgroundColor':'#d3d3d3',paddingBottom:20,paddingTop:20
         }
       }>
          <label style ={{padding:20,'fontSize':18,'fontWeight':'bold'}}>Discover who You are....</label>
           <button style={{
               color:'white',
-              'backgroundColor':'#FF6347',
+              'backgroundColor':'#f49608', 
               'borderRadius':20,
               padding: 10,
+              borderColor:'transparent'
             }}>GET FREE ANALYSIS
           </button>
       </div>
@@ -288,7 +277,7 @@ function Home() {
             
           </nav>
         <img
-        style={{display: 'flex','marginLeft': 50,padding:10,'marginRight':20}}
+        style={{display: 'flex','marginLeft': 50,padding:10,'paddingRight':20}}
         src={social_icons} alt="social_icons" />
           </ul>
 
