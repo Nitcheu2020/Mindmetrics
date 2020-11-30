@@ -77,29 +77,6 @@ export default class App extends Component {
   }
 
   render() {
-    /*
-    #86207c violet 
-    #f49608 jaune 
-    <div>
-        <h1>TODO LIST</h1>
-        <form onSubmit={this.handleSubmit}>
-          <input value={this.state.text} onChange={e => this.handleChange(e)} />
-          <button>Add</button>
-          <ol>
-            {this.state.list.map((item, index) => {
-              return (
-                <li key={index}>{item}
-                  <button onClick={() => this.removeItem(index)}>Delete</button>
-                </li>)
-            })}
-          </ol>
-        </form>
-      </div>*/
-      /*backgroundColor: "#F194FF",
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2 */
-    //<Link onClick={this.handleClick.bind(this)} />
     return (
         <ErrorBoundary>
             <Router>
@@ -132,9 +109,10 @@ export default class App extends Component {
             <button style={{
               display:'flex',
               color:'white',
-              'backgroundColor':'#FF6347',
+              'backgroundColor':'#F49608',
               'borderRadius':20,
               padding: 10,
+              borderColor:'transparent'
             }}>TAKE TEST</button>
           </div>
 
@@ -182,18 +160,25 @@ function Home() {
     <button style={{
               'marginTop':20,
               color:'white',
-              'backgroundColor':'#FF6347',
+              'backgroundColor':'#F49608',
               'borderRadius':20,
               padding: 10,
+              borderColor:'transparent'
             }}>GET FREE ANALYSIS</button>
     <img
-        style={{display: 'flex','marginLeft': 50,padding:10}}
+        style={{
+          display: 'flex',
+          maxWidth: '100%', maxHeight: '100%',padding:10
+          //alignSelf:'center'
+         // 'marginLeft': 50,padding:10
+      }}
         src={result} alt="result" />
     <img
-        style={{display: 'block',paddingRight:50,
-        maxWidth: '100%', maxHeight: '100%'
-      }}
+        style={{
+           display: 'flex',paddingRight:50,maxWidth: '100%', maxHeight: '100%'
+        }}
         src={faces} alt="faces" />
+
     <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','marginTop':20,'fontSize':25}}>
       <label> What Your Words  </label>
       <label>Says About You</label>
@@ -246,9 +231,10 @@ function Home() {
          <label style ={{padding:20,'fontSize':18,'fontWeight':'bold'}}>Discover who You are....</label>
           <button style={{
               color:'white',
-              'backgroundColor':'#FF6347',
+              'backgroundColor':'#f49608', 
               'borderRadius':20,
               padding: 10,
+              borderColor:'transparent'
             }}>GET FREE ANALYSIS
           </button>
       </div>

@@ -8,7 +8,10 @@ import './App.css';
 import firebase from "firebase/app";
 //CATEGORY REMAINS THE SAME ON ABSOLUTE VALUE MEANNIG POSITIVE AND NEGATIVE BELONG TO THE SAME SET....
 import Canvas from './Canvas';
-
+import ModalAnswers from './ModalAnswers';
+import Gauge from './Gauge';
+var  questionsSuivante = 0;
+var nextQuestion=[];
 function shuffle(arra1) {
   var ctr = arra1.length, temp, index;
 
@@ -242,6 +245,21 @@ const numberCircle ={
   alignItems: 'center',
   flexDirection:'column'
 };
+//GO AUTOMATICALLY TO THE NEXT PAGE ONCE YOU HAVE ANSWER THE 5 QUESTIONS.... GERREEEEEEEEEEEEEEE
+//ADD A LOADING RESULT.... SETtIMEoUT TO DISPLAY RESULT...  2 or 3 seconds... 
+//Take personality Test should remain with the form 
+// remove the menu once the user start the test and only leave him the Home page options... by clicking on the logo 
+// remove the text on the logout for the user logging Info .. 
+//remove the header on the sign up page and change the height as the same with the form.... flex : 1  for each
+ //SHOW A SCREENSHOT OF THE RESULT IMAGE..
+ // DISPLAY THE RESULT IMAGE TO THE USER WHO HAS TAKEN THE TEST ALREADY.... 
+ //SHARE THE IMAGE URL TO THE SOCIAL NETWORK
+ // KEEP ONLY fACEBOOK tWITTER, LINKEDiN AS SOCIAL PLATFORM TO SHARE ON ... 
+ //ALIGNMENT FOR THE HOME PAGE HAS TO BE CHECKED..
+ // THE FOOTER ALSO HAS TO BE ON POINT .. 
+ // MENU PAGE RESPONSIVENESS... 
+ //PREMIUM BUTTON... 
+ //blurred image on the background.... and Premium Button on top.... or put the Premium button on the modal ... 
 
 class Description extends Component {
   constructor (props){
@@ -260,7 +278,11 @@ class Description extends Component {
         password:'',
         showExam:false,
         user:null,
-        arrayScore: null
+        arrayScore: null,
+        modalOpen:false,
+        modalIsOpen:false,
+        progressBar:0,
+        //PASSER LA FONCTION DE DISPLAY EN PARAMETRE AUSSI 
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.setPassword = this.setPassword.bind(this);
@@ -396,12 +418,21 @@ handleSubmit(event) {
   }
 
   arrayOfAnswers = () =>{
+    this.setState({modalOpen:true});
     this. getValue(1,'betterthan');
     this. getValue(2,'betterthan1');
     this. getValue(3,'betterthan2');
     this. getValue(4,'betterthan3');
     this. getValue(5,'betterthan4');
   };
+
+   openModal =() =>{
+    this.setState({modalIsOpen:true});
+  }
+  
+   closeModal=()=>{
+    this.setState({modalIsOpen:false});
+  }
 
   render() {
     let response = [
@@ -441,13 +472,7 @@ handleSubmit(event) {
         quote: 1
       }
     ];
-    /*
-<label style={{textAlign:'center',fontWeight:'bold'}}>
-          {elmnt.valeur}
-        </label>
-*/
-
-    const onSiteChanged = (e) => {
+const onSiteChanged = (e) => {
         this.setState({
         site: e.currentTarget.value
         });
@@ -460,7 +485,12 @@ handleSubmit(event) {
     }
 
     const handleClick = (question,elmnt) => {
-      const {debut,fin} =  this.state;
+      const {debut,fin,progressBar} =  this.state;
+      //set the next question
+      if (!nextQuestion.includes(question)) {
+        nextQuestion.push(question);
+        if (progressBar <100) this.setState({progressBar: progressBar +2});
+      }
       let Questions = Questionnaire.slice(debut-1,fin);
       //etant donnee que je slice par groupe de 5 les index iront tjrs jusk 4 et par consequent je devrais prendre la cle de la question.... 
         try {
@@ -481,40 +511,31 @@ handleSubmit(event) {
            //answers[Questions[question].key] = rslt;
             this.setState({ selected: elmnt.key, answers });  
 
+            //new pages..... 
+            setTimeout(() =>{
+              const {debut,fin} = this.state;
+                //Move to the next page *****
+            if (nextQuestion.length ===5 && fin<100)
+            {
+              this.setState({debut:debut+5,fin:fin+5});
+              nextQuestion=[];
+            }
+           }, 2000);
+             
+
         } catch (error) {
         this.setState({ error });
         }
     }
-
-    /*
-
-    let sorted =[];
-let sommation = array1.map( element =>   { 
-    let filtre = array1.filter( x => Math.abs(x.category) === element.category);
-    
-  if ((filtre.length !== 0) &&  !sorted.includes(element.category)) 
-  {      
-      let score = 0;
-      score =  filtre.map ( val => Number(val.score)).reduce ( (acc,curr) => acc + curr) ;
-     sorted.push(element.category);
-      return { 
-         [element.category]: filtre,
-         score:score
-        // array1.filter( x => Math.abs(x) === element)
-     }
- }
- })
-  let rsultFinal = sommation.filter( x => x !== undefined);
-  console.log(JSON.stringify(rsultFinal));
-    */
-//answers[Questions[question].key-1] = rslt;
- // persisting the authentication....... 
- //MERGE ARRAY ONCE 5 QUESTIONS ARE ANSWERED??????????????????????????????????????????????????????????????????????????????????????????????????
     const qcm = (question) => {
         let answers = [...this.state.answers];
+        if (question === 50) console.log("QUESTION sdfdsfdfs 50 ");
       return response.map((elmnt) => (
         <td key={elmnt.key} style={{ padding: 5 }}>
-          <button style={(answers[question-1])  && answers[question-1].keyresponse === elmnt.key ? styles['radioButtonClicked' + elmnt.key] : styles['radioButton' + elmnt.key]} 
+          <button style={
+            question === 50 ? (answers[question])  && answers[question].keyresponse === elmnt.key ? styles['radioButtonClicked' + elmnt.key] : styles['radioButton' + elmnt.key]:
+            (answers[question-1])  && answers[question-1].keyresponse === elmnt.key ? styles['radioButtonClicked' + elmnt.key] : styles['radioButton' + elmnt.key]
+          } 
                   onClick={()=> {
                      handleClick(question,elmnt)}}
           />
@@ -532,44 +553,41 @@ let sommation = array1.map( element =>   {
       let percc = Math.floor(findees +1) *100/donne.length;
 
     }
+
     // background: `url(${faces})`, padding:20
     return (
       <ErrorBoundary>
-        <label>Open sans bold</label>
-        <label style= {{fontFamily:'Open Sans Bold'}}> Open avec bold</label>
         <div style={{justifyContent:'center',display:'flex',alignItems:'center'}}>
-        <img  style={{paddingBottom:10,}} src={logo} alt="logo"/>
+          {this.state.user? <img  style={{padding:10,}} src={logo} alt="logo"/>:null}
         </div>
-        <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column'}}>
-          <div style={{backgroundImage: `url(${bgHeader})`,height:470,justifyContent:'center',display:'flex',flexDirection:'column'}}>
-            <div>
-            <label style={{marginLeft:'23%',fontSize:35}}> Take The Personality Test</label>
+
+          <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column'}}>
+            
+
+             {!this.state.user ? <> 
+
+              <div 
+              style={{backgroundImage: `url(${bgHeader})`, height:470,justifyContent:'center',display:'flex',flexDirection:'column'
+              }}
+            >
+              <div>
+                <label style={{marginLeft:'23%',fontSize:35,fontFamily:'Open Sans Bold'}}> Take The Personality Test</label>
+              </div>
+              <label style={{width:'27%',marginLeft:'23%',fontFamily:'Open Sans Light'}} > Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </label>
             </div>
-            <label style={{width:'27%',marginLeft:'23%'}} > Lipsum Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </label>
-          </div>
 
              <label style={{color:'red',alignSelf:'center'}}> {
                 this.state.message
              }</label>
-             {!this.state.user ? <> 
-              <label style={{display:'flex',alignSelf:'center',padding:10}}>Please enter your information to take the exam</label>
+
+              <label style={{display:'flex',alignSelf:'center',padding:10,fontFamily:'Open Sans Regular'}}>Please enter your information to take the exam</label>
             <form  style={numberCircle} onSubmit={this.handleSubmit}>
               <input type="text" value={this.state.firstName} onChange={this.setFirstName} style={{borderColor:'transparent',borderRadius:3,margin:5,padding:5}} placeholder="FIRST NAME" />
               <input type="text" value={this.state.lastName} onChange={this.setLastName} style={{borderColor:'transparent',borderRadius:3,margin:5}} placeholder="LAST NAME" />
               <input type="email" value={this.state.email} onChange={this.setEmail} style={{borderColor:'transparent',borderRadius:3,margin:5}} placeholder="EMAIL ADDRESS" />
                <input type="password" value={this.state.password} onChange={this.setPassword}  style={{borderColor:'transparent',borderRadius:3,margin:5}} placeholder="PASSWORD"/>
               <input type="submit" value="Begin The Exam &rarr;"  
-                style={{
-                  display:'flex',
-                  alignSelf:'center',
-                  color:'white',
-                  'backgroundColor':'#FF6347',
-                  'borderRadius':20,
-                  padding: 7,
-                  marginTop:5,
-                  marginBottom:15,
-                  borderColor:'transparent'
-                }}
+                style={styles.submit}
               />
         </form>
              </> : null}
@@ -587,11 +605,12 @@ let sommation = array1.map( element =>   {
 
        </div>
 
-
-       <div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5,margin:5,alignItems:'center',alignSelf:'center',width:'30%'}}>
-        <div style={{height:15,width:2 *this.state.fin +"%",backgroundColor:'purple',borderRadius:50,marginBottom:5,display:'flex'}}/>
+      <div style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',padding:15}}>
+          <div style={{backgroundColor:'#DCDCDC',borderRadius:5,marginLeft:5,margin:5,alignItems:'center',alignSelf:'center',width:'30%'}}>
+            <div style={{height:25,width:this.state.progressBar +"%",backgroundColor:'#86207C',borderRadius:5,display:'flex',flex:1}}/>
+          </div>
+            <label style={{fontFamily:'Open Sans Bold', fontSize:24,color:'#86207C'}}> {this.state.progressBar +"%"}</label>
       </div>
-
         <div style={{
                 display:'flex',
                 'flexDirection': "column"
@@ -599,26 +618,17 @@ let sommation = array1.map( element =>   {
           {Questionnaire.slice(this.state.debut-1,this.state.fin).map((elemnt, key) => (
             <div
               key={elemnt.key}
-              style={{
-               'justifyContent': "space-between",
-                padding: 10,
-                display:'flex',
-                'flexDirection':'column',
-                alignItems:'center',
-                borderBottom : "thin solid #DCDCDC",
-                width: '30%',
-                alignSelf:'center'
-              }}
+              style={styles.questionnaire}
             >
-              <label style={styles.button,{display: 'flex'}}>
+              <label style={styles.button,{display: 'flex',fontFamily:'Open Sans Regular'}}>
                 {elemnt.val}
               </label>
                     <tr style={{justifyContent:'space-around',alignItems:'center',display:'flex'}}>
-                        <label style={{display:'flex',padding:10,color:'#7FFFD4',fontWeight:'bold'}}>Agree</label>
+                        <label style={{display:'flex',padding:10,color:'#7FFFD4',fontFamily:'Sans Open Bold',fontWeight:'bold'}}>Agree</label>
                         {
                             qcm(elemnt.key)
                         }
-                        <label style={{display:'flex',padding:10,color:'#8B008B',fontWeight:'bold'}}>Disagree</label>
+                        <label style={{display:'flex',padding:10,color:'#86207C',fontSize:18,fontFamily:'Sans Open Bold',fontWeight:'bold'}}>Disagree</label>
                     </tr>
             </div>
           ))}
@@ -626,14 +636,7 @@ let sommation = array1.map( element =>   {
         </div>
         <div style={{display:'flex',alignItems:'center',justifyContent:'center',padding:15}}>
                         
-        <button style={{
-              display:'flex',
-              alignSelf:'center',
-              color:'white',
-              'backgroundColor':'#FF6347',
-              'borderRadius':20,
-              padding: 10,
-            }}
+        <button style={styles.buton}
             onClick ={() => {
               const {debut,fin} = this.state;
               this.setState({debut:debut-5,fin:fin-5})
@@ -661,44 +664,21 @@ let sommation = array1.map( element =>   {
               LOG OUT 
             </button>
 
-       <button style={{
-              display:'flex',
-              alignSelf:'center',
-              color:'white',
-              'backgroundColor':'#FF6347',
-              'borderRadius':20,
-              padding: 10,
-              borderColor:'transparent'
-            }}
+       <button style={styles.buton}
             onClick ={this.submitAnswers}
             >SUBMIT ANSWERS</button>
 
 
    
-            <button style={{
-              display:'flex',
-              alignSelf:'center',
-              color:'white',
-              'backgroundColor':'blue',
-              'borderRadius':20,
-              padding: 10,
-              borderColor:'transparent'
-            }}
+            <button style={styles.buton}
             onClick ={this.arrayOfAnswers}
             >CHECK THE ANSERS ON CATEGORY 5 </button>
 
-            <button style={{
-              display:'flex',
-              alignSelf:'center',
-              color:'white',
-              'backgroundColor':'#FF6347',
-              'borderRadius':20,
-              padding: 10,
-            }}
+            <button style={styles.buton}
             onClick ={() => {
               const userId = firebaseService.auth().currentUser.uid;
               const {answers} = this.state;
-
+        
               //ici on va regrouper par category ...
               let sorted =[];
               let sommation = answers.map( element =>   { 
@@ -723,14 +703,14 @@ let sommation = array1.map( element =>   {
                //if we only have negative they are not going to be save in the score... which is a problemm.....
                //desactiver le button next jusk ce que l'utilisateur... finisse de repondre aux questions sur la page...
                 let rsultFinal = sommation.filter( x => x !== undefined);
-
+        
                 rsultFinal.forEach( val =>  {
                  // let saved = { [userId]: val.score};
                   firebaseService.database().ref('scores/' + 'category' + '/' + [Object.keys(val)[0]] + '/' + userId).set(
                    // saved
                      val.score
                      );
-
+        
                 });
                  let resp ={
                     answers:answers.filter( val => val !==undefined),
@@ -742,33 +722,24 @@ let sommation = array1.map( element =>   {
              // firebaseService.database().ref('answers/').push(
                 resp
               );
-
+        
               this. getValue(1,'betterthan');
-    this. getValue(2,'betterthan1');
-    this. getValue(3,'betterthan2');
-    this. getValue(4,'betterthan3');
-    this. getValue(5,'betterthan4');
+              this. getValue(2,'betterthan1');
+              this. getValue(3,'betterthan2');
+              this. getValue(4,'betterthan3');
+              this. getValue(5,'betterthan4');
+              this.openModal();
             }}
             >SAVE ANSWERS</button>
-
-            <button style={{
-              display:'flex',
-              alignSelf:'center',
-              color:'white',
-              'backgroundColor':'#FF6347',
-              'borderRadius':20,
-              padding: 10,
-            }}
+            { nextQuestion.length ===5 ?<button style={styles.buton}
             onClick ={() => {
-              const {debut,fin} = this.state;
-              this.setState({debut:debut+5,fin:fin+5})
+              
             }}
             >
-              Next questions
-            </button> 
+              Next  &rarr;
+          </button> : null} 
+
         </div> 
-          <label>{this.state.debut} et et et et {this.state.fin}</label>
-          <label>{JSON.stringify(this.state.answers)}</label> 
       </> : null }   
            {this.state.arrayScore && 
             <div style={{width:'50%'}}>
@@ -776,44 +747,60 @@ let sommation = array1.map( element =>   {
              labels =  {Object.keys(this.state.arrayScore)}/>
             </div>
             } 
-
-
-
-   <div style={{width:'35%', alignItems:'center'}}>
-    <label style={{alignSelf:'center',display:'flex'}}>{this.state.betterthan}%</label>
-<div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5,marginBottom:5}}>
-    <div style={{height:15,width:this.state.betterthan +"%",backgroundColor:'purple',borderRadius:50,marginBottom:5}}/>
-</div>
-
-<label>{this.state.betterthan1}%</label>
-<div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5}}>
-    <div style={{height:15,width:this.state.betterthan1 +"%",backgroundColor:'red',borderRadius:50,marginBottom:5}}/>
-</div>
-
-<label>{this.state.betterthan2}%</label>
-<div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5}}>
-    <div style={{height:15,width:this.state.betterthan2 +"%",backgroundColor:'green',borderRadius:50,marginBottom:5}}/>
-</div>
-
-<label>{this.state.betterthan3}%</label>
-<div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5}}>
-    <div style={{height:15,width:this.state.betterthan3 +"%",backgroundColor:'blue',borderRadius:50,marginBottom:5}}/>
-</div>
-
-<label style={{display:'flex',justifyContent:'center'}}>{this.state.betterthan4}%</label>
-<div style={{backgroundColor:'#DCDCDC',borderRadius:50,marginLeft:5}}>
-<div style={{height:15,width:this.state.betterthan4 +"%",backgroundColor:'orange',borderRadius:50,marginBottom:5}}/>
-</div>
-</div>
-<label>Here is the result {JSON.stringify(this.state.resultat)}</label>
-
+              <ModalAnswers 
+              modalOpen={this.state.modalOpen}
+              openModal={this.openModal}
+              closeModal={this.closeModal}
+              modalIsOpen={this.state.modalIsOpen}
+              composant ={
+                <div style={{ alignItems:'center',width:'100%'}}>
+                  <Gauge level ={this.state.betterthan} title="betterthan" color="#86207C"/>
+                  <Gauge level ={this.state.betterthan1} title="betterthan1" color="red"/>
+                  <Gauge level ={this.state.betterthan2} title="betterthan2" color="green"/>
+                  <Gauge level ={this.state.betterthan3} title="betterthan3" color="blue"/>
+                  <Gauge level ={this.state.betterthan4} title="betterthan4" color="orange"/>
+                </div>
+              }/>
       </ErrorBoundary>
     );
   }
 }
 //
 // style={[styles.button, {fontWeight: "bold", flex: 1 }]}
+//backgroundColor: '#d3d3d3',
+//'backgroundColor':'#F49608',
 const styles = {
+  submit:{
+    display:'flex',
+    alignSelf:'center',
+    color:'white',
+    'backgroundColor':'#F49608',
+    'borderRadius':20,
+    padding: 7,
+    marginTop:5,
+    marginBottom:15,
+    borderColor:'transparent'
+  },
+  questionnaire:{
+    'justifyContent': "space-between",
+     padding: 10,
+     display:'flex',
+     'flexDirection':'column',
+     alignItems:'center',
+     borderBottom : "thin solid #DCDCDC",
+     width: '30%',
+     alignSelf:'center'
+   },
+  buton:{
+    display:'flex',
+    alignSelf:'center',
+    color:'white',
+    'backgroundColor':'#ff8c00',//'#F49608',
+    'borderRadius':20,
+    borderColor:'transparent',
+    padding: 10,
+    margin:2
+  },
   button: {
     'alignItems': "center",
     'backgroundColor': "#DDDDDD",
@@ -849,7 +836,7 @@ radioButtonClicked1: {
 width: '35px',
 height: '35px',
 'border-radius': '50%',
-backgroundColor:'green',
+backgroundColor:'#00FA9A',
 },
 radioButton2: {
   width: '30px',
@@ -861,7 +848,7 @@ radioButtonClicked2: {
 width: '30px',
 height: '30px',
 'border-radius': '50%',
-backgroundColor:'purple',
+backgroundColor:'#00FA9A',
 },
 radioButton3: {
   width: '25px',
@@ -873,7 +860,7 @@ radioButtonClicked3: {
 width: '25px',
 height: '25px',
 'border-radius': '50%',
-backgroundColor:'blue',
+backgroundColor:'#00FA9A',
 },
 radioButton4: {
   width: '20px',
@@ -890,37 +877,37 @@ radioButton5: {
   width: '25px',
   height: '25px',
   'border-radius': '50%',
-  borderColor: '#8B008B',
+  borderColor: '#86207C',
 },
 radioButtonClicked5: {
 width: '25px',
 height: '25px',
 'border-radius': '50%',
-backgroundColor:'orange',
+backgroundColor:'#86207C',
 },
 radioButton6: {
   width: '30px',
   height: '30px',
   'border-radius': '50%',
-  borderColor: '#8B008B',
+  borderColor: '#86207C',
 },
 radioButtonClicked6: {
 width: '30px',
 height: '30px',
 'border-radius': '50%',
-backgroundColor:'black',
+backgroundColor:'#86207C',
 },
 radioButton7: {
   width: '35px',
   height: '35px',
   'border-radius': '50%',
-  borderColor: '#8B008B',
+  borderColor: '#86207C',
 },
 radioButtonClicked7: {
 width: '35px',
 height: '35px',
 'border-radius': '50%',
-backgroundColor:'brown',
+backgroundColor:'#86207C',
 }
 };
 
