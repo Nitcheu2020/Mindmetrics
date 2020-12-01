@@ -12,6 +12,11 @@ import ModalAnswers from './ModalAnswers';
 import Gauge from './Gauge';
 import QuestionnaireBrute from './QuestionnaireBrute';
 import response from './response';
+import {Motion, spring} from 'react-motion';
+import {
+  Link
+} from "react-router-dom";
+
 var  questionsSuivante = 0;
 var nextQuestion=[];
 function shuffle(arra1) {
@@ -51,7 +56,6 @@ const numberCircle ={
   alignItems: 'center',
   flexDirection:'column'
 };
-
 class Description extends Component {
   constructor (props){
     super(props);
@@ -73,6 +77,7 @@ class Description extends Component {
         modalOpen:false,
         modalIsOpen:false,
         progressBar:0,
+        progress:0,
         //PASSER LA FONCTION DE DISPLAY EN PARAMETRE AUSSI 
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -305,7 +310,40 @@ const onSiteChanged = (e) => {
       let percc = Math.floor(findees +1) *100/donne.length;
 
     }
-   
+
+    const logOut = () => {
+      firebase.auth().signOut().then(function() {
+      // Sign-out successful.
+      }).catch(function(error) {
+      // An error happened.
+      });
+    }
+     
+    var il = 0;
+    var decompte =0;
+    const move =() =>{
+      if (il == 0) {
+        il = 1;
+       // var elem = document.getElementById("myBar");
+        var width = 1;
+        var id = setInterval(frame, 10);
+        function frame() {
+          if (width >= 100) {
+           // SetShowResult(true);
+           return ;
+           // this.setState({showResult:true});
+          //  clearInterval(id);
+          //  il = 0;
+          } else {
+            width++;
+            decompte = width
+            console.log(decompte);
+         //   this.setState({progress:width});
+           // elem.style.width = width + "%";
+          }
+        }
+      }
+    }
      /*     LOG OUT  function              
         <button style={styles.buton}
             onClick ={() => {
@@ -348,7 +386,15 @@ const onSiteChanged = (e) => {
     return (
       <ErrorBoundary>
         <div style={{justifyContent:'center',display:'flex',alignItems:'center',backgroundColor:'#D3D3D3',}}>
-          {this.state.user? <img  style={{padding:10,}} src={logo} alt="logo"/>:null}
+          {this.state.user? 
+          <>
+          <Link to="/" style={{ textDecoration: 'none' }}>
+           <button style={{backgroundColor:'transparent',borderColor:'transparent'}} onClick={() => logOut()}>
+           <img  style={{padding:10,}} src={logo} alt="logo"/>
+           </button>
+          </Link>
+          </>
+          :null}
         </div>
 
           {!this.state.user ? <div style={{display:'flex',flexDirection:'column'}}> 
@@ -383,25 +429,6 @@ const onSiteChanged = (e) => {
           </div>
           </div> : null}
          
-          <button style={{
-              display:'flex',
-              alignSelf:'center',
-              color:'white',
-              'backgroundColor':'red',
-              'borderRadius':20,
-              padding: 10,
-            }}
-            onClick ={() => {
-              firebase.auth().signOut().then(function() {
-              // Sign-out successful.
-            }).catch(function(error) {
-              // An error happened.
-            });
-            }}
-            >
-              LOG OUT 
-            </button>
-
       {this.state.user ? <>
         <div style={{justifyContent:'center'}}>
         <div
@@ -424,6 +451,7 @@ const onSiteChanged = (e) => {
                 display:'flex',
                 'flexDirection': "column",
              }}>
+
           {Questionnaire.slice(this.state.debut-1,this.state.fin).map((elemnt, key) => (
             <div
               key={elemnt.key}
@@ -444,8 +472,33 @@ const onSiteChanged = (e) => {
         </div>
         </div>
         <div style={{display:'flex',alignItems:'center',justifyContent:'center',padding:15}}>
-       
-       { this.state.progressBar >=100? <button style={styles.butonSubmit}
+        
+
+        <Link to= {{pathname: "/resultat",
+              state: { progress: decompte,
+                    counting:true,
+                 }
+          }} 
+          style={{ textDecoration: 'none' }}
+       >
+            <button  onClick={()=> move()} style={{color:'red'}}>
+                              Try asdasdasdas dasasdasd
+            </button>
+       </Link>
+
+
+
+
+
+       { this.state.progressBar >=100? 
+
+       <Link to= {{pathname: "/resultat",
+              nitcheu:"Mbouendeu"
+          }} 
+          style={{ textDecoration: 'none' }}
+       >
+
+       <button style={styles.butonSubmit}
             onClick ={() => {
               const userId = firebaseService.auth().currentUser.uid;
               const {answers} = this.state;
@@ -500,17 +553,15 @@ const onSiteChanged = (e) => {
               this. getValue(4,'betterthan3');
               this. getValue(5,'betterthan4');
               this.openModal();
+              //setTimeout(() =>{ this.openModal(); }, 3000);
+              
             }}
             >Submit Answers</button>
+            </Link>
             :null}
         </div> 
-      </> : null }   
-           {this.state.arrayScore && 
-            <div style={{width:'50%'}}>
-            <Canvas   data = {Object.values(this.state.arrayScore)}
-             labels =  {Object.keys(this.state.arrayScore)}/>
-            </div>
-            } 
+      </> : null } 
+
             { this.state.modalIsOpen?<ModalAnswers 
               modalOpen={this.state.modalOpen}
               openModal={this.openModal}

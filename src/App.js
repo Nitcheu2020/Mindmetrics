@@ -14,6 +14,8 @@ import LoginForm from './LoginForm';
 import Canvas from './Canvas';
 import ErrorBoundary from './ErrorBoundary';
 import firebaseService from './firebaseService';
+import Resultat from './Resultat';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -147,6 +149,9 @@ export default class App extends Component {
           </Route>
           <Route path="/description">
             <Description />
+          </Route>
+          <Route path="/resultat">
+            <Resultat {...this.props}/>
           </Route>
           <Route path="/blog">
             <Blog />
