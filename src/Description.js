@@ -10,6 +10,13 @@ import firebase from "firebase/app";
 import Canvas from './Canvas';
 import ModalAnswers from './ModalAnswers';
 import Gauge from './Gauge';
+import QuestionnaireBrute from './QuestionnaireBrute';
+import response from './response';
+import {Motion, spring} from 'react-motion';
+import {
+  Link
+} from "react-router-dom";
+
 var  questionsSuivante = 0;
 var nextQuestion=[];
 function shuffle(arra1) {
@@ -29,203 +36,7 @@ function shuffle(arra1) {
   return arra1;
 }
 
-const QuestionnaireBrute = [
-  {
-    key: "1",
-    val: "Am the life of the party.",
-    category: 1,
-    pondere: 7
-  },
-  {
-    key: "2",
-    val: "Feel little concern for others.",
-    category: -2,
-    pondere: 1
-  },
-  { key: "3", val: "Am always prepared.", category: 3, pondere: 7 },
-  {
-    key: "4",
-    val: "Get stressed out easily.",
-    category: -4,
-    pondere: 1
-  },
-  { key: "5", val: "Have a rich vocabulary.", category: 5, pondere: 7 },
-  { key: "6", val: "Don't talk a lot.", category: -1, pondere: 1 },
-  {
-    key: "7",
-    val: "Am interested in people.",
-    category: 2,
-    pondere: 7
-  },
-  {
-    key: "8",
-    val: "Leave my belongings around.",
-    category: -3,
-    pondere: 1
-  },
-  {
-    key: "9",
-    val: " Am relaxed most of the time.",
-    category: 4,
-    pondere: 7
-  },
-  {
-    key: "10",
-    val: "Have difficulty understanding abstract ideas.",
-    category: -5,
-    pondere: 1
-  },
-  {
-    key: "11",
-    val: "Feel comfortable around people.",
-    category: 1,
-    pondere: 7
-  },
-  { key: "12", val: "Insult people.", category: -2, pondere: 1 },
-  {
-    key: "13",
-    val: "Pay attention to details.",
-    category: 3,
-    pondere: 7
-  },
-  { key: "14", val: "Worry about things.", category: -4, pondere: 1 },
-  {
-    key: "15",
-    val: "Have a vivid imagination.",
-    category: 5,
-    pondere: 7
-  },
-  {
-    key: "16",
-    val: "Keep in the background.",
-    category: -1,
-    pondere: 1
-  },
-  {
-    key: "17",
-    val: "Sympathize with others' feelings.",
-    category: 2,
-    pondere: 7
-  },
-  {
-    key: "18",
-    val: "Make a mess of things.",
-    category: -3,
-    pondere: 1
-  },
-  { key: "19", val: "Seldom feel blue.", category: 4, pondere: 7 },
-  {
-    key: "20",
-    val: "Am not interested in abstract ideas.",
-    category: -5,
-    pondere: 1
-  },
-  { key: "21", val: "Start conversations.", category: 1, pondere: 7 },
-  {
-    key: "22",
-    val: "Am not interested in other people's problems.",
-    category: -2,
-    pondere: 1
-  },
-  {
-    key: "23",
-    val: "Get chores done right away.",
-    category: 3,
-    pondere: 7
-  },
-  { key: "24", val: "Am easily disturbed.", category: -4, pondere: 1 },
-  { key: "25", val: "Have excellent ideas.", category: 5, pondere: 7 },
-  { key: "26", val: "Have little to say.", category: -1, pondere: 1 },
-  { key: "27", val: "Have a soft heart.", category: 2, pondere: 7 },
-  {
-    key: "28",
-    val: "Often forget to put things back in their proper place.",
-    category: -3,
-    pondere: 1
-  },
-  { key: "29", val: "Get upset easily.", category: -4, pondere: 1 },
-  {
-    key: "30",
-    val: "Do not have a good imagination.",
-    category: -5,
-    pondere: 1
-  },
-  {
-    key: "31",
-    val: "Talk to a lot of different people at parties.",
-    category: 1,
-    pondere: 7
-  },
-  {
-    key: "32",
-    val: "Am not really interested in others.",
-    category: -2,
-    pondere: 1
-  },
-  { key: "33", val: "Like order.", category: 3, pondere: 7 },
-  { key: "34", val: "Change my mood a lot.", category: -4, pondere: 1 },
-  {
-    key: "35",
-    val: "Am quick to understand things.",
-    category: 5,
-    pondere: 7
-  },
-  {
-    key: "36",
-    val: "Don't like to draw attention to myself.",
-    category: -1,
-    pondere: 1
-  },
-  {
-    key: "37",
-    val: "Take time out for others.",
-    category: 2,
-    pondere: 7
-  },
-  { key: "38", val: "Shirk my duties.", category: -3, pondere: 1 },
-  {
-    key: "39",
-    val: "Have frequent mood swings.",
-    category: -4,
-    pondere: 1
-  },
-  { key: "40", val: "Use difficult words .", category: 5, pondere: 7 },
-  {
-    key: "41",
-    val: "Don't mind being the center of attention.",
-    category: 1,
-    pondere: 7
-  },
-  { key: "42", val: "Feel others' emotions.", category: 2, pondere: 7 },
-  { key: "43", val: "Follow a schedule.", category: 3, pondere: 7 },
-  { key: "44", val: "Get irritated easily.", category: -4, pondere: 1 },
-  {
-    key: "45",
-    val: "Spend time reflecting on things.",
-    category: 5,
-    pondere: 7
-  },
-  {
-    key: "46",
-    val: "Am quiet around strangers.",
-    category: -1,
-    pondere: 1
-  },
-  {
-    key: "47",
-    val: "Make people feel at ease.",
-    category: 2,
-    pondere: 7
-  },
-  {
-    key: "48",
-    val: "Am exacting in my work.",
-    category: 3,
-    pondere: 7
-  },
-  { key: "49", val: "Often feel blue.", category: -4, pondere: 1 },
-  { key: "50", val: "Am full of ideas.", category: 5, pondere: 7 }
-];
+
 
 const Questionnaire = shuffle(QuestionnaireBrute);
 
@@ -245,22 +56,6 @@ const numberCircle ={
   alignItems: 'center',
   flexDirection:'column'
 };
-//GO AUTOMATICALLY TO THE NEXT PAGE ONCE YOU HAVE ANSWER THE 5 QUESTIONS.... GERREEEEEEEEEEEEEEE
-//ADD A LOADING RESULT.... SETtIMEoUT TO DISPLAY RESULT...  2 or 3 seconds... 
-//Take personality Test should remain with the form 
-// remove the menu once the user start the test and only leave him the Home page options... by clicking on the logo 
-// remove the text on the logout for the user logging Info .. 
-//remove the header on the sign up page and change the height as the same with the form.... flex : 1  for each
- //SHOW A SCREENSHOT OF THE RESULT IMAGE..
- // DISPLAY THE RESULT IMAGE TO THE USER WHO HAS TAKEN THE TEST ALREADY.... 
- //SHARE THE IMAGE URL TO THE SOCIAL NETWORK
- // KEEP ONLY fACEBOOK tWITTER, LINKEDiN AS SOCIAL PLATFORM TO SHARE ON ... 
- //ALIGNMENT FOR THE HOME PAGE HAS TO BE CHECKED..
- // THE FOOTER ALSO HAS TO BE ON POINT .. 
- // MENU PAGE RESPONSIVENESS... 
- //PREMIUM BUTTON... 
- //blurred image on the background.... and Premium Button on top.... or put the Premium button on the modal ... 
-
 class Description extends Component {
   constructor (props){
     super(props);
@@ -282,6 +77,7 @@ class Description extends Component {
         modalOpen:false,
         modalIsOpen:false,
         progressBar:0,
+        progress:0,
         //PASSER LA FONCTION DE DISPLAY EN PARAMETRE AUSSI 
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -311,9 +107,6 @@ componentWillUnmount() {
   this.authSubscription();
 }
 
-
-
-  
 setPassword(event) {
   console.log('password', event.target.value);
   this.setState({password: event.target.value});
@@ -435,43 +228,7 @@ handleSubmit(event) {
   }
 
   render() {
-    let response = [
-      {
-        key: 1,
-        valeur: "Strongly Disagree",
-        quote: 7
-      },
-      {
-        key: 2,
-        valeur: "Disagree",
-        quote: 6
-      },
-      {
-        key: 3,
-        valeur: "Slightly Disagree",
-        quote: 4
-      },
-      {
-        key: 4,
-        valeur: "Neutral",
-        quote: 4
-      },
-      {
-        key: 5,
-        valeur: "Slightly Agree",
-        quote: 3
-      },
-      {
-        key: 6,
-        valeur: "Agree",
-        quote: 2
-      },
-      {
-        key: 7,
-        valeur: "Strongly Agree",
-        quote: 1
-      }
-    ];
+    
 const onSiteChanged = (e) => {
         this.setState({
         site: e.currentTarget.value
@@ -531,7 +288,7 @@ const onSiteChanged = (e) => {
         let answers = [...this.state.answers];
         if (question === 50) console.log("QUESTION sdfdsfdfs 50 ");
       return response.map((elmnt) => (
-        <td key={elmnt.key} style={{ padding: 5 }}>
+        <td key={elmnt.key} style={{ padding: 12 }}>
           <button style={
             question === 50 ? (answers[question])  && answers[question].keyresponse === elmnt.key ? styles['radioButtonClicked' + elmnt.key] : styles['radioButton' + elmnt.key]:
             (answers[question-1])  && answers[question-1].keyresponse === elmnt.key ? styles['radioButtonClicked' + elmnt.key] : styles['radioButton' + elmnt.key]
@@ -554,88 +311,40 @@ const onSiteChanged = (e) => {
 
     }
 
-    // background: `url(${faces})`, padding:20
-    return (
-      <ErrorBoundary>
-        <div style={{justifyContent:'center',display:'flex',alignItems:'center'}}>
-          {this.state.user? <img  style={{padding:10,}} src={logo} alt="logo"/>:null}
-        </div>
-
-          <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column'}}>
-            
-
-             {!this.state.user ? <> 
-
-              <div 
-              style={{backgroundImage: `url(${bgHeader})`, height:470,justifyContent:'center',display:'flex',flexDirection:'column'
-              }}
-            >
-              <div>
-                <label style={{marginLeft:'23%',fontSize:35,fontFamily:'Open Sans Bold'}}> Take The Personality Test</label>
-              </div>
-              <label style={{width:'27%',marginLeft:'23%',fontFamily:'Open Sans Light'}} > Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </label>
-            </div>
-
-             <label style={{color:'red',alignSelf:'center'}}> {
-                this.state.message
-             }</label>
-
-              <label style={{display:'flex',alignSelf:'center',padding:10,fontFamily:'Open Sans Regular'}}>Please enter your information to take the exam</label>
-            <form  style={numberCircle} onSubmit={this.handleSubmit}>
-              <input type="text" value={this.state.firstName} onChange={this.setFirstName} style={{borderColor:'transparent',borderRadius:3,margin:5,padding:5}} placeholder="FIRST NAME" />
-              <input type="text" value={this.state.lastName} onChange={this.setLastName} style={{borderColor:'transparent',borderRadius:3,margin:5}} placeholder="LAST NAME" />
-              <input type="email" value={this.state.email} onChange={this.setEmail} style={{borderColor:'transparent',borderRadius:3,margin:5}} placeholder="EMAIL ADDRESS" />
-               <input type="password" value={this.state.password} onChange={this.setPassword}  style={{borderColor:'transparent',borderRadius:3,margin:5}} placeholder="PASSWORD"/>
-              <input type="submit" value="Begin The Exam &rarr;"  
-                style={styles.submit}
-              />
-        </form>
-             </> : null}
-         
-        </div>
-      {this.state.user ? <>
-        <div style={{justifyContent:'center'}}>
-        <div
-          style={{
-           'justifyContent': "space-around",
-            display:'flex',
-            'flexDirection':'row'
-          }}
-        >   
-
-       </div>
-
-      <div style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',padding:15}}>
-          <div style={{backgroundColor:'#DCDCDC',borderRadius:5,marginLeft:5,margin:5,alignItems:'center',alignSelf:'center',width:'30%'}}>
-            <div style={{height:25,width:this.state.progressBar +"%",backgroundColor:'#86207C',borderRadius:5,display:'flex',flex:1}}/>
-          </div>
-            <label style={{fontFamily:'Open Sans Bold', fontSize:24,color:'#86207C'}}> {this.state.progressBar +"%"}</label>
-      </div>
-        <div style={{
-                display:'flex',
-                'flexDirection': "column"
-             }}>
-          {Questionnaire.slice(this.state.debut-1,this.state.fin).map((elemnt, key) => (
-            <div
-              key={elemnt.key}
-              style={styles.questionnaire}
-            >
-              <label style={styles.button,{display: 'flex',fontFamily:'Open Sans Regular'}}>
-                {elemnt.val}
-              </label>
-                    <tr style={{justifyContent:'space-around',alignItems:'center',display:'flex'}}>
-                        <label style={{display:'flex',padding:10,color:'#7FFFD4',fontFamily:'Sans Open Bold',fontWeight:'bold'}}>Agree</label>
-                        {
-                            qcm(elemnt.key)
-                        }
-                        <label style={{display:'flex',padding:10,color:'#86207C',fontSize:18,fontFamily:'Sans Open Bold',fontWeight:'bold'}}>Disagree</label>
-                    </tr>
-            </div>
-          ))}
-        </div>
-        </div>
-        <div style={{display:'flex',alignItems:'center',justifyContent:'center',padding:15}}>
-                        
+    const logOut = () => {
+      firebase.auth().signOut().then(function() {
+      // Sign-out successful.
+      }).catch(function(error) {
+      // An error happened.
+      });
+    }
+     
+    var il = 0;
+    var decompte =0;
+    const move =() =>{
+      if (il == 0) {
+        il = 1;
+       // var elem = document.getElementById("myBar");
+        var width = 1;
+        var id = setInterval(frame, 10);
+        function frame() {
+          if (width >= 100) {
+           // SetShowResult(true);
+           return ;
+           // this.setState({showResult:true});
+          //  clearInterval(id);
+          //  il = 0;
+          } else {
+            width++;
+            decompte = width
+            console.log(decompte);
+         //   this.setState({progress:width});
+           // elem.style.width = width + "%";
+          }
+        }
+      }
+    }
+     /*     LOG OUT  function              
         <button style={styles.buton}
             onClick ={() => {
               const {debut,fin} = this.state;
@@ -644,7 +353,6 @@ const onSiteChanged = (e) => {
             >
               Previous Questions
             </button>
-
           <button style={{
               display:'flex',
               alignSelf:'center',
@@ -663,7 +371,6 @@ const onSiteChanged = (e) => {
             >
               LOG OUT 
             </button>
-
        <button style={styles.buton}
             onClick ={this.submitAnswers}
             >SUBMIT ANSWERS</button>
@@ -672,9 +379,126 @@ const onSiteChanged = (e) => {
    
             <button style={styles.buton}
             onClick ={this.arrayOfAnswers}
-            >CHECK THE ANSERS ON CATEGORY 5 </button>
+            >CHECK THE ANSERS ON CATEGORY 5 </button>*/
+    
+   
+    // background: `url(${faces})`, padding:20
+    return (
+      <ErrorBoundary>
+        <div style={{justifyContent:'center',display:'flex',alignItems:'center',backgroundColor:'#D3D3D3',}}>
+          {this.state.user? 
+          <>
+          <Link to="/" style={{ textDecoration: 'none' }}>
+           <button style={{backgroundColor:'transparent',borderColor:'transparent'}} onClick={() => logOut()}>
+           <img  style={{padding:10,}} src={logo} alt="logo"/>
+           </button>
+          </Link>
+          </>
+          :null}
+        </div>
 
-            <button style={styles.buton}
+          {!this.state.user ? <div style={{display:'flex',flexDirection:'column'}}> 
+          <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column',flex:1}}>
+            <div 
+              style={{backgroundImage: `url(${bgHeader})`, height:470,justifyContent:'center',display:'flex',flexDirection:'column'
+              }}
+            >
+            <div>
+              <label style={{marginLeft:'23%',fontSize:35,fontFamily:'Open Sans Bold'}}> Take The Personality Test</label>
+            </div>
+            <label style={{width:'27%',marginLeft:'23%',fontFamily:'Open Sans Light'}} > Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </label>
+          </div>
+
+            <label style={{color:'red',alignSelf:'center'}}> {
+              this.state.message
+            }</label>
+            
+          </div>
+
+            <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column',flex:1}} >
+            <label style={{display:'flex',alignSelf:'center',padding:10,fontFamily:'Open Sans Regular'}}>Please enter your information to take the exam</label>
+          <form  style={numberCircle} onSubmit={this.handleSubmit}>
+            <input type="text" value={this.state.firstName} onChange={this.setFirstName} style={{borderColor:'transparent',borderRadius:3,margin:5,padding:5}} placeholder="FIRST NAME" />
+            <input type="text" value={this.state.lastName} onChange={this.setLastName} style={{borderColor:'transparent',borderRadius:3,margin:5}} placeholder="LAST NAME" />
+            <input type="email" value={this.state.email} onChange={this.setEmail} style={{borderColor:'transparent',borderRadius:3,margin:5}} placeholder="EMAIL ADDRESS" />
+              <input type="password" value={this.state.password} onChange={this.setPassword}  style={{borderColor:'transparent',borderRadius:3,margin:5}} placeholder="PASSWORD"/>
+            <input type="submit" value="Begin The Exam &rarr;"  
+              style={styles.submit}
+            />
+          </form>
+          </div>
+          </div> : null}
+         
+      {this.state.user ? <>
+        <div style={{justifyContent:'center'}}>
+        <div
+          style={{
+           'justifyContent': "space-between",
+            display:'flex',
+            'flexDirection':'row'
+          }}
+        >   
+
+       </div>
+
+      <div style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',padding:10}}>
+          <div style={{backgroundColor:'#DCDCDC',borderRadius:5,marginLeft:5,marginRight:5,alignItems:'center',alignSelf:'center',width:'30%', borderTop : "thin solid darkgray",}}>
+            <div style={{height:25,width:this.state.progressBar +"%",backgroundColor:'#86207C',borderRadius:5,display:'flex',flex:1}}/>
+          </div>
+            <label style={{fontFamily:'Open Sans Bold', fontSize:24,color:'#86207C'}}> {this.state.progressBar +"%"}</label>
+      </div>
+        <div style={{
+                display:'flex',
+                'flexDirection': "column",
+             }}>
+
+          {Questionnaire.slice(this.state.debut-1,this.state.fin).map((elemnt, key) => (
+            <div
+              key={elemnt.key}
+              style={styles.questionnaire}
+            >
+              <label style={styles.button,{display: 'flex',fontFamily:'Open Sans Regular',padding:5}}>
+                {elemnt.val}
+              </label>
+                    <tr style={{justifyContent:'space-around',alignItems:'center',display:'flex'}}>
+                        <label style={{display:'flex',padding:10,color:'#7FFFD4',fontFamily:'Sans Open Bold',fontWeight:'bold'}}>Agree</label>
+                        {
+                            qcm(elemnt.key)
+                        }
+                        <label style={{display:'flex',padding:10,color:'#86207C',fontSize:18,fontWeight:'bold'}}>Disagree</label>
+                    </tr>
+            </div>
+          ))}
+        </div>
+        </div>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'center',padding:15}}>
+        
+
+        <Link to= {{pathname: "/resultat",
+              state: { progress: decompte,
+                    counting:true,
+                 }
+          }} 
+          style={{ textDecoration: 'none' }}
+       >
+            <button  onClick={()=> move()} style={{color:'red'}}>
+                              Try asdasdasdas dasasdasd
+            </button>
+       </Link>
+
+
+
+
+
+       { this.state.progressBar >=100? 
+
+       <Link to= {{pathname: "/resultat",
+              nitcheu:"Mbouendeu"
+          }} 
+          style={{ textDecoration: 'none' }}
+       >
+
+       <button style={styles.butonSubmit}
             onClick ={() => {
               const userId = firebaseService.auth().currentUser.uid;
               const {answers} = this.state;
@@ -729,25 +553,16 @@ const onSiteChanged = (e) => {
               this. getValue(4,'betterthan3');
               this. getValue(5,'betterthan4');
               this.openModal();
-            }}
-            >SAVE ANSWERS</button>
-            { nextQuestion.length ===5 ?<button style={styles.buton}
-            onClick ={() => {
+              //setTimeout(() =>{ this.openModal(); }, 3000);
               
             }}
-            >
-              Next  &rarr;
-          </button> : null} 
-
+            >Submit Answers</button>
+            </Link>
+            :null}
         </div> 
-      </> : null }   
-           {this.state.arrayScore && 
-            <div style={{width:'50%'}}>
-            <Canvas   data = {Object.values(this.state.arrayScore)}
-             labels =  {Object.keys(this.state.arrayScore)}/>
-            </div>
-            } 
-              <ModalAnswers 
+      </> : null } 
+
+            { this.state.modalIsOpen?<ModalAnswers 
               modalOpen={this.state.modalOpen}
               openModal={this.openModal}
               closeModal={this.closeModal}
@@ -760,7 +575,9 @@ const onSiteChanged = (e) => {
                   <Gauge level ={this.state.betterthan3} title="betterthan3" color="blue"/>
                   <Gauge level ={this.state.betterthan4} title="betterthan4" color="orange"/>
                 </div>
-              }/>
+              }/> :null
+              }
+
       </ErrorBoundary>
     );
   }
@@ -770,6 +587,19 @@ const onSiteChanged = (e) => {
 //backgroundColor: '#d3d3d3',
 //'backgroundColor':'#F49608',
 const styles = {
+  butonSubmit:{
+    display:'flex',
+    alignSelf:'center',
+    color:'white',
+    'backgroundColor':'#F49608',
+    'borderRadius':20,
+    padding: 7,
+    marginTop:5,
+    marginBottom:15,
+    borderColor:'transparent',
+    fontFamily:'Sans Open Light',
+    fontSize:21,
+  },
   submit:{
     display:'flex',
     alignSelf:'center',

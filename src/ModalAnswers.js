@@ -47,14 +47,13 @@ const ModalAnswers = props => {
   */
  
   return (
-    <div>
-    <button onClick={props.openModal}>Open Modal</button>
+    <div style={{display:'flex',flex:1,maxWidth:'100%'}}>
     <Modal
       isOpen={props.modalIsOpen}
       onAfterOpen={afterOpenModal}
       onRequestClose={props.closeModal}
       style={customStyles}
-      contentLabel="Example Modal"
+      contentLabel="Result Page"
     >
 
       <h2 ref={_subtitle => (subtitle = _subtitle)}>Result Page</h2>
