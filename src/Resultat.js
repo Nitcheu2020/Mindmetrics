@@ -4,16 +4,32 @@ import Gauge from './Gauge';
 import html2canvas from 'html2canvas';
 import firebaseService from './firebaseService';
 import firebase from "firebase/app";
+import Modal from 'react-modal';
+import bgHeader from './img/bg-header.png';
 
 import {
     useLocation,
   } from "react-router-dom";
+
+  const customStyles = {
+    content : {
+      top                   : '50%',
+      left                  : '50%',
+      right                 : 'auto',
+      bottom                : 'auto',
+      marginRight           : '-50%',
+      transform             : 'translate(-50%, -50%)'
+    }
+  };
+
+  Modal.setAppElement('#root');
 
 const Resultat = (props) => {
 
   const photoRef = useRef(null);
   const outputRef = useRef(null);
     useEffect(() => {
+      console.log("???????????????????????????? in use effect");
          function decompte() {
             let i = 0;
             if (i == 0) {
@@ -59,6 +75,28 @@ ref.putString(message, 'data_url').then(function(snapshot) {
 
 let background = location.state && location.state.progress;
 
+  
+
+let resultat1level =  location.state && location.state.resultat1level;
+let resultat2level =  location.state && location.state.resultat2level;
+let resultat3level =  location.state && location.state.resultat3level;
+let resultat4level =  location.state && location.state.resultat4level;
+let resultat5level =  location.state && location.state.resultat5level;
+
+let resultat1title =  location.state && location.state.resultat1title;
+let resultat2title =  location.state && location.state.resultat2title;
+let resultat3title =  location.state && location.state.resultat3title;
+let resultat4title =  location.state && location.state.resultat4title;
+let resultat5title =  location.state && location.state.resultat5title;
+
+
+let resultat1color =  location.state && location.state.resultat1color;
+let resultat2color =  location.state && location.state.resultat2color;
+let resultat3color =  location.state && location.state.resultat3color;
+let resultat4color =  location.state && location.state.resultat4color;
+let resultat5color =  location.state && location.state.resultat5color;
+
+
 function guid() {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
@@ -101,13 +139,32 @@ const  takeshot =() => {
    if (!showResult) 
    {
        return (
-        <div >
-             <Gauge level ={progress} title="loading" color="orange"/>
-        </div>
-   );}
-    return (
-      <div>
+         <div style={{backgroundImage: `url(${bgHeader})`,flex:1,display:'flex'}}>
+            <label style={{color:'red'}}>  background  {background}</label>
+            <label style={{color:'red'}}>???   {resultat1level}</label>
+            <label style={{color:'red'}}>!!!! {resultat3level}</label>
+            <label style={{color:'red'}}> ......{resultat4level}</label>
 
+          <div  style={{display:'flex',flex:1,justifyContent:'center',alignItems:'center', margin:'25%'
+        }}>
+             <Gauge fontSize="34" fontColor='#86207C' level ={progress} title="Score Calculation" color="orange"/>
+        </div>
+         </div>
+        
+   );}
+  /*
+  
+        <div style={{ alignItems:'center',width:'100%'}}>
+          <Gauge level ={resultat1.level} title= {resultat1.title} color={resultat1.color}/>
+          <Gauge level ={resultat2.level} title= {resultat2.title} color={resultat2.color}/>
+          <Gauge level ={resultat3.level} title= {resultat3.title} color={resultat3.color}/>
+          <Gauge level ={resultat4.level} title= {resultat4.title} color={resultat4.color}/>
+          <Gauge level ={resultat5.level} title= {resultat5.title} color={resultat5.color}/>
+        </div>
+  */
+   return (
+      <div>
+        <label>{resultat1level}</label>
       <button onClick={() => {
          const imageRef = firebaseService.storage().ref('images').child(guid())
          
