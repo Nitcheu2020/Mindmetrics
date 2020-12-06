@@ -11,6 +11,7 @@
     "caniuse-lite": "^1.0.30001159",
     "chart.js": "^2.9.4",
     "firebase": "^8.0.0",
+    "html2canvas": "^1.0.0-rc.7",
     "is-promise": "^4.0.0",
     "react": "^16.13.1",
     "react-addons-transition-group": "^15.6.2",
