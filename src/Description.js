@@ -3,7 +3,12 @@ import ErrorBoundary from './ErrorBoundary';
 import firebaseService from './firebaseService';
 import faces from './img/faces.png';
 import logo from './img/logo.png';
+import twitter from './img/twitter.jpg';
+import facebook from './img/facebook.png';
+import linkedIn from './img/linkedIn.png';
+import google  from './img/google.png';
 import bgHeader from './img/bg-header.png';
+import Footer from './Footer';
 import './App.css';
 import firebase from "firebase/app";
 //CATEGORY REMAINS THE SAME ON ABSOLUTE VALUE MEANNIG POSITIVE AND NEGATIVE BELONG TO THE SAME SET....
@@ -78,11 +83,17 @@ class Description extends Component {
         modalIsOpen:false,
         progressBar:0,
         progress:0,
+        betterthan:10,
+        betterthan1:11,
+        betterthan2:13,
+        betterthan3:17,
+        betterthan4:19
         //PASSER LA FONCTION DE DISPLAY EN PARAMETRE AUSSI 
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.setPassword = this.setPassword.bind(this);
     this.setEmail = this.setEmail.bind(this);
+    this.timeout = null;
 }
 
 componentDidMount() {
@@ -105,6 +116,10 @@ componentDidMount() {
 
 componentWillUnmount() {
   this.authSubscription();
+  if (this.timeout) {
+    clearTimeout(this.timeout);
+  }
+
 }
 
 setPassword(event) {
@@ -167,10 +182,7 @@ handleSubmit(event) {
     const userId = firebaseService.auth().currentUser.uid;
     var ref = firebaseService.database().ref('scores/category/' + cate);
     ref.once('value', (snapshot) =>{
-      console.log(snapshot.val());
-      this.setState({recycle:snapshot.val()});
       const obj = snapshot.val();
-      
       let donne = Object.values(obj);
       donne = donne.sort((a, b) =>{
         return a - b;
@@ -208,6 +220,7 @@ handleSubmit(event) {
       sortedCategory.forEach( x => jsonObj[Object.keys(x)] = x[Object.keys(x)] )
       this.setState({arrayScore: jsonObj})
     });
+    return [betterthan];
   }
 
   arrayOfAnswers = () =>{
@@ -225,6 +238,10 @@ handleSubmit(event) {
   
    closeModal=()=>{
     this.setState({modalIsOpen:false});
+  }
+
+  testGetValue = () =>{
+   return this.state.betterthan4;
   }
 
   render() {
@@ -321,6 +338,8 @@ const onSiteChanged = (e) => {
      
     var il = 0;
     var decompte =0;
+    var resultat1level,resultat2level,resultat3level,resultat4level,resultat5level;
+
     const move =() =>{
       if (il == 0) {
         il = 1;
@@ -472,90 +491,118 @@ const onSiteChanged = (e) => {
         </div>
         </div>
         <div style={{display:'flex',alignItems:'center',justifyContent:'center',padding:15}}>
-        
-
+      
         <Link to= {{pathname: "/resultat",
-              state: { progress: decompte,
-                    counting:true,
-                 }
+        state:{
+          progress: 'assd'
+        }
           }} 
           style={{ textDecoration: 'none' }}
+          onClick={()=> console.log("LE MBOLE DANSE DANSE SEULEMENT........")}
        >
-            <button  onClick={()=> move()} style={{color:'red'}}>
-                              Try asdasdasdas dasasdasd
-            </button>
-       </Link>
-
-
-
+         Tesster la fonction oncl
+         </Link>
 
 
        { this.state.progressBar >=100? 
-
-       <Link to= {{pathname: "/resultat",
-              nitcheu:"Mbouendeu"
+      <Link to= {{pathname: "/resultat",
+        state: { progress: this.state.betterthan4,
+            counting:true,
+            resultat1level:  this.state.betterthan,
+            resultat2level: this.state.betterthan1,
+            resultat3level: this.state.betterthan2,
+            resultat4level: this.state.betterthan3,
+            resultat5level: this.state.betterthan4,
+          }
           }} 
           style={{ textDecoration: 'none' }}
+          onClick={ (e)=> {
+            const userId = firebaseService.auth().currentUser.uid;
+            const {answers} = this.state;
+      
+            //ici on va regrouper par category ...
+            let sorted =[];
+            let sommation = answers.map( element =>   { 
+                let filtre = answers.filter( x => Math.abs(x.category) === element.category);
+                
+              if ((filtre.length !== 0) &&  !sorted.includes(element.category)) 
+              {      
+                  let score = 0;
+                  score =  filtre.map ( val => Number(val.score)).reduce ( (acc,curr) => acc + curr) ;
+                 sorted.push(element.category);
+                  return { 
+                     [element.category]: filtre,
+                     score:score
+                    // answers.filter( x => Math.abs(x) === element)
+                 }
+             }
+             })
+             //numero 50 ne prend pas sa valeur....
+             //passer la valeur element.question au lieu de key... puisque la cle change tjrs..s
+             //je dois reintialiser la variabe a 1 quand on ava a une nouvelle page et activez next lorsque le  compte va a 5 et 
+             // lorsque le compte va a 50 on active submit answer ou alors change Next to Submit answers...
+             //if we only have negative they are not going to be save in the score... which is a problemm.....
+             //desactiver le button next jusk ce que l'utilisateur... finisse de repondre aux questions sur la page...
+              let rsultFinal = sommation.filter( x => x !== undefined);
+      
+              rsultFinal.forEach( val =>  {
+               // let saved = { [userId]: val.score};
+                firebaseService.database().ref('scores/' + 'category' + '/' + [Object.keys(val)[0]] + '/' + userId).set(
+                 // saved
+                   val.score
+                   );
+      
+              });
+               let resp ={
+                  answers:answers.filter( val => val !==undefined),
+                  groupAnswer: rsultFinal
+              };
+              console.log(resp);
+            //Fin regrouper par catgeorie...
+            firebaseService.database().ref('users/' + userId + '/').set(
+           // firebaseService.database().ref('answers/').push(
+              resp
+            );
+      
+             this.getValue(1,'betterthan');
+              this.getValue(2,'betterthan1');
+             this.getValue(3,'betterthan2');
+             this.getValue(4,'betterthan3');
+             this.getValue(5,'betterthan4');
+             this.openModal();
+            //setTimeout(() =>{ this.openModal(); }, 3000);
+            resultat1level = this.state.betterthan ;
+            resultat2level = this.state.betterthan1 ;
+            resultat3level = this.state.betterthan2;
+            resultat4level = this.state.betterthan3;
+            resultat5level = this.state.betterthan4;
+
+
+
+
+            /*const { replace, to, delay, onDelayStart, onDelayEnd } = this.props;
+            const { history } = this.context.router;
+
+            onDelayStart(e, to);
+            if (e.defaultPrevented) {
+              return;
+            }
+            e.preventDefault();
+
+            this.timeout = setTimeout(() => {
+              if (replace) {
+                history.replace(to);
+              } else {
+                history.push(to);
+              }
+              onDelayEnd(e, to);
+            }, delay);*/
+
+          }}
        >
 
        <button style={styles.butonSubmit}
-            onClick ={() => {
-              const userId = firebaseService.auth().currentUser.uid;
-              const {answers} = this.state;
-        
-              //ici on va regrouper par category ...
-              let sorted =[];
-              let sommation = answers.map( element =>   { 
-                  let filtre = answers.filter( x => Math.abs(x.category) === element.category);
-                  
-                if ((filtre.length !== 0) &&  !sorted.includes(element.category)) 
-                {      
-                    let score = 0;
-                    score =  filtre.map ( val => Number(val.score)).reduce ( (acc,curr) => acc + curr) ;
-                   sorted.push(element.category);
-                    return { 
-                       [element.category]: filtre,
-                       score:score
-                      // answers.filter( x => Math.abs(x) === element)
-                   }
-               }
-               })
-               //numero 50 ne prend pas sa valeur....
-               //passer la valeur element.question au lieu de key... puisque la cle change tjrs..s
-               //je dois reintialiser la variabe a 1 quand on ava a une nouvelle page et activez next lorsque le  compte va a 5 et 
-               // lorsque le compte va a 50 on active submit answer ou alors change Next to Submit answers...
-               //if we only have negative they are not going to be save in the score... which is a problemm.....
-               //desactiver le button next jusk ce que l'utilisateur... finisse de repondre aux questions sur la page...
-                let rsultFinal = sommation.filter( x => x !== undefined);
-        
-                rsultFinal.forEach( val =>  {
-                 // let saved = { [userId]: val.score};
-                  firebaseService.database().ref('scores/' + 'category' + '/' + [Object.keys(val)[0]] + '/' + userId).set(
-                   // saved
-                     val.score
-                     );
-        
-                });
-                 let resp ={
-                    answers:answers.filter( val => val !==undefined),
-                    groupAnswer: rsultFinal
-                };
-                console.log(resp);
-              //Fin regrouper par catgeorie...
-              firebaseService.database().ref('users/' + userId + '/').set(
-             // firebaseService.database().ref('answers/').push(
-                resp
-              );
-        
-              this. getValue(1,'betterthan');
-              this. getValue(2,'betterthan1');
-              this. getValue(3,'betterthan2');
-              this. getValue(4,'betterthan3');
-              this. getValue(5,'betterthan4');
-              this.openModal();
-              //setTimeout(() =>{ this.openModal(); }, 3000);
-              
-            }}
+            onClick ={() => console.log("clicked")}
             >Submit Answers</button>
             </Link>
             :null}
@@ -577,8 +624,11 @@ const onSiteChanged = (e) => {
                 </div>
               }/> :null
               }
-
-      </ErrorBoundary>
+            <div style={{backgroundColor:'#CDCDCD',justifyContent:'center',display:'flex',padding:'5%'}}>
+              <label > Ask Your Friends and Family to Take the Test Too!</label>
+            </div>
+        <Footer/>
+     </ErrorBoundary>
     );
   }
 }

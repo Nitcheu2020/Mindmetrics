@@ -35,19 +35,6 @@ const ModalAnswers = props => {
   }
  
   /*
-    <div>I am a modal</div>
-      <form>
-        <input />
-        <button>tab navigation</button>
-        <button>stays</button>
-        <button>inside</button>
-        <button>the modal</button>
-        
-      </form>
-  */
- 
-  return (
-    <div style={{display:'flex',flex:1,maxWidth:'100%'}}>
     <Modal
       isOpen={props.modalIsOpen}
       onAfterOpen={afterOpenModal}
@@ -55,12 +42,19 @@ const ModalAnswers = props => {
       style={customStyles}
       contentLabel="Result Page"
     >
+    
+    </Modal>
+    
+  */
+ 
+  return (
+    <div style={{display:'flex',flex:1,maxWidth:'100%'}}>
+    
 
       <h2 ref={_subtitle => (subtitle = _subtitle)}>Result Page</h2>
       <button onClick={props.closeModal}>close</button>
       {props.composant}
       <Blog/>
-    </Modal>
   </div>
   );
 }

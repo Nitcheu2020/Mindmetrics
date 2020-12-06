@@ -15,6 +15,7 @@ import Canvas from './Canvas';
 import ErrorBoundary from './ErrorBoundary';
 import firebaseService from './firebaseService';
 import Resultat from './Resultat';
+import Footer from './Footer';
 
 import {
   BrowserRouter as Router,
@@ -34,13 +35,15 @@ const divStyle = {
 };
 
 const numberCircle ={
+  display:'flex',
     'borderRadius': '50%',
     width: 36,
     height: 36,
     padding: 8,
-    background: '#fff',
+    background: 'red', ///#fff
     color: '#666',
-    'textAlign': 'center',
+  //  'textAlign': 'center',
+   // alignSelf:'center'
 };
 const imgStyle = {
   padding:'20'
@@ -159,6 +162,9 @@ export default class App extends Component {
           <Route path="/">
             <Home />
           </Route>
+          <Route path="/footer">
+            <Footer />
+          </Route>
         </Switch>
       </Router>
       </ErrorBoundary>
@@ -170,80 +176,85 @@ export default class App extends Component {
 
 function Home() {
   return (
-    <div style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column'}}>
-    <h1>Your True Personality Revealed</h1>
-    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column',}}>
-    <label> We use your writing and social media profiles to build you a detailed </label>
-    <label  >and accurate Personality report </label>
-    </label>
-    <button style={{
-              'marginTop':20,
-              color:'white',
-              'backgroundColor':'#F49608',
-              'borderRadius':20,
-              padding: 10,
-              borderColor:'transparent'
-            }}>GET FREE ANALYSIS</button>
-    <img
-        style={{
-          display: 'flex',
-          maxWidth: '100%', maxHeight: '100%',padding:10
-          //alignSelf:'center'
-         // 'marginLeft': 50,padding:10
-      }}
-        src={result} alt="result" />
-    <img
-        style={{
-           display: 'flex',paddingRight:50,maxWidth: '100%', maxHeight: '100%'
-        }}
-        src={faces} alt="faces" />
-
-    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','marginTop':20,'fontSize':25}}>
-      <label> What Your Words  </label>
-      <label>Says About You</label>
-    </label>
-
-    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','marginTop':20,}}>
-      <label> Your writing is a sample of how you think.Studying the patterns we've found in the way certain people of </label>
-      <label>certain personalities use words, we can use your writing to determine using data,what kind of Personality</label>
-      <label>you have exactly.</label>
-       <label style={{color:'pink','marginTop':10}}>find more.... </label>
-    </label>
-
-    <nav style={{display:'flex','flexDirection':'row'}}>
-    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','marginTop':20,}}>
-      <label> Data Driven and Scientific  </label>
-      <label style={{width:305}}>Using data and natural language processing we're able to predict your Personality based on the most popular Personality model used in the psychology community, the Five Factor Personality model</label>
-       <label style={{color:'pink','marginTop':10}}>find more.... </label>
-    </label>
-    <img
-        style={{display: 'flex','marginTop': 50,padding:10}}
-        src={scheme_small} alt="scheme" />
-    </nav>
-
-    <nav style={{display:'flex','flexDirection':'row'}}>
-    <img
-        style={{display: 'flex','marginTop': 50,padding:10,}}
-        src={hand} alt="hand" />
-
-    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','marginTop':20,}}>
-      <label> Easy to Use  </label>
-      <label style={{width:310}}> Faster than any other personality analysis out there. Just choose where and what you want us to analyze: your twitter , Facebook or Copy and paste  you blog, We'll have it analyzed in seconds.</label>
-       <label style={{color:'pink','marginTop':10,}}>find more.... </label>
-    </label>
-
-    </nav>
-
-    <nav style={{display:'flex','flexDirection':'row'}}>
-    <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','marginTop':20,padding:20}}>
-      <label> Detailed Personality Reports  </label>
-        <label style={{width:310}}>Free reports includes your personality profile, including 5 majors traits, values , and needs and text summary as well as graph representation of who you are </label>
-         <label style={{color:'pink','marginTop':10,}}>Try out.... </label>
+    <>
+    <div style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column',maxWidth:'100%'}}>
+      <h1>Your True Personality Revealed</h1>
+      <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column',padding:'5%'}}>
+        <label> We use your writing and social media profiles to build you a detailed </label>
+        <label  >and accurate Personality report </label>
       </label>
+      <button style={{
+                'marginTop':20,
+                color:'white',
+                'backgroundColor':'#F49608',
+                'borderRadius':20,
+                padding: 10,
+                borderColor:'transparent'
+              }}>
+                GET FREE ANALYSIS
+      </button>
       <img
-        style={{display: 'flex','marginTop': 50,padding:10, transform: [{ rotate: '14deg' }],}}
-        src={ico_chart} alt="ico_chart" />
-    </nav>
+          style={{
+            display: 'flex',
+            maxWidth: '100%', maxHeight: '100%',padding:10
+            //alignSelf:'center'
+          // 'marginLeft': 50,padding:10
+          }}
+          src={result} alt="result" 
+      />
+      <img
+        style={{
+           display: 'flex',maxWidth: '100%', maxHeight: 'auto'
+        }}
+        src={faces} alt="faces"
+      />
+      <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','marginTop':20,'fontSize':25}}>
+        <label> What Your Words  </label>
+        <label>Says About You</label>
+      </label>
+        
+      <label style={{justifyContent:'center',display:'flex',padding:'5%','flexDirection':'column'}}>
+        <label> Your writing is a sample of how you think.Studying the patterns we've found in the way certain people of </label>
+        <label>certain personalities use words, we can use your writing to determine using data,what kind of Personality</label>
+        <label>you have exactly.</label>
+        <label style={{color:'pink','marginTop':10,alignSelf:'center'}}>find more.... </label>
+      </label>
+      <nav style={{display:'flex','flexDirection':'row',justifyContent:'center',alignItems:'center'}}>
+        <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','marginTop':20,maxWidth:'40%',padding:'5%'}}>
+          <label> Data Driven and Scientific  </label>
+          <label>Using data and natural language processing we're able to predict your Personality based on the most popular Personality model used in the psychology community, the Five Factor Personality model</label>
+          <label style={{color:'pink','marginTop':10}}>find more.... </label>
+        </label>
+        <img
+            style={{display: 'flex',maxWidth: '50%', maxHeight: 'auto',padding:'5%'}}
+            src={scheme_small} alt="scheme" 
+        />
+      </nav>
+
+      <nav style={{display:'flex','flexDirection':'row'}}>
+        <img
+          style={{display: 'flex',maxWidth: '50%', maxHeight: 'auto',padding:'5%'}}
+          src={hand} alt="hand"
+        />
+
+        <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','marginTop':20,maxWidth:'40%'}}>
+          <label> Easy to Use  </label>
+          <label > Faster than any other personality analysis out there. Just choose where and what you want us to analyze: your twitter , Facebook or Copy and paste  you blog, We'll have it analyzed in seconds.</label>
+          <label style={{color:'pink','marginTop':10,}}>find more.... </label>
+        </label>
+      </nav>
+
+      <nav style={{display:'flex','flexDirection':'row',alignItems:'center',justifyContent:'center'}}>
+        <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','marginTop':20,padding:20,maxWidth:'40%'}}>
+          <label> Detailed Personality Reports  </label>
+          <label >Free reports includes your personality profile, including 5 majors traits, values , and needs and text summary as well as graph representation of who you are </label>
+          <label style={{color:'pink','marginTop':10,}}>Try out.... </label>
+        </label>
+        <img
+          style={{display: 'flex',maxWidth: '50%', maxHeight: 'auto',padding:'5%', transform: [{ rotate: '14deg' }],}}
+          src={ico_chart} alt="ico_chart"
+        />
+      </nav>
        <div style ={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column',width:'100%','backgroundColor':'#d3d3d3',paddingBottom:20,paddingTop:20
         }
       }>
@@ -257,58 +268,9 @@ function Home() {
             }}>GET FREE ANALYSIS
           </button>
       </div>
-
-        <ul style={{
-      //    backgroundColor: '#d3d3d3',
-  //'fontWeight': 'bold',
-   display: 'flex',
-  'flexDirection':'row',
-  'justifyContent':'center',
-  'alignItems':'center',
-  width:'100%',
-        }}>
-          <nav style={{
-             flex:1,
-  //'fontWeight': 'bold',
-   display: 'flex',
-  'flexDirection':'row',
-  'justifyContent':'space-around',
-  'alignItems':'center'
-          }}>
-            <li>
-              <Link to="/">HOME</Link>
-            </li>
-            <li>
-              <Link to="/description">HOW IT WORKS</Link>
-            </li>
-            <li>
-              <Link to="/blog">Blog</Link>
-            </li>
-             <li>
-              <Link to="/research">RESEARCH</Link>
-            </li>
-             <li>
-              <Link to="/contact">CONTACT</Link>
-            </li>
-            <li>
-              <Link to="/canvas">Canvas</Link>
-            </li>
-            
-          </nav>
-        <img
-        style={{display: 'flex','marginLeft': 50,padding:10,'paddingRight':20}}
-        src={social_icons} alt="social_icons" />
-          </ul>
-
-        <div style={{display:'flex','flexDirection':'row','alignItems':'center','justifyContent':'center'}}>
-          <label style={numberCircle}> R</label>
-        <label> Mindmetrics Technology. All rights reserved.</label>
-      <img
-        style={{display: 'flex','marginTop': 50,padding:10, transform: [{ rotate: '14deg' }],}}
-        src={logo_footer} alt="logo_footer" />
     </div>
-
-    </div>
+    <Footer/>
+    </>
   );
 }
 
