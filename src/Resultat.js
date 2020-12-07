@@ -71,12 +71,12 @@ ref.putString(message, 'data_url').then(function(snapshot) {
     const [error,setError] = useState(null);
     const [isLoaded,setIsLoaded] = useState(false);
     const [items,setItems] = useState([]);
-    const [ imgSrc, setImgSrc] = useState('');
+    const [ imgSrc, setImgSrc] = useState(null);
 
 let background = location.state && location.state.progress;
 
   
-
+//BLOG props as url...
 let resultat1level =  location.state && location.state.resultat1level;
 let resultat2level =  location.state && location.state.resultat2level;
 let resultat3level =  location.state && location.state.resultat3level;
@@ -127,6 +127,14 @@ const  takeshot =() => {
 
       }).then(() => imageRef.getDownloadURL())
       .then(url =>{
+       /* const imageRef = firebaseService.storage().ref('images').child(guid())
+        var storageRef = firebase.storage().ref();
+        var imagesRef = storageRef.child('images/');
+        // Data URL string
+         imageRef.putString(url, 'data_url').then(function(snapshot) {
+          console.log('Uploaded a data_url string!',snapshot);
+         // console.log('url',imageRef.getDownloadURL())
+      }) */
         console.log('Finally getting the URL...',url);
       })
       }) 
@@ -136,74 +144,19 @@ const  takeshot =() => {
      move();
     }, 3000);
     */
-   if (!showResult) 
-   {
-       return (
-         <div style={{backgroundImage: `url(${bgHeader})`,flex:1,display:'flex'}}>
-            <label style={{color:'red'}}>  background  {background}</label>
-            <label style={{color:'red'}}>???   {resultat1level}</label>
-            <label style={{color:'red'}}>!!!! {resultat3level}</label>
-            <label style={{color:'red'}}> ......{resultat4level}</label>
 
-          <div  style={{display:'flex',flex:1,justifyContent:'center',alignItems:'center', margin:'25%'
-        }}>
-             <Gauge fontSize="34" fontColor='#86207C' level ={progress} title="Score Calculation" color="orange"/>
-        </div>
-         </div>
-        
-   );}
-  /*
-  
-        <div style={{ alignItems:'center',width:'100%'}}>
-          <Gauge level ={resultat1.level} title= {resultat1.title} color={resultat1.color}/>
-          <Gauge level ={resultat2.level} title= {resultat2.title} color={resultat2.color}/>
-          <Gauge level ={resultat3.level} title= {resultat3.title} color={resultat3.color}/>
-          <Gauge level ={resultat4.level} title= {resultat4.title} color={resultat4.color}/>
-          <Gauge level ={resultat5.level} title= {resultat5.title} color={resultat5.color}/>
-        </div>
-  */
    return (
-      <div>
-        <label>{resultat1level}</label>
-      <button onClick={() => {
-         const imageRef = firebaseService.storage().ref('images').child(guid())
-         
-        // imageRef.put(blob, { contentType: mime })
-        // then imageRef.getDownloadURL() 
-
-        var storageRef = firebase.storage().ref();
-        var imagesRef = storageRef.child('images/');
-        // Data URL string
-        var message = 'data:text/plain;base64,5b6p5Y+344GX44G+44GX44Gf77yB44GK44KB44Gn44Go44GG77yB';
-        imageRef.putString(message, 'data_url').then(function(snapshot) {
-          console.log('Uploaded a data_url string!',snapshot);
-          console.log('url',imageRef.getDownloadURL())
-      })
-    }}> 
-            upload data....  
-        </button> 
-
-    <div id="photo" ref={photoRef} > 
-    <h1>GeeksforGeeks</h1> 
-        <label>
-        Hello everyone! This is a 
-        trial page for taking a 
-        screenshot. 
-        This is a dummy button! 
-        </label>
-        <button> Dummy</button>  
-        <label>Click the button below to 
-        take a screenshot of the div.
-        </label>
-        <button onClick={() =>takeshot()}> 
+      <div ref={photoRef} >
+         <div style={{ alignItems:'center',width:'100%'}}>
+                  <Gauge level ={resultat1level} title="betterthan" color="#86207C"/>
+                  <Gauge level ={resultat2level} title="betterthan1" color="red"/>
+                  <Gauge level ={resultat3level} title="betterthan2" color="green"/>
+                  <Gauge level ={resultat4level} title="betterthan3" color="blue"/>
+                  <Gauge level ={resultat5level} title="betterthan4" color="orange"/>
+          </div>
+        <button style={{backgroundColor:'red'}} onClick={() =>takeshot()}> 
             Take Screenshot 
         </button> 
-    </div> 
-    <h1>Screenshot:</h1> 
-    <div id="output" ref={outputRef}></div> 
-
-          <h1 style={{padding:10,maxHeight:'100%',maxWidth:'100%',display:'flex'}}>{JSON.stringify(items)} </h1>
-          <img  style={{padding:10,maxHeight:'100%',maxWidth:'100%'}} src={imgSrc} alt="giphy"/>
       </div>
     );
   };
