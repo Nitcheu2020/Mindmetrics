@@ -146,18 +146,71 @@ const  takeshot =() => {
     */
 
    return (
+     <div>
       <div ref={photoRef} >
          <div style={{ alignItems:'center',width:'100%'}}>
-                  <Gauge level ={resultat1level} title="betterthan" color="#86207C"/>
-                  <Gauge level ={resultat2level} title="betterthan1" color="red"/>
-                  <Gauge level ={resultat3level} title="betterthan2" color="green"/>
-                  <Gauge level ={resultat4level} title="betterthan3" color="blue"/>
-                  <Gauge level ={resultat5level} title="betterthan4" color="orange"/>
+                  <Gauge level ={resultat1level} title="betterthan" color="#ff0f33"/>
+                  <Gauge level ={resultat2level} title="betterthan1" color="#41ac97"/>
+                  <Gauge level ={resultat3level} title="betterthan2" color="#cb0c86"/>
+                  <Gauge level ={resultat4level} title="betterthan3" color="#04b2ca"/>
+                  <Gauge level ={resultat5level} title="betterthan4" color="#2c719d"/>
           </div>
         <button style={{backgroundColor:'red'}} onClick={() =>takeshot()}> 
             Take Screenshot 
         </button> 
       </div>
+      <div style={{
+        position: 'relative',
+        width: '100%',
+        maxWidth: '100%'
+      }}>
+        <img   src={bgHeader} style={{
+          width: '100%',
+          height: 'auto',
+        }} alt="bgHeader"/>
+        <button class="btn" 
+          onClick={() => console.log("Cliqued")}
+          onMouseOver={() => console.log("hover")}
+          style={{
+            top                   : '50%',
+            left                  : '50%',
+            right                 : 'auto',
+            bottom                : 'auto',
+            marginRight           : '-50%',
+            transform             : 'translate(-50%, -50%)',
+           position: 'absolute',
+
+           
+            display:'flex',
+    alignSelf:'center',
+    color:'white',
+    'backgroundColor':'#F49608',
+    'borderRadius':20,
+    padding: 7,
+    marginTop:5,
+    marginBottom:15,
+    borderColor:'transparent',
+    fontFamily:'Sans Open Light',
+    fontSize:21,
+           /*top: '50%',
+           left: '50%',
+           transform: 'translate(-50%, -50%)',
+           '-ms-transform': 'translate(-50%, -50%)',
+           backgroundColor: '#555',
+           color: 'white',
+           fontSize: '16px',
+           padding: '12px 24px',
+           border: 'none',
+           cursor: 'pointer',
+           borderRadius: '5px',
+           textAlign: 'center',*/ 
+          }}
+
+        >
+          GET PREMIUM REPORTS
+        </button>
+      </div>
+    </div> 
     );
   };
 

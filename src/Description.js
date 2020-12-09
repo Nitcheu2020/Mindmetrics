@@ -373,7 +373,7 @@ const onSiteChanged = (e) => {
              <Gauge fontSize="34" fontColor='#86207C' level ={progress} title="Score Calculation" color="orange"/>
       </div>
     );
-
+          //style={{ alignItems:'center',width:'100%'}}
     return (
       <ErrorBoundary>
         <div style={{justifyContent:'center',display:'flex',alignItems:'center',backgroundColor:'#D3D3D3',}}>
@@ -389,9 +389,10 @@ const onSiteChanged = (e) => {
         </div>
 
           {!this.state.user ? <div style={{display:'flex',flexDirection:'column'}}> 
-          <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column',flex:1}}>
+          <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column',flex:1,position:'relative'}}>
             <div 
-              style={{backgroundImage: `url(${bgHeader})`, height:470,justifyContent:'center',display:'flex',flexDirection:'column'
+              style={{backgroundImage: `url(${bgHeader})`,
+               height:470,justifyContent:'center',display:'flex',flexDirection:'column',
               }}
             >
             <div>

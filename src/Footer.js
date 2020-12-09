@@ -5,6 +5,7 @@ import {
   } from "react-router-dom";
   import social_icons from './img/social_icons.png';
 import logo_footer from './img/logo_footer.png';
+import Menu from './Menu';
 
 const  Footer =(props)=>{
     return (
@@ -19,24 +20,8 @@ const  Footer =(props)=>{
            // maringTop:'5%'
           //  maxWidth:'100%',
           }}>
-              <nav style={{
-                flex:1,
-                //'fontWeight': 'bold',
-                display: 'flex',
-                flexDirection:'row',
-                justifyContent:'flex-start',
-                alignItems:'center',
-                alignSelf:'flex-start',
-                //display:'inline-flex',
-              }}>
-                <Link to="/" style={{ textDecoration: 'none',padding:'1%',display:'flex' }}>HOME</Link>
-                <Link to="/description" style={{ textDecoration: 'none',padding:'1%',display:'flex'}}>HOW IT WORKS</Link>
-                <Link to="/blog" style={{ textDecoration: 'none',padding:'1%' }}>Blog</Link>
-                <Link to="/research" style={{ textDecoration: 'none',padding:'1%',height: 'auto', }} >RESEARCH</Link>
-                <Link to="/contact" style={{ textDecoration: 'none',padding:'1%' }}>CONTACT</Link>
-                <Link to="/canvas" style={{ textDecoration: 'none',padding:'1%' }}>Canvas</Link>
-                
-              </nav>
+              
+              <Menu/>
               <img
                   style={{display: 'flex',alignSelf:'flex-end',marginRight:"20%",padding:'1%',width: '10%',
                   height: 'auto',}}
