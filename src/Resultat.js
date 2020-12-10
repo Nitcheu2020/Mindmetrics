@@ -8,6 +8,7 @@ import Modal from 'react-modal';
 import bgHeader from './img/bg-header.png';
 import Blog from './Blog';
 
+import Footer from './Footer';
 import {
     useLocation,
   } from "react-router-dom";
@@ -148,10 +149,12 @@ const  takeshot =() => {
 
    return (
      <div>
-      <div style={{display:'flex',flexDirection:'row',backgroundColor:'#d3d3d3',justifyContent:'space-between'}} ref={photoRef} >
+      <div style={{display:'flex',flexDirection:'row',backgroundColor:'#c0c0c0',justifyContent:'space-between',
+          'paddingLeft': '17.40vw', 'paddingRight': '17.40vw',
+      }} ref={photoRef} >
         <div style={{'marginLeft': '1.70vw',padding:'1vw',}}>
           <label>
-              Your Name
+              Your Name 
           </label>
           <div style={{paddingBottom:'1vw', borderBottom: '2px solid 	#c0c0c0',width:'100%',fontSize:'0.85vw'}}> 
             <label>
@@ -166,8 +169,8 @@ const  takeshot =() => {
             <label>You are :</label> 
             </nav>
             <label style={{fontSize:'1.5vw'}}>Helpful and Analytical</label> 
-            <nav style={{width:'120%',display:'flex'}}>
-              <label style={{ borderBottom: '2px solid 	#c0c0c0',paddingBottom:'1vw',fontSize:'1vw',padding:10}}>
+            <nav style={{width:'23vw',display:'flex',paddingRight:'5vw'}}>
+              <label style={{ borderBottom: '2px solid 	#c0c0c0',paddingBottom:'1vw',fontSize:'1vw'}}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 {<br/>} {<br/>}
@@ -187,7 +190,7 @@ const  takeshot =() => {
             </div>
         </div>
 
-         <div style={{justifyContent:'center',alignItems:'center',width:'160%',backgroundColor:'white',padding:'3vw',margin:'3vw'}}>
+         <div style={{justifyContent:'center',alignItems:'center',width:'35.63vw',backgroundColor:'white',padding:'2vw',margin:'1vw',boxShadow: '1px 1px 1px 1px  #d3d3d3'}}>
                   <div  style={{alignSelf:'center',display:'flex'}}>resultat2level </div>
                   <Gauge level ={50} title="betterthan" color="#ff0f33"/>
                   <Gauge level ={80} title="betterthan1" color="#41ac97"/>
@@ -213,7 +216,7 @@ const  takeshot =() => {
         }} alt="bgHeader"/>
 
         <div style={{
-          
+         // border: '5px solid 	#red',
           top                   : '50%',
           left                  : '50%',
           right                 : 'auto',
@@ -222,7 +225,7 @@ const  takeshot =() => {
           transform             : 'translate(-50%, -50%)',
          position: 'absolute',
         }}>
-          
+
         <button class="btn" 
           onClick={() => console.log("Cliqued")}
           onMouseOver={() => console.log("hover")}
@@ -262,6 +265,7 @@ const  takeshot =() => {
 
       </div>
     </div> 
+
     );
   };
 

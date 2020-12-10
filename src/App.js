@@ -33,7 +33,8 @@ const divStyle = {
   'flexDirection':'row',
   justifyContent:'center',
   alignItems:'center', 
-  maxWidth:'100%'
+  maxWidth:'100%',
+  'paddingLeft': '17.40vw',
 };
 
 const numberCircle ={
