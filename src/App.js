@@ -16,7 +16,8 @@ import ErrorBoundary from './ErrorBoundary';
 import firebaseService from './firebaseService';
 import Resultat from './Resultat';
 import Footer from './Footer';
-
+import Gauge from './Gauge';
+import Menu from './Menu';
 import {
   BrowserRouter as Router,
   Switch,
@@ -30,8 +31,9 @@ const divStyle = {
   //'fontWeight': 'bold',
    display: 'flex',
   'flexDirection':'row',
-  justifyContent:'space-around',
+  justifyContent:'center',
   alignItems:'center', 
+  maxWidth:'100%'
 };
 
 const numberCircle ={
@@ -101,31 +103,15 @@ export default class App extends Component {
         {!this.state.user? <div style={divStyle}>
 
         <img
-        style={{display: 'flex','marginLeft': 50,padding:10}}
-        src={logo} alt="Logo" />
-        
-            <label>
-              <Link to="/" style={{ textDecoration: 'none' }}>HOME</Link>
-            </label>
-            <label>
-              <Link to="/description"  style={{ textDecoration: 'none' }}>HOW IT WORKS</Link>
-            </label>
-            <label>
-              <Link to="login" style={{ textDecoration: 'none' }}>Login </Link>
-            </label>
-            <label>
-              <Link to="/blog" style={{ textDecoration: 'none' }}>Blog</Link>
-            </label>
-             <label style={{display:'flex',}}>
-              <Link to="/research" style={{ textDecoration: 'none' }}>RESEARCH</Link>
-            </label>
-             <label style={{display:'flex',}}>
-              <Link to="/contact" style={{ textDecoration: 'none' }}>CONTACT</Link>
-            </label>
-            <label style={{display:'flex',}}>
-              <Link to="/canvas" style={{ textDecoration: 'none' }}>Canvas</Link>
-            </label>
-            <button style={{
+          style={{
+            display: 'flex','marginLeft': '1.70vw',padding:'1vw',paddingRight:'4vw'
+          }}
+          src={logo} alt="Logo" 
+        />
+            <Menu justifyContent='flex-end'/>
+            <Link to="/description" style={{textDecoration: 'none',}} transition="glide-right">
+           <button style={{
+              position:'relative',
               display:'flex',
               color:'white',
               'backgroundColor':'#F49608',
@@ -133,6 +119,7 @@ export default class App extends Component {
               padding: 10,
               borderColor:'transparent'
             }}>TAKE TEST</button>
+            </Link>
           </div>:null}
 
         {/* A <Switch> looks through its children <Route>s and
@@ -183,6 +170,8 @@ function Home() {
         <label> We use your writing and social media profiles to build you a detailed </label>
         <label  >and accurate Personality report </label>
       </label>
+     
+      <Link to="/description" style={{ textDecoration: 'none',}}>
       <button style={{
                 'marginTop':20,
                 color:'white',
@@ -193,6 +182,7 @@ function Home() {
               }}>
                 GET FREE ANALYSIS
       </button>
+      </Link>
       <img
           style={{
             display: 'flex',
@@ -259,6 +249,7 @@ function Home() {
         }
       }>
          <label style ={{padding:20,'fontSize':18,'fontWeight':'bold'}}>Discover who You are....</label>
+         <Link to="/description">
           <button style={{
               color:'white',
               'backgroundColor':'#f49608', 
@@ -267,6 +258,7 @@ function Home() {
               borderColor:'transparent'
             }}>GET FREE ANALYSIS
           </button>
+          </Link>
       </div>
     </div>
     <Footer/>

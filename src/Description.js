@@ -19,7 +19,7 @@ import QuestionnaireBrute from './QuestionnaireBrute';
 import response from './response';
 import {Motion, spring} from 'react-motion';
 import {
-  Link
+  Link,withRouter
 } from "react-router-dom";
 
 var  questionsSuivante = 0;
@@ -284,7 +284,7 @@ const onSiteChanged = (e) => {
            // answers[Questions[question].key-1] = rslt;
            //answers[Questions[question].key] = rslt;
             this.setState({ selected: elmnt.key, answers });  
-
+             console.log("Fin",this.state.fin);
             //new pages..... 
             setTimeout(() =>{
               const {debut,fin} = this.state;
@@ -305,7 +305,7 @@ const onSiteChanged = (e) => {
         let answers = [...this.state.answers];
         if (question === 50) console.log("QUESTION sdfdsfdfs 50 ");
       return response.map((elmnt) => (
-        <td key={elmnt.key} style={{ padding: 12 }}>
+        <td key={elmnt.key} style={{ padding: 7 }}>
           <button style={
             question === 50 ? (answers[question])  && answers[question].keyresponse === elmnt.key ? styles['radioButtonClicked' + elmnt.key] : styles['radioButton' + elmnt.key]:
             (answers[question-1])  && answers[question-1].keyresponse === elmnt.key ? styles['radioButtonClicked' + elmnt.key] : styles['radioButton' + elmnt.key]
@@ -338,70 +338,42 @@ const onSiteChanged = (e) => {
      
     var il = 0;
     var decompte =0;
-    var resultat1level,resultat2level,resultat3level,resultat4level,resultat5level;
+    var montrer = false;
 
     const move =() =>{
       if (il == 0) {
         il = 1;
        // var elem = document.getElementById("myBar");
-        var width = 1;
-        var id = setInterval(frame, 10);
-        function frame() {
-          if (width >= 100) {
-           // SetShowResult(true);
-           return ;
-           // this.setState({showResult:true});
-          //  clearInterval(id);
-          //  il = 0;
-          } else {
-            width++;
-            decompte = width
-            console.log(decompte);
-         //   this.setState({progress:width});
-           // elem.style.width = width + "%";
-          }
+       // function
+       const  frame = () =>{
+        if (width >= 100) {
+          this.setState({showResult: true});
+          return ;
+         // this.setState({showResult:true});
+        //  clearInterval(id);
+        //  il = 0;
+        } else {
+          width++;
+          decompte = width
+          console.log(decompte);
+          this.setState({progress:width});
+         // elem.style.width = width + "%";
         }
       }
+
+        var width = 1;
+        var id = setInterval(frame, 50);
+       
+      }
     }
-     /*     LOG OUT  function              
-        <button style={styles.buton}
-            onClick ={() => {
-              const {debut,fin} = this.state;
-              this.setState({debut:debut-5,fin:fin-5})
-            }}
-            >
-              Previous Questions
-            </button>
-          <button style={{
-              display:'flex',
-              alignSelf:'center',
-              color:'white',
-              'backgroundColor':'red',
-              'borderRadius':20,
-              padding: 10,
-            }}
-            onClick ={() => {
-              firebase.auth().signOut().then(function() {
-              // Sign-out successful.
-            }).catch(function(error) {
-              // An error happened.
-            });
-            }}
-            >
-              LOG OUT 
-            </button>
-       <button style={styles.buton}
-            onClick ={this.submitAnswers}
-            >SUBMIT ANSWERS</button>
-
-
-   
-            <button style={styles.buton}
-            onClick ={this.arrayOfAnswers}
-            >CHECK THE ANSERS ON CATEGORY 5 </button>*/
-    
-   
-    // background: `url(${faces})`, padding:20
+    const {showResult,progress} = this.state;
+    if (showResult) return (
+      <div  style={{display:'flex',flex:1,justifyContent:'center',alignItems:'center', margin:'25%'
+          }}>
+             <Gauge fontSize="34" fontColor='#86207C' level ={progress} title="Score Calculation" color="orange"/>
+      </div>
+    );
+          //style={{ alignItems:'center',width:'100%'}}
     return (
       <ErrorBoundary>
         <div style={{justifyContent:'center',display:'flex',alignItems:'center',backgroundColor:'#D3D3D3',}}>
@@ -409,7 +381,7 @@ const onSiteChanged = (e) => {
           <>
           <Link to="/" style={{ textDecoration: 'none' }}>
            <button style={{backgroundColor:'transparent',borderColor:'transparent'}} onClick={() => logOut()}>
-           <img  style={{padding:10,}} src={logo} alt="logo"/>
+           <img  style={{padding:5,}} src={logo} alt="logo"/>
            </button>
           </Link>
           </>
@@ -417,9 +389,10 @@ const onSiteChanged = (e) => {
         </div>
 
           {!this.state.user ? <div style={{display:'flex',flexDirection:'column'}}> 
-          <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column',flex:1}}>
+          <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column',flex:1,position:'relative'}}>
             <div 
-              style={{backgroundImage: `url(${bgHeader})`, height:470,justifyContent:'center',display:'flex',flexDirection:'column'
+              style={{backgroundImage: `url(${bgHeader})`,
+               height:470,justifyContent:'center',display:'flex',flexDirection:'column',
               }}
             >
             <div>
@@ -476,7 +449,7 @@ const onSiteChanged = (e) => {
               key={elemnt.key}
               style={styles.questionnaire}
             >
-              <label style={styles.button,{display: 'flex',fontFamily:'Open Sans Regular',padding:5}}>
+              <label style={styles.button,{display: 'flex',fontFamily:'Open Sans Regular',padding:2}}>
                 {elemnt.val}
               </label>
                     <tr style={{justifyContent:'space-around',alignItems:'center',display:'flex'}}>
@@ -491,32 +464,12 @@ const onSiteChanged = (e) => {
         </div>
         </div>
         <div style={{display:'flex',alignItems:'center',justifyContent:'center',padding:15}}>
-      
-        <Link to= {{pathname: "/resultat",
-        state:{
-          progress: 'assd'
-        }
-          }} 
-          style={{ textDecoration: 'none' }}
-          onClick={()=> console.log("LE MBOLE DANSE DANSE SEULEMENT........")}
-       >
-         Tesster la fonction oncl
-         </Link>
-
-
-       { this.state.progressBar >=100? 
-      <Link to= {{pathname: "/resultat",
-        state: { progress: this.state.betterthan4,
-            counting:true,
-            resultat1level:  this.state.betterthan,
-            resultat2level: this.state.betterthan1,
-            resultat3level: this.state.betterthan2,
-            resultat4level: this.state.betterthan3,
-            resultat5level: this.state.betterthan4,
-          }
-          }} 
+        
+       { this.state.progressBar >=100?
+      <Link 
           style={{ textDecoration: 'none' }}
           onClick={ (e)=> {
+            e.preventDefault()
             const userId = firebaseService.auth().currentUser.uid;
             const {answers} = this.state;
       
@@ -569,15 +522,21 @@ const onSiteChanged = (e) => {
              this.getValue(3,'betterthan2');
              this.getValue(4,'betterthan3');
              this.getValue(5,'betterthan4');
-             this.openModal();
-            //setTimeout(() =>{ this.openModal(); }, 3000);
-            resultat1level = this.state.betterthan ;
-            resultat2level = this.state.betterthan1 ;
-            resultat3level = this.state.betterthan2;
-            resultat4level = this.state.betterthan3;
-            resultat5level = this.state.betterthan4;
-
-
+            // this.openModal();
+            this.setState({showResult:true});
+            move();
+            setTimeout(() => {
+              this.props.history.push({
+                pathname: "/resultat",
+                state:{ progress: this.state.betterthan4,
+                  counting:true,
+                  resultat1level:  this.state.betterthan,
+                  resultat2level: this.state.betterthan1,
+                  resultat3level: this.state.betterthan2,
+                  resultat4level: this.state.betterthan3,
+                  resultat5level: this.state.betterthan4,}
+              })
+          },5000);
 
 
             /*const { replace, to, delay, onDelayStart, onDelayEnd } = this.props;
@@ -624,7 +583,7 @@ const onSiteChanged = (e) => {
                 </div>
               }/> :null
               }
-            <div style={{backgroundColor:'#CDCDCD',justifyContent:'center',display:'flex',padding:'5%'}}>
+            <div style={{backgroundColor:'#CDCDCD',justifyContent:'center',display:'flex',padding:'2%',alignSelf:'flex-end'}}>
               <label > Ask Your Friends and Family to Take the Test Too!</label>
             </div>
         <Footer/>
@@ -791,4 +750,4 @@ backgroundColor:'#86207C',
 }
 };
 
-export default Description;
+export default withRouter(Description);
