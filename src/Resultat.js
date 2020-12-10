@@ -6,6 +6,7 @@ import firebaseService from './firebaseService';
 import firebase from "firebase/app";
 import Modal from 'react-modal';
 import bgHeader from './img/bg-header.png';
+import Blog from './Blog';
 
 import {
     useLocation,
@@ -147,18 +148,60 @@ const  takeshot =() => {
 
    return (
      <div>
-      <div ref={photoRef} >
-         <div style={{ alignItems:'center',width:'100%'}}>
-                  <Gauge level ={resultat1level} title="betterthan" color="#ff0f33"/>
-                  <Gauge level ={resultat2level} title="betterthan1" color="#41ac97"/>
+      <div style={{display:'flex',flexDirection:'row',backgroundColor:'#d3d3d3',justifyContent:'space-between'}} ref={photoRef} >
+        <div style={{'marginLeft': '1.70vw',padding:'1vw',}}>
+          <label>
+              Your Name
+          </label>
+          <div style={{paddingBottom:'1vw', borderBottom: '2px solid 	#c0c0c0',width:'100%',fontSize:'0.85vw'}}> 
+            <label>
+              123123 words analyzed. 
+            </label>
+            <label >
+               Very Strong Analysis
+            </label> 
+          </div>  
+          
+          <nav>
+            <label>You are :</label> 
+            </nav>
+            <label style={{fontSize:'1.5vw'}}>Helpful and Analytical</label> 
+            <nav style={{width:'120%',display:'flex'}}>
+              <label style={{ borderBottom: '2px solid 	#c0c0c0',paddingBottom:'1vw',fontSize:'1vw',padding:10}}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                {<br/>} {<br/>}
+                Ut enim ad minim veniam, quis nostrud exercitation
+                ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                {<br/>} {<br/>}
+                Duis aute irure dolor in reprehenderit in voluptate 
+                velit esse cillum dolore eu fugiat nulla pariatur. 
+                Excepteur sint non proident.
+              </label>
+            </nav>
+            <div style={{paddingTop:'1.5vh',flexDirection:'row',display:'flex',justifyContent:'center', alignItems:'center',}}>
+              <label style={{display:'flex',fontSize:'1vw',padding:'1vw',marginTop:-30}}>
+                Share Your Results 
+              </label>
+              <Blog/>
+            </div>
+        </div>
+
+         <div style={{justifyContent:'center',alignItems:'center',width:'160%',backgroundColor:'white',padding:'3vw',margin:'3vw'}}>
+                  <div  style={{alignSelf:'center',display:'flex'}}>resultat2level </div>
+                  <Gauge level ={50} title="betterthan" color="#ff0f33"/>
+                  <Gauge level ={80} title="betterthan1" color="#41ac97"/>
                   <Gauge level ={resultat3level} title="betterthan2" color="#cb0c86"/>
                   <Gauge level ={resultat4level} title="betterthan3" color="#04b2ca"/>
                   <Gauge level ={resultat5level} title="betterthan4" color="#2c719d"/>
           </div>
-        <button style={{backgroundColor:'red'}} onClick={() =>takeshot()}> 
+        
+      </div>
+
+      <button style={{backgroundColor:'red'}} onClick={() =>takeshot()}> 
             Take Screenshot 
         </button> 
-      </div>
+        
       <div style={{
         position: 'relative',
         width: '100%',
@@ -168,17 +211,22 @@ const  takeshot =() => {
           width: '100%',
           height: 'auto',
         }} alt="bgHeader"/>
+
+        <div style={{
+          
+          top                   : '50%',
+          left                  : '50%',
+          right                 : 'auto',
+          bottom                : 'auto',
+          marginRight           : '-50%',
+          transform             : 'translate(-50%, -50%)',
+         position: 'absolute',
+        }}>
+          
         <button class="btn" 
           onClick={() => console.log("Cliqued")}
           onMouseOver={() => console.log("hover")}
           style={{
-            top                   : '50%',
-            left                  : '50%',
-            right                 : 'auto',
-            bottom                : 'auto',
-            marginRight           : '-50%',
-            transform             : 'translate(-50%, -50%)',
-           position: 'absolute',
 
            
             display:'flex',
@@ -209,6 +257,9 @@ const  takeshot =() => {
         >
           GET PREMIUM REPORTS
         </button>
+
+        </div>
+
       </div>
     </div> 
     );
