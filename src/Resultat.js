@@ -6,6 +6,7 @@ import firebaseService from './firebaseService';
 import firebase from "firebase/app";
 import Modal from 'react-modal';
 import bgHeader from './img/bg-header.png';
+import Blog from './Blog';
 
 import {
     useLocation,
@@ -71,12 +72,12 @@ ref.putString(message, 'data_url').then(function(snapshot) {
     const [error,setError] = useState(null);
     const [isLoaded,setIsLoaded] = useState(false);
     const [items,setItems] = useState([]);
-    const [ imgSrc, setImgSrc] = useState('');
+    const [ imgSrc, setImgSrc] = useState(null);
 
 let background = location.state && location.state.progress;
 
   
-
+//BLOG props as url...
 let resultat1level =  location.state && location.state.resultat1level;
 let resultat2level =  location.state && location.state.resultat2level;
 let resultat3level =  location.state && location.state.resultat3level;
@@ -127,6 +128,14 @@ const  takeshot =() => {
 
       }).then(() => imageRef.getDownloadURL())
       .then(url =>{
+       /* const imageRef = firebaseService.storage().ref('images').child(guid())
+        var storageRef = firebase.storage().ref();
+        var imagesRef = storageRef.child('images/');
+        // Data URL string
+         imageRef.putString(url, 'data_url').then(function(snapshot) {
+          console.log('Uploaded a data_url string!',snapshot);
+         // console.log('url',imageRef.getDownloadURL())
+      }) */
         console.log('Finally getting the URL...',url);
       })
       }) 
@@ -136,75 +145,123 @@ const  takeshot =() => {
      move();
     }, 3000);
     */
-   if (!showResult) 
-   {
-       return (
-         <div style={{backgroundImage: `url(${bgHeader})`,flex:1,display:'flex'}}>
-            <label style={{color:'red'}}>  background  {background}</label>
-            <label style={{color:'red'}}>???   {resultat1level}</label>
-            <label style={{color:'red'}}>!!!! {resultat3level}</label>
-            <label style={{color:'red'}}> ......{resultat4level}</label>
 
-          <div  style={{display:'flex',flex:1,justifyContent:'center',alignItems:'center', margin:'25%'
-        }}>
-             <Gauge fontSize="34" fontColor='#86207C' level ={progress} title="Score Calculation" color="orange"/>
-        </div>
-         </div>
-        
-   );}
-  /*
-  
-        <div style={{ alignItems:'center',width:'100%'}}>
-          <Gauge level ={resultat1.level} title= {resultat1.title} color={resultat1.color}/>
-          <Gauge level ={resultat2.level} title= {resultat2.title} color={resultat2.color}/>
-          <Gauge level ={resultat3.level} title= {resultat3.title} color={resultat3.color}/>
-          <Gauge level ={resultat4.level} title= {resultat4.title} color={resultat4.color}/>
-          <Gauge level ={resultat5.level} title= {resultat5.title} color={resultat5.color}/>
-        </div>
-  */
    return (
-      <div>
-        <label>{resultat1level}</label>
-      <button onClick={() => {
-         const imageRef = firebaseService.storage().ref('images').child(guid())
-         
-        // imageRef.put(blob, { contentType: mime })
-        // then imageRef.getDownloadURL() 
+     <div>
+      <div style={{display:'flex',flexDirection:'row',backgroundColor:'#d3d3d3',justifyContent:'space-between'}} ref={photoRef} >
+        <div style={{'marginLeft': '1.70vw',padding:'1vw',}}>
+          <label>
+              Your Name
+          </label>
+          <div style={{paddingBottom:'1vw', borderBottom: '2px solid 	#c0c0c0',width:'100%',fontSize:'0.85vw'}}> 
+            <label>
+              123123 words analyzed. 
+            </label>
+            <label >
+               Very Strong Analysis
+            </label> 
+          </div>  
+          
+          <nav>
+            <label>You are :</label> 
+            </nav>
+            <label style={{fontSize:'1.5vw'}}>Helpful and Analytical</label> 
+            <nav style={{width:'120%',display:'flex'}}>
+              <label style={{ borderBottom: '2px solid 	#c0c0c0',paddingBottom:'1vw',fontSize:'1vw',padding:10}}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                {<br/>} {<br/>}
+                Ut enim ad minim veniam, quis nostrud exercitation
+                ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                {<br/>} {<br/>}
+                Duis aute irure dolor in reprehenderit in voluptate 
+                velit esse cillum dolore eu fugiat nulla pariatur. 
+                Excepteur sint non proident.
+              </label>
+            </nav>
+            <div style={{paddingTop:'1.5vh',flexDirection:'row',display:'flex',justifyContent:'center', alignItems:'center',}}>
+              <label style={{display:'flex',fontSize:'1vw',padding:'1vw',marginTop:-30}}>
+                Share Your Results 
+              </label>
+              <Blog/>
+            </div>
+        </div>
 
-        var storageRef = firebase.storage().ref();
-        var imagesRef = storageRef.child('images/');
-        // Data URL string
-        var message = 'data:text/plain;base64,5b6p5Y+344GX44G+44GX44Gf77yB44GK44KB44Gn44Go44GG77yB';
-        imageRef.putString(message, 'data_url').then(function(snapshot) {
-          console.log('Uploaded a data_url string!',snapshot);
-          console.log('url',imageRef.getDownloadURL())
-      })
-    }}> 
-            upload data....  
-        </button> 
+         <div style={{justifyContent:'center',alignItems:'center',width:'160%',backgroundColor:'white',padding:'3vw',margin:'3vw'}}>
+                  <div  style={{alignSelf:'center',display:'flex'}}>resultat2level </div>
+                  <Gauge level ={50} title="betterthan" color="#ff0f33"/>
+                  <Gauge level ={80} title="betterthan1" color="#41ac97"/>
+                  <Gauge level ={resultat3level} title="betterthan2" color="#cb0c86"/>
+                  <Gauge level ={resultat4level} title="betterthan3" color="#04b2ca"/>
+                  <Gauge level ={resultat5level} title="betterthan4" color="#2c719d"/>
+          </div>
+        
+      </div>
 
-    <div id="photo" ref={photoRef} > 
-    <h1>GeeksforGeeks</h1> 
-        <label>
-        Hello everyone! This is a 
-        trial page for taking a 
-        screenshot. 
-        This is a dummy button! 
-        </label>
-        <button> Dummy</button>  
-        <label>Click the button below to 
-        take a screenshot of the div.
-        </label>
-        <button onClick={() =>takeshot()}> 
+      <button style={{backgroundColor:'red'}} onClick={() =>takeshot()}> 
             Take Screenshot 
         </button> 
-    </div> 
-    <h1>Screenshot:</h1> 
-    <div id="output" ref={outputRef}></div> 
+        
+      <div style={{
+        position: 'relative',
+        width: '100%',
+        maxWidth: '100%'
+      }}>
+        <img   src={bgHeader} style={{
+          width: '100%',
+          height: 'auto',
+        }} alt="bgHeader"/>
 
-          <h1 style={{padding:10,maxHeight:'100%',maxWidth:'100%',display:'flex'}}>{JSON.stringify(items)} </h1>
-          <img  style={{padding:10,maxHeight:'100%',maxWidth:'100%'}} src={imgSrc} alt="giphy"/>
+        <div style={{
+          
+          top                   : '50%',
+          left                  : '50%',
+          right                 : 'auto',
+          bottom                : 'auto',
+          marginRight           : '-50%',
+          transform             : 'translate(-50%, -50%)',
+         position: 'absolute',
+        }}>
+          
+        <button class="btn" 
+          onClick={() => console.log("Cliqued")}
+          onMouseOver={() => console.log("hover")}
+          style={{
+
+           
+            display:'flex',
+    alignSelf:'center',
+    color:'white',
+    'backgroundColor':'#F49608',
+    'borderRadius':20,
+    padding: 7,
+    marginTop:5,
+    marginBottom:15,
+    borderColor:'transparent',
+    fontFamily:'Sans Open Light',
+    fontSize:21,
+           /*top: '50%',
+           left: '50%',
+           transform: 'translate(-50%, -50%)',
+           '-ms-transform': 'translate(-50%, -50%)',
+           backgroundColor: '#555',
+           color: 'white',
+           fontSize: '16px',
+           padding: '12px 24px',
+           border: 'none',
+           cursor: 'pointer',
+           borderRadius: '5px',
+           textAlign: 'center',*/ 
+          }}
+
+        >
+          GET PREMIUM REPORTS
+        </button>
+
+        </div>
+
       </div>
+    </div> 
     );
   };
 
