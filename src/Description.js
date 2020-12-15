@@ -41,6 +41,12 @@ function shuffle(arra1) {
   return arra1;
 }
 
+const widthScreen = (taille) =>  {
+  return taille * 100/2063 + 'vw';
+}
+const heightScreen = (taille) =>  {
+  return taille * 100/2610 + 'vw';
+} 
 
 
 const Questionnaire = shuffle(QuestionnaireBrute);
@@ -305,7 +311,7 @@ const onSiteChanged = (e) => {
         let answers = [...this.state.answers];
         if (question === 50) console.log("QUESTION sdfdsfdfs 50 ");
       return response.map((elmnt) => (
-        <td key={elmnt.key} style={{ padding: 7 }}>
+        <td key={elmnt.key} style={{ paddingRight: widthScreen(40) }}>
           <button style={
             question === 50 ? (answers[question])  && answers[question].keyresponse === elmnt.key ? styles['radioButtonClicked' + elmnt.key] : styles['radioButton' + elmnt.key]:
             (answers[question-1])  && answers[question-1].keyresponse === elmnt.key ? styles['radioButtonClicked' + elmnt.key] : styles['radioButton' + elmnt.key]
@@ -396,9 +402,9 @@ const onSiteChanged = (e) => {
               }}
             >
             <div>
-              <label style={{marginLeft:'23%',fontSize:35,fontFamily:'Open Sans Bold'}}> Take The Personality Test</label>
+              <label style={{marginLeft:widthScreen(360),fontSize:widthScreen(46.5),fontFamily:'Open Sans Light',paddingBottom:heightScreen(29)}}> Take The Personality Test</label>
             </div>
-            <label style={{width:'27%',marginLeft:'23%',fontFamily:'Open Sans Light'}} > Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </label>
+            <label style={{width:widthScreen(482.63),marginLeft:widthScreen(360),fontFamily:'Open Sans Light',fontSize:widthScreen(20)}} > Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </label>
           </div>
 
             <label style={{color:'red',alignSelf:'center'}}> {
@@ -408,12 +414,12 @@ const onSiteChanged = (e) => {
           </div>
 
             <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column',flex:1}} >
-            <label style={{display:'flex',alignSelf:'center',padding:10,fontFamily:'Open Sans Regular'}}>Please enter your information to take the exam</label>
+            <label style={{display:'flex',alignSelf:'center',padding:10,fontFamily:'Open Sans Regular',fontSize:widthScreen(27.5)}}>Please enter your information to take the exam</label>
           <form  style={numberCircle} onSubmit={this.handleSubmit}>
-            <input type="text" value={this.state.firstName} onChange={this.setFirstName} style={{borderColor:'transparent',borderRadius:3,margin:5,padding:5}} placeholder="FIRST NAME" />
-            <input type="text" value={this.state.lastName} onChange={this.setLastName} style={{borderColor:'transparent',borderRadius:3,margin:5}} placeholder="LAST NAME" />
-            <input type="email" value={this.state.email} onChange={this.setEmail} style={{borderColor:'transparent',borderRadius:3,margin:5}} placeholder="EMAIL ADDRESS" />
-              <input type="password" value={this.state.password} onChange={this.setPassword}  style={{borderColor:'transparent',borderRadius:3,margin:5}} placeholder="PASSWORD"/>
+            <input type="text" value={this.state.firstName} onChange={this.setFirstName} placeholderStyle={{fontSize:widthScreen(22),fontFamily:'Open Sans Regular',paddingLeft:25}} style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3,marginBottom:heightScreen(22)}} placeholder="FIRST NAME" />
+            <input type="text" value={this.state.lastName} onChange={this.setLastName} style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3,marginBottom:heightScreen(22)}} placeholder="LAST NAME" />
+            <input type="email" value={this.state.email} onChange={this.setEmail} style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3,marginBottom:heightScreen(22)}} placeholder="EMAIL ADDRESS" />
+              <input type="password" value={this.state.password} onChange={this.setPassword}  style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3}} placeholder="PASSWORD"/>
             <input type="submit" value="Begin The Exam &rarr;"  
               style={styles.submit}
             />
@@ -433,9 +439,9 @@ const onSiteChanged = (e) => {
 
        </div>
 
-      <div style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',padding:10}}>
-          <div style={{backgroundColor:'#DCDCDC',borderRadius:5,marginLeft:5,marginRight:5,alignItems:'center',alignSelf:'center',width:'30%', borderTop : "thin solid darkgray",}}>
-            <div style={{height:25,width:this.state.progressBar +"%",backgroundColor:'#86207C',borderRadius:5,display:'flex',flex:1}}/>
+      <div style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',paddingTop:heightScreen(80)}}>
+          <div style={{backgroundColor:'#DCDCDC',borderRadius:5,marginLeft:5,marginRight:widthScreen(39),alignItems:'center',alignSelf:'center',width:'30%', borderTop : "thin solid darkgray",}}>
+            <div style={{height:heightScreen(31),width:this.state.progressBar +"%",backgroundColor:'#86207C',borderRadius:5,display:'flex',flex:1}}/>
           </div>
             <label style={{fontFamily:'Open Sans Bold', fontSize:24,color:'#86207C'}}> {this.state.progressBar +"%"}</label>
       </div>
@@ -449,21 +455,21 @@ const onSiteChanged = (e) => {
               key={elemnt.key}
               style={styles.questionnaire}
             >
-              <label style={styles.button,{display: 'flex',fontFamily:'Open Sans Regular',padding:2}}>
+              <label style={styles.button,{display: 'flex',fontFamily:'Open Sans Regular',paddingBottom:heightScreen(30),paddingTop:heightScreen(80),fontSize:18}}>
                 {elemnt.val}
               </label>
                     <tr style={{justifyContent:'space-around',alignItems:'center',display:'flex'}}>
-                        <label style={{display:'flex',padding:10,color:'#7FFFD4',fontFamily:'Sans Open Bold',fontWeight:'bold'}}>Agree</label>
+                        <label style={{display:'flex',paddingRight:widthScreen(41),color:'#41ac97',fontFamily:'Sans Open Bold',fontWeight:'bold'}}>Agree</label>
                         {
                             qcm(elemnt.key)
                         }
-                        <label style={{display:'flex',padding:10,color:'#86207C',fontSize:18,fontWeight:'bold'}}>Disagree</label>
+                        <label style={{display:'flex',color:'#86207C',fontSize:18,fontFamily:'Sans Open Bold',}}>Disagree</label>
                     </tr>
             </div>
           ))}
         </div>
         </div>
-        <div style={{display:'flex',alignItems:'center',justifyContent:'center',padding:15}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
         
        { this.state.progressBar >=100?
       <Link 
@@ -583,10 +589,7 @@ const onSiteChanged = (e) => {
                 </div>
               }/> :null
               }
-            <div style={{backgroundColor:'#CDCDCD',justifyContent:'center',display:'flex',padding:'2%',alignSelf:'flex-end'}}>
-              <label > Ask Your Friends and Family to Take the Test Too!</label>
-            </div>
-        <Footer/>
+        <Footer text={true}/>
      </ErrorBoundary>
     );
   }
@@ -614,15 +617,17 @@ const styles = {
     alignSelf:'center',
     color:'white',
     'backgroundColor':'#F49608',
-    'borderRadius':20,
-    padding: 7,
-    marginTop:5,
-    marginBottom:15,
+    'borderRadius':50,
+    fontSize:widthScreen(22),
+    fontFamily:'Sans Open Light',
+    padding: heightScreen(20),
+    marginTop:heightScreen(31),
+    marginBottom:heightScreen(60),
     borderColor:'transparent'
   },
   questionnaire:{
     'justifyContent': "space-between",
-     padding: 10,
+     paddingBottom: heightScreen(40),
      display:'flex',
      'flexDirection':'column',
      alignItems:'center',
@@ -637,8 +642,8 @@ const styles = {
     'backgroundColor':'#ff8c00',//'#F49608',
     'borderRadius':20,
     borderColor:'transparent',
-    padding: 10,
-    margin:2
+    //padding: 10,
+    //margin:2
   },
   button: {
     'alignItems': "center",
@@ -666,85 +671,85 @@ radioButtonClicked: {
   borderColor: 'pink',
 },
 radioButton1: {
-  width: '35px',
-  height: '35px',
+  width: widthScreen(68),
+  height: widthScreen(68),
   'border-radius': '50%',
-  borderColor:'#00FA9A'
+  borderColor:'#41ac97'
 },
 radioButtonClicked1: {
-width: '35px',
-height: '35px',
+width: widthScreen(68),
+height: widthScreen(68),
 'border-radius': '50%',
-backgroundColor:'#00FA9A',
+backgroundColor:'#41ac97',
 },
 radioButton2: {
-  width: '30px',
-  height: '30px',
+  width: widthScreen(50),
+  height: widthScreen(50),
   'border-radius': '50%',
-  borderColor:'#00FA9A'
+  borderColor:'#41ac97'
 },
 radioButtonClicked2: {
-width: '30px',
-height: '30px',
+width: widthScreen(50),
+height: widthScreen(50),
 'border-radius': '50%',
-backgroundColor:'#00FA9A',
+backgroundColor:'#41ac97',
 },
 radioButton3: {
-  width: '25px',
-  height: '25px',
+  width: widthScreen(42),
+  height: widthScreen(42),
   'border-radius': '50%',
-  borderColor:'#00FA9A'
+  borderColor:'#41ac97'
 },
 radioButtonClicked3: {
-width: '25px',
-height: '25px',
+width: widthScreen(42),
+height: widthScreen(42),
 'border-radius': '50%',
-backgroundColor:'#00FA9A',
+backgroundColor:'#41ac97',
 },
 radioButton4: {
-  width: '20px',
-  height: '20px',
+  width: widthScreen(34),
+  height: widthScreen(34),
   'border-radius': '50%',
 },
 radioButtonClicked4: {
-width: '20px',
-height: '20px',
+width: widthScreen(34),
+height: widthScreen(34),
 'border-radius': '50%',
 backgroundColor:'gray',
 },
 radioButton5: {
-  width: '25px',
-  height: '25px',
+  width: widthScreen(42),
+  height: widthScreen(42),
   'border-radius': '50%',
   borderColor: '#86207C',
 },
 radioButtonClicked5: {
-width: '25px',
-height: '25px',
+width: widthScreen(42),
+height:widthScreen(42),
 'border-radius': '50%',
 backgroundColor:'#86207C',
 },
 radioButton6: {
-  width: '30px',
-  height: '30px',
+  width: widthScreen(52.25),
+  height: widthScreen(52.25),
   'border-radius': '50%',
   borderColor: '#86207C',
 },
 radioButtonClicked6: {
-width: '30px',
-height: '30px',
+width: widthScreen(52.25),
+height: widthScreen(52.25),
 'border-radius': '50%',
 backgroundColor:'#86207C',
 },
 radioButton7: {
-  width: '35px',
-  height: '35px',
+  width: widthScreen(68),
+  height: widthScreen(68),
   'border-radius': '50%',
   borderColor: '#86207C',
 },
 radioButtonClicked7: {
-width: '35px',
-height: '35px',
+width: widthScreen(68),
+height: widthScreen(68),
 'border-radius': '50%',
 backgroundColor:'#86207C',
 }

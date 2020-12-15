@@ -3,14 +3,31 @@ import {
     Link
   } from "react-router-dom";
 
-var fontSize = '1.25vw';
+
+const widthScreen = (taille) =>  {
+  return taille * 100/2063 + 'vw';
+}
+const heightScreen = (taille) =>  {
+  return taille * 100/2610 + 'vw';
+} 
+const  fontSize = widthScreen(19);
+const padding = widthScreen(12);
+
 const styleMenu = { 
     textDecoration: 'none',
-    padding:'1%',
+    paddingRight:'2%',
     display:'flex',
-    fontSize:fontSize
+    fontSize:fontSize,
+    fontFamily: 'Open Sans Light'
 };
 
+/*
+
+            <Link to="/description" style={styleMenu}>HOW IT WORKS</Link>
+            <Link to="/blog" style={styleMenu}>Blog</Link>
+            <Link to="/research" style={styleMenu} >RESEARCH</Link>
+            <Link to="/contact" style={styleMenu}>CONTACT</Link>
+*/
 const  Menu = (props) => {
     return (
         <nav style={{
@@ -28,7 +45,6 @@ const  Menu = (props) => {
             <Link to="/blog" style={styleMenu}>Blog</Link>
             <Link to="/research" style={styleMenu} >RESEARCH</Link>
             <Link to="/contact" style={styleMenu}>CONTACT</Link>
-            
           </nav>
     );
 }

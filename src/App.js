@@ -18,6 +18,7 @@ import Resultat from './Resultat';
 import Footer from './Footer';
 import Gauge from './Gauge';
 import Menu from './Menu';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -25,15 +26,31 @@ import {
   Link
 } from "react-router-dom";
 import Blog from './Blog';
+
+const widthScreen = (taille) =>  {
+  return taille * 100/2063 + 'vw';
+}
+const heightScreen = (taille) =>  {
+  return taille * 100/2610 + 'vw';
+} 
+const  fontSize = widthScreen(19);
+const padding = widthScreen(12);
+
 const divStyle = {
  // flex:1,
-  backgroundColor: '#d3d3d3',
+  backgroundColor: '#FFFAFA',//'#d3d3d3',
   //'fontWeight': 'bold',
    display: 'flex',
   'flexDirection':'row',
-  justifyContent:'center',
+  justifyContent:'space-around',
   alignItems:'center', 
-  maxWidth:'100%'
+  maxWidth:'100%',
+  paddingLeft: widthScreen(360),
+  paddingRight: widthScreen(360),
+
+  paddingTop: heightScreen(18),
+  paddingBottom:heightScreen(14),
+  //'paddingLeft':36000*widthScreen +'vw',
 };
 
 const numberCircle ={
@@ -100,11 +117,14 @@ export default class App extends Component {
     return (
         <ErrorBoundary>
             <Router>
+              <div style={{backgroundColor:'pink'}}>
+
         {!this.state.user? <div style={divStyle}>
 
         <img
           style={{
-            display: 'flex','marginLeft': '1.70vw',padding:'1vw',paddingRight:'4vw'
+            display: 'flex',paddingTop:heightScreen(14),paddingBottom:heightScreen(14),
+          //  backgroundColor:'red'
           }}
           src={logo} alt="Logo" 
         />
@@ -116,12 +136,15 @@ export default class App extends Component {
               color:'white',
               'backgroundColor':'#F49608',
               'borderRadius':20,
-              padding: 10,
-              borderColor:'transparent'
+              //padding:padding,
+              padding: padding,
+              borderColor:'transparent',
+              fontSize:fontSize
             }}>TAKE TEST</button>
             </Link>
           </div>:null}
 
+          </div>
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>

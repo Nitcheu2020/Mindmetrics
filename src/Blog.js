@@ -2,64 +2,31 @@
 import React, { Component } from "react";
 import {
   FacebookShareCount,
-  PinterestShareCount,
-  VKShareCount,
-  OKShareCount,
-  RedditShareCount,
-  TumblrShareCount,
-  HatenaShareCount,
   FacebookShareButton,
   FacebookMessengerShareButton,
   FacebookMessengerIcon,
   LinkedinShareButton,
   TwitterShareButton,
-  PinterestShareButton,
-  VKShareButton,
-  OKShareButton,
-  TelegramShareButton,
-  WhatsappShareButton,
-  RedditShareButton,
-  EmailShareButton,
-  TumblrShareButton,
-  LivejournalShareButton,
-  MailruShareButton,
-  ViberShareButton,
-  WorkplaceShareButton,
-  LineShareButton,
-  WeiboShareButton,
-  PocketShareButton,
-  InstapaperShareButton,
-  HatenaShareButton,
   FacebookIcon,
   TwitterIcon,
   LinkedinIcon,
-  PinterestIcon,
-  VKIcon,
-  OKIcon,
-  TelegramIcon,
-  WhatsappIcon,
-  RedditIcon,
-  TumblrIcon,
-  MailruIcon,
-  EmailIcon,
-  LivejournalIcon,
-  ViberIcon,
-  WorkplaceIcon,
-  LineIcon,
-  PocketIcon,
-  InstapaperIcon,
-  WeiboIcon,
-  HatenaIcon,
 } from "react-share";
 import logo from "./img/logo.png";
+
+const widthScreen = (taille) =>  {
+  return taille * 100/2063 + 'vw';
+}
+const heightScreen = (taille) =>  {
+  return taille * 100/2610 + 'vw';
+}
 
 function Blog() {
     const shareUrl = 'http://github.com';
     const title = 'Mindmetrics';
 
   return (
-      <div style={{display:'flex',flexDirection:'row',justifyContent:'space-around'}}>
-        <div className="Demo__some-network">
+      <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+        <div className="Demo__some-network" style={{paddingRight:widthScreen(5)}}>
           <FacebookShareButton
             url={shareUrl}
             quote={title}
@@ -68,14 +35,14 @@ function Blog() {
             <FacebookIcon size={32} round />
           </FacebookShareButton>
 
-          <div>
+          <div style={{paddingRight:widthScreen(2)}}>
             <FacebookShareCount url={shareUrl} className="Demo__some-network__share-count">
               {count => count}
             </FacebookShareCount>
           </div>
         </div>
 
-        <div className="Demo__some-network">
+        <div className="Demo__some-network" style={{paddingRight:widthScreen(2)}}>
           <FacebookMessengerShareButton
             url={shareUrl}
             appId="521270401588372"
@@ -85,7 +52,7 @@ function Blog() {
           </FacebookMessengerShareButton>
         </div>
 
-        <div className="Demo__some-network">
+        <div className="Demo__some-network" style={{paddingRight:widthScreen(2)}}>
           <TwitterShareButton
             url={shareUrl}
             title={title}
@@ -98,7 +65,7 @@ function Blog() {
         </div>
 
         
-        <div className="Demo__some-network">
+        <div className="Demo__some-network" style={{paddingRight:widthScreen(2)}}>
           <LinkedinShareButton url={shareUrl} className="Demo__some-network__share-button">
             <LinkedinIcon size={32} round />
           </LinkedinShareButton>
