@@ -23,10 +23,9 @@ const styleMenu = {
 
 /*
 
-            <Link to="/description" style={styleMenu}>HOW IT WORKS</Link>
+            
             <Link to="/blog" style={styleMenu}>Blog</Link>
             <Link to="/research" style={styleMenu} >RESEARCH</Link>
-            <Link to="/contact" style={styleMenu}>CONTACT</Link>
 */
 const  Menu = (props) => {
     return (
@@ -42,8 +41,6 @@ const  Menu = (props) => {
           }}>
             <Link to="/" style={styleMenu}>HOME</Link>
             <Link to="/description" style={styleMenu}>HOW IT WORKS</Link>
-            <Link to="/blog" style={styleMenu}>Blog</Link>
-            <Link to="/research" style={styleMenu} >RESEARCH</Link>
             <Link to="/contact" style={styleMenu}>CONTACT</Link>
           </nav>
     );

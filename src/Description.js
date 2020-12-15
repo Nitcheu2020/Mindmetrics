@@ -93,7 +93,8 @@ class Description extends Component {
         betterthan1:11,
         betterthan2:13,
         betterthan3:17,
-        betterthan4:19
+        betterthan4:19,
+        inProp:false,
         //PASSER LA FONCTION DE DISPLAY EN PARAMETRE AUSSI 
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -297,8 +298,10 @@ const onSiteChanged = (e) => {
                 //Move to the next page *****
             if (nextQuestion.length ===5 && fin<100)
             {
-              this.setState({debut:debut+5,fin:fin+5});
+              this.setState({debut:debut+5,fin:fin+5,inProp:true});
               nextQuestion=[];
+            }else {
+              this.setState({inProp:false})
             }
            }, 2000);
              
