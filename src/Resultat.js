@@ -8,6 +8,7 @@ import Modal from 'react-modal';
 import bgHeader from './img/bg-header.png';
 import Blog from './Blog';
 
+import Footer from './Footer';
 import {
     useLocation,
   } from "react-router-dom";
@@ -24,6 +25,13 @@ import {
   };
 
   Modal.setAppElement('#root');
+
+  const widthScreen = (taille) =>  {
+    return taille * 100/2063 + 'vw';
+  }
+  const heightScreen = (taille) =>  {
+    return taille * 100/2610 + 'vw';
+  } 
 
 const Resultat = (props) => {
 
@@ -147,27 +155,24 @@ const  takeshot =() => {
     */
 
    return (
-     <div>
-      <div style={{display:'flex',flexDirection:'row',backgroundColor:'#d3d3d3',justifyContent:'space-between'}} ref={photoRef} >
-        <div style={{'marginLeft': '1.70vw',padding:'1vw',}}>
-          <label>
-              Your Name
-          </label>
-          <div style={{paddingBottom:'1vw', borderBottom: '2px solid 	#c0c0c0',width:'100%',fontSize:'0.85vw'}}> 
-            <label>
-              123123 words analyzed. 
-            </label>
-            <label >
-               Very Strong Analysis
-            </label> 
-          </div>  
+     <div style={{
+      paddingTop:heightScreen(74),backgroundColor:'#d3d3d3'}}>
+      <div style={{display:'flex',flexDirection:'row',backgroundColor:'#d3d3d3',justifyContent:'space-between',
+          paddingLeft: widthScreen(360), paddingRight: widthScreen(360)
+      }} ref={photoRef} >
+        <div  style={{width:'25.7vw', paddingTop: heightScreen(8)}}> 
+          <nav style={{fontSize:widthScreen(35),paddingBottom:heightScreen(33), borderBottom: '2px solid 	#c0c0c0',width:'100%',marginBottom:heightScreen(33),
+          fontFamily:'Open Sans Bold',
+        }}>
+              Your Name 
+          </nav>
           
           <nav>
-            <label>You are :</label> 
+            <label style={{fontSize:widthScreen(26),fontFamily:'Open Sans Italic'}}>You are :</label> 
             </nav>
-            <label style={{fontSize:'1.5vw'}}>Helpful and Analytical</label> 
-            <nav style={{width:'120%',display:'flex'}}>
-              <label style={{ borderBottom: '2px solid 	#c0c0c0',paddingBottom:'1vw',fontSize:'1vw',padding:10}}>
+            <label style={{fontSize:widthScreen(38),fontFamily:'Open Sans Italic',paddingBottom:heightScreen(29)}}>Helpful and Analytical</label> 
+            <nav style={{width:'25.7vw',display:'flex',paddingRight:'5vw'}}>
+              <label style={{ borderBottom: '2px solid 	#c0c0c0',paddingBottom:'1vw',fontSize:widthScreen(22),fontFamily:'Open Sans Light'}}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 {<br/>} {<br/>}
@@ -179,16 +184,29 @@ const  takeshot =() => {
                 Excepteur sint non proident.
               </label>
             </nav>
-            <div style={{paddingTop:'1.5vh',flexDirection:'row',display:'flex',justifyContent:'center', alignItems:'center',}}>
-              <label style={{display:'flex',fontSize:'1vw',padding:'1vw',marginTop:-30}}>
+            <div style={{paddingTop:heightScreen(40),flexDirection:'row',display:'flex',justifyContent:'flex-start', alignItems:'center',}}>
+              <label style={{display:'flex',fontSize:'1vw',paddingRight:'0.5vw',marginTop:-18,fontFamily:'Sans Open Bold'}}>
                 Share Your Results 
               </label>
               <Blog/>
             </div>
         </div>
 
-         <div style={{justifyContent:'center',alignItems:'center',width:'160%',backgroundColor:'white',padding:'3vw',margin:'3vw'}}>
-                  <div  style={{alignSelf:'center',display:'flex'}}>resultat2level </div>
+        <div 
+          style={{
+            justifyContent:'center',
+              margingLeft:widthScreen(95),
+              paddingLeft:widthScreen(52),
+              paddingRight:widthScreen(62),
+              paddingTop:heightScreen(50),
+              paddingBottom:heightScreen(70),
+              marginBottom: heightScreen(91),
+              alignItems:'center',
+              width:widthScreen(621),
+              backgroundColor:'white',
+              boxShadow: '1px 1px 1px 1px  #d3d3d3'
+          }}
+        > 
                   <Gauge level ={50} title="betterthan" color="#ff0f33"/>
                   <Gauge level ={80} title="betterthan1" color="#41ac97"/>
                   <Gauge level ={resultat3level} title="betterthan2" color="#cb0c86"/>
@@ -213,7 +231,7 @@ const  takeshot =() => {
         }} alt="bgHeader"/>
 
         <div style={{
-          
+         // border: '5px solid 	#red',
           top                   : '50%',
           left                  : '50%',
           right                 : 'auto',
@@ -222,7 +240,7 @@ const  takeshot =() => {
           transform             : 'translate(-50%, -50%)',
          position: 'absolute',
         }}>
-          
+
         <button class="btn" 
           onClick={() => console.log("Cliqued")}
           onMouseOver={() => console.log("hover")}
@@ -261,7 +279,9 @@ const  takeshot =() => {
         </div>
 
       </div>
+      <Footer text={true}/>
     </div> 
+
     );
   };
 
