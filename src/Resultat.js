@@ -26,6 +26,13 @@ import {
 
   Modal.setAppElement('#root');
 
+  const widthScreen = (taille) =>  {
+    return taille * 100/2063 + 'vw';
+  }
+  const heightScreen = (taille) =>  {
+    return taille * 100/2610 + 'vw';
+  } 
+
 const Resultat = (props) => {
 
   const photoRef = useRef(null);
@@ -148,29 +155,24 @@ const  takeshot =() => {
     */
 
    return (
-     <div>
-      <div style={{display:'flex',flexDirection:'row',backgroundColor:'#c0c0c0',justifyContent:'space-between',
-          'paddingLeft': '17.40vw', 'paddingRight': '17.40vw',
+     <div style={{
+      paddingTop:heightScreen(74),backgroundColor:'#d3d3d3'}}>
+      <div style={{display:'flex',flexDirection:'row',backgroundColor:'#d3d3d3',justifyContent:'space-between',
+          paddingLeft: widthScreen(360), paddingRight: widthScreen(360)
       }} ref={photoRef} >
-        <div style={{'marginLeft': '1.70vw',padding:'1vw',}}>
-          <label>
+        <div  style={{width:'25.7vw', paddingTop: heightScreen(8)}}> 
+          <nav style={{fontSize:widthScreen(35),paddingBottom:heightScreen(33), borderBottom: '2px solid 	#c0c0c0',width:'100%',marginBottom:heightScreen(33),
+          fontFamily:'Open Sans Bold',
+        }}>
               Your Name 
-          </label>
-          <div style={{paddingBottom:'1vw', borderBottom: '2px solid 	#c0c0c0',width:'100%',fontSize:'0.85vw'}}> 
-            <label>
-              123123 words analyzed. 
-            </label>
-            <label >
-               Very Strong Analysis
-            </label> 
-          </div>  
+          </nav>
           
           <nav>
-            <label>You are :</label> 
+            <label style={{fontSize:widthScreen(26),fontFamily:'Open Sans Italic'}}>You are :</label> 
             </nav>
-            <label style={{fontSize:'1.5vw'}}>Helpful and Analytical</label> 
-            <nav style={{width:'23vw',display:'flex',paddingRight:'5vw'}}>
-              <label style={{ borderBottom: '2px solid 	#c0c0c0',paddingBottom:'1vw',fontSize:'1vw'}}>
+            <label style={{fontSize:widthScreen(38),fontFamily:'Open Sans Italic',paddingBottom:heightScreen(29)}}>Helpful and Analytical</label> 
+            <nav style={{width:'25.7vw',display:'flex',paddingRight:'5vw'}}>
+              <label style={{ borderBottom: '2px solid 	#c0c0c0',paddingBottom:'1vw',fontSize:widthScreen(22),fontFamily:'Open Sans Light'}}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 {<br/>} {<br/>}
@@ -182,16 +184,29 @@ const  takeshot =() => {
                 Excepteur sint non proident.
               </label>
             </nav>
-            <div style={{paddingTop:'1.5vh',flexDirection:'row',display:'flex',justifyContent:'center', alignItems:'center',}}>
-              <label style={{display:'flex',fontSize:'1vw',padding:'1vw',marginTop:-30}}>
+            <div style={{paddingTop:heightScreen(40),flexDirection:'row',display:'flex',justifyContent:'flex-start', alignItems:'center',}}>
+              <label style={{display:'flex',fontSize:'1vw',paddingRight:'0.5vw',marginTop:-18,fontFamily:'Sans Open Bold'}}>
                 Share Your Results 
               </label>
               <Blog/>
             </div>
         </div>
 
-         <div style={{justifyContent:'center',alignItems:'center',width:'35.63vw',backgroundColor:'white',padding:'2vw',margin:'1vw',boxShadow: '1px 1px 1px 1px  #d3d3d3'}}>
-                  <div  style={{alignSelf:'center',display:'flex'}}>resultat2level </div>
+        <div 
+          style={{
+            justifyContent:'center',
+              margingLeft:widthScreen(95),
+              paddingLeft:widthScreen(52),
+              paddingRight:widthScreen(62),
+              paddingTop:heightScreen(50),
+              paddingBottom:heightScreen(70),
+              marginBottom: heightScreen(91),
+              alignItems:'center',
+              width:widthScreen(621),
+              backgroundColor:'white',
+              boxShadow: '1px 1px 1px 1px  #d3d3d3'
+          }}
+        > 
                   <Gauge level ={50} title="betterthan" color="#ff0f33"/>
                   <Gauge level ={80} title="betterthan1" color="#41ac97"/>
                   <Gauge level ={resultat3level} title="betterthan2" color="#cb0c86"/>
@@ -264,6 +279,7 @@ const  takeshot =() => {
         </div>
 
       </div>
+      <Footer text={true}/>
     </div> 
 
     );

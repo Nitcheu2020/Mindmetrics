@@ -1,16 +1,16 @@
-@font-face {
+/*@font-face {
   font-family: 'Open Sans Bold';
-  /*font-style: normal;*/
- /* font-weight: 400;*/
- /* src: url('../fonts/open-sans-v13-latin-regular.eot');  IE9 Compat Modes */
+  font-style: normal;
+  font-weight: 400;
+ src: url('../fonts/open-sans-v13-latin-regular.eot');  IE9 Compat Modes 
   src: local('Open Sans Bold'), local('OpenSansBold'),
-      /* url('./fonts/open-sans-v13-latin-regular.eot?#iefix') format('embedded-opentype'),  IE6-IE8 */
-      /* url('./fonts/open-sans-v13-latin-regular.woff2') format('woff2'),  Super Modern Browsers */
-       /*url('./fonts/open-sans-v13-latin-regular.woff') format('woff'),  Modern Browsers */
-       url('./fonts/OpenSans-Bold.ttf') format('truetype'), /* Safari, Android, iOS */
-      /* url('./fonts/open-sans-v13-latin-regular.svg#OpenSans') format('svg');  Legacy iOS */
+      url('./fonts/open-sans-v13-latin-regular.eot?#iefix') format('embedded-opentype'),  IE6-IE8 
+      url('./fonts/open-sans-v13-latin-regular.woff2') format('woff2'),  Super Modern Browsers 
+       url('./fonts/open-sans-v13-latin-regular.woff') format('woff'),  Modern Browsers 
+       url('./fonts/OpenSans-Bold.ttf') format('truetype'),  Safari, Android, iOS 
+      url('./fonts/open-sans-v13-latin-regular.svg#OpenSans') format('svg');  Legacy iOS 
 }
-
+*/
 @font-face {
   font-family: 'Open Sans Regular';
   src: url('./fonts/OpenSans-Regular.ttf');
@@ -19,6 +19,16 @@
 @font-face {
   font-family: 'Open Sans Light';
   src: url('./fonts/OpenSans-Light.ttf');
+}
+
+@font-face {
+  font-family: 'Open Sans Italic';
+  src: url('./fonts/OpenSans-Italic.ttf');
+}
+
+@font-face {
+  font-family: 'Open Sans Bold';
+  src: url('./fonts/OpenSans-Bold.ttf');
 }
 
 body {
