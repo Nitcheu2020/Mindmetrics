@@ -19,9 +19,10 @@ import QuestionnaireBrute from './QuestionnaireBrute';
 import response from './response';
 import {Motion, spring} from 'react-motion';
 import {
-  Link,withRouter
+  Link,withRouter,useLocation
 } from "react-router-dom";
 
+import {TransitionGroup,CSSTransition}  from 'react-transition-group';
 var  questionsSuivante = 0;
 var nextQuestion=[];
 function shuffle(arra1) {
@@ -40,6 +41,8 @@ function shuffle(arra1) {
   }
   return arra1;
 }
+
+//const location = useLocation();
 
 const widthScreen = (taille) =>  {
   return taille * 100/2063 + 'vw';
@@ -452,24 +455,25 @@ const onSiteChanged = (e) => {
                 display:'flex',
                 'flexDirection': "column",
              }}>
+          
+            {Questionnaire.slice(this.state.debut-1,this.state.fin).map((elemnt, key) => (
+              <div
+                key={elemnt.key}
+                style={styles.questionnaire}
+              >
+                <label style={styles.button,{display: 'flex',fontFamily:'Open Sans Regular',paddingBottom:heightScreen(30),paddingTop:heightScreen(80),fontSize:18}}>
+                  {elemnt.val}
+                </label>
+                      <tr style={{justifyContent:'space-around',alignItems:'center',display:'flex'}}>
+                          <label style={{display:'flex',paddingRight:widthScreen(41),color:'#41ac97',fontFamily:'Sans Open Bold',fontWeight:'bold'}}>Agree</label>
+                          {
+                              qcm(elemnt.key)
+                          }
+                          <label style={{display:'flex',color:'#86207C',fontSize:18,fontFamily:'Sans Open Bold',}}>Disagree</label>
+                      </tr>
+              </div>
+            ))}
 
-          {Questionnaire.slice(this.state.debut-1,this.state.fin).map((elemnt, key) => (
-            <div
-              key={elemnt.key}
-              style={styles.questionnaire}
-            >
-              <label style={styles.button,{display: 'flex',fontFamily:'Open Sans Regular',paddingBottom:heightScreen(30),paddingTop:heightScreen(80),fontSize:18}}>
-                {elemnt.val}
-              </label>
-                    <tr style={{justifyContent:'space-around',alignItems:'center',display:'flex'}}>
-                        <label style={{display:'flex',paddingRight:widthScreen(41),color:'#41ac97',fontFamily:'Sans Open Bold',fontWeight:'bold'}}>Agree</label>
-                        {
-                            qcm(elemnt.key)
-                        }
-                        <label style={{display:'flex',color:'#86207C',fontSize:18,fontFamily:'Sans Open Bold',}}>Disagree</label>
-                    </tr>
-            </div>
-          ))}
         </div>
         </div>
         <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}>

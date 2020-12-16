@@ -23,7 +23,7 @@ const  Footer =(props)=>{
           }}>
               <label  style={{alignSelf:'center',fontSize:widthScreen(40),fontFamily:'Open Sans Light',paddingBottom:heightScreen(36)}}> Ask Your Friends and Family to Take the Test Too!</label>
                 <div style={{alignSelf:'center'}}> 
-                  <Blog/>
+                  <Blog url={props.url}/>
                 </div>
               </div>:null
           }
