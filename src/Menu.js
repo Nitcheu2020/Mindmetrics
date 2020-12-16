@@ -7,11 +7,7 @@ import {
 const widthScreen = (taille) =>  {
   return taille * 100/2063 + 'vw';
 }
-const heightScreen = (taille) =>  {
-  return taille * 100/2610 + 'vw';
-} 
 const  fontSize = widthScreen(19);
-const padding = widthScreen(12);
 
 const styleMenu = { 
     textDecoration: 'none',

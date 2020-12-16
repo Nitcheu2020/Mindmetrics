@@ -1,8 +1,5 @@
-import ReactDOM from "react-dom";
-import React, { Component } from "react";
-import {
-    Link
-  } from "react-router-dom";
+
+import React from "react";
   import social_icons from './img/social_icons.png';
 import logo_footer from './img/logo_footer.png';
 import Menu from './Menu';

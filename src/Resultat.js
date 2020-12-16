@@ -109,7 +109,9 @@ ref.putString(message, 'data_url').then(function(snapshot) {
 });*/
 
     let location = useLocation();
-    //save upgrade and save the result image in the storage.. or database .... 
+    //save upgrade and save the result image in the storage.. or database ....  => i can not save the picture because the percentile will change depending onthe user that has submitted their score in the meantime....
+    // Set the NExt Buton and also make sure the last set of Qestion remains and the submit button on the bottom ...
+    
 //console.log("location.....",location.pathname);
     const [showResult, SetShowResult] = useState(false);
     const [progress, SetProgress] = useState(0);
@@ -244,22 +246,25 @@ function guid() {
         }}>
 
         <button className="btn" 
-          onClick={() => console.log("Cliqued")}
+          onClick={() => {
+            const userId = firebaseService.auth().currentUser.uid;
+            firebaseService.database().ref('premium/').push(userId);  
+          }}
           onMouseOver={() => console.log("hover")}
           style={{
-
-           
             display:'flex',
-    alignSelf:'center',
-    color:'white',
-    'backgroundColor':'#F49608',
-    'borderRadius':20,
-    padding: 7,
-    marginTop:5,
-    marginBottom:15,
-    borderColor:'transparent',
-    fontFamily:'Sans Open Light',
-    fontSize:21,
+            alignSelf:'center',
+            color:'white',
+            'backgroundColor':'#F49608',
+            'borderRadius':20,
+            paddingLeft:widthScreen(30),
+            paddingRight:widthScreen(30),
+            paddingTop:heightScreen(18),
+            paddingBottom:heightScreen(18),
+            marginBottom:15,
+            borderColor:'transparent',
+            fontFamily:'Open Sans Light',
+            fontSize:widthScreen(20.5),
            /*top: '50%',
            left: '50%',
            transform: 'translate(-50%, -50%)',

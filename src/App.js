@@ -18,6 +18,10 @@ import Resultat from './Resultat';
 import Footer from './Footer';
 import Gauge from './Gauge';
 import Menu from './Menu';
+import firebase from "firebase/app";
+import {
+  useLocation,
+} from "react-router-dom";
 
 import {
   BrowserRouter as Router,
@@ -35,8 +39,6 @@ const heightScreen = (taille) =>  {
 } 
 const  fontSize = widthScreen(19);
 const padding = widthScreen(12);
-
-
 
 const divStyle = {
  // flex:1,
@@ -77,9 +79,6 @@ export default class App extends Component {
       list: [],
       text: ""
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.removeItem = this.removeItem.bind(this);
   }
 
   componentDidMount() {
@@ -95,41 +94,35 @@ export default class App extends Component {
     this.authSubscription();
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    this.setState((prevState) => ({
-      list: prevState.list.concat(this.state.text),
-      text: ""
-    }));
-  }
 
-  handleChange(e) {
-    this.setState({
-      text: e.target.value
+   logOut = () => {
+    firebase.auth().signOut().then(function() {
+    // Sign-out successful.
+    }).catch(function(error) {
+    // An error happened.
     });
   }
 
-  removeItem(index) {
-    const list = this.state.list;
-    list.splice(index, 1);
-    this.setState({ list });
-  }
 
   render() {
     return (
         <ErrorBoundary>
             <Router>
-              <div style={{backgroundColor:'pink'}}>
-
-        {!this.state.user? <div style={divStyle}>
-
-        <img
-          style={{
-            display: 'flex',paddingTop:heightScreen(14),paddingBottom:heightScreen(14),
-          //  backgroundColor:'red'
-          }}
-          src={logo} alt="Logo" 
-        />
+              <div >
+                
+        <div style={divStyle}>
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <button style={{backgroundColor:'transparent',borderColor:'transparent'}} onClick={() => this.logOut()}>
+              <img  
+              style={{
+                display: 'flex',paddingTop:heightScreen(14),paddingBottom:heightScreen(14),
+              }} 
+              src={logo} alt="logo"
+              />
+            </button>
+          </Link>
+        {!this.state.user?
+         <>
             <Menu justifyContent='flex-end'/> 
             <Link to="/description" style={{textDecoration: 'none',}} transition="glide-right">
            <button style={{
@@ -144,7 +137,8 @@ export default class App extends Component {
               fontSize:fontSize
             }}>TAKE TEST</button>
             </Link>
-          </div>:null}
+          </>:null}
+            </div>
 
           </div>
         {/* A <Switch> looks through its children <Route>s and
@@ -253,27 +247,27 @@ function Home() {
         />
       </nav>
 
-      <nav style={{display:'flex','flexDirection':'row',backgroundColor:'#d3d3d3'}}>
+      <nav style={{display:'flex','flexDirection':'row',backgroundColor:'#d3d3d3',paddingLeft:widthScreen(50),paddingRight:widthScreen(50),paddingTop:heightScreen(50),paddingBottom:heightScreen(50)}}>
         <img
           style={{display: 'flex',maxWidth: widthScreen(1503), maxHeight: 'auto',alignSelf:'flex-end',paddingLeft:widthScreen(50)}}
           src={hand} alt="hand"
         />
 
-        <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column',width:widthScreen(300),padding:widthScreen(50)}}>
+        <label style={{display: 'flex','justifyContent':'center','flexDirection':'column',width:widthScreen(300)}}>
           <label style={{fontFamily:'Open Sans Light',fontSize:widthScreen(40),paddingBottom:heightScreen(30),marginBottom:heightScreen(33)}}> Easy to Use  </label>
           <label style={{fontFamily:'Open Sans Light',fontSize:widthScreen(22)}}> Faster than any other personality analysis out there. Just choose where and what you want us to analyze: your twitter , Facebook or Copy and paste  you blog, We'll have it analyzed in seconds.</label>
           <label style={{color:'#ba097d','marginTop':heightScreen(10),alignSelf:'center',paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}>Try it out &gt; </label>
         </label>
       </nav>
 
-      <nav style={{display:'flex','flexDirection':'row'}}>
-        <label style={{display: 'flex','flexDirection':'column',width:widthScreen(400),}}>
-          <label style={{fontFamily:'Open Sans Light',fontSize:widthScreen(40),paddingBottom:heightScreen(30),marginBottom:heightScreen(33),alignSelf:'flex-start'}}> Detailed Personality Reports  </label>
-          <label style={{fontFamily:'Open Sans Light',fontSize:widthScreen(22)}}>Free reports includes your personality profile, including 5 majors traits, values , and needs and text summary as well as graph representation of who you are </label>
-          <label style={{color:'#ba097d','marginTop':heightScreen(10),alignSelf:'center',paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}>Try it out &gt; </label>
+      <nav style={{display:'flex','flexDirection':'row',paddingLeft:widthScreen(380),paddingRight:widthScreen(380)}}>
+        <label style={{display: 'flex','flexDirection':'column',paddingTop:heightScreen(116)}}>
+          <label style={{fontFamily:'Open Sans Light',fontSize:widthScreen(40),paddingBottom:heightScreen(30),marginBottom:heightScreen(33)}}> Detailed Personality Reports  </label>
+          <label style={{fontFamily:'Open Sans Light',fontSize:widthScreen(22),width:'30%',display:'flex',alignSelf:'flex-start'}}>Free reports includes your personality profile, including 5 majors traits, values , and needs and text summary as well as graph representation of who you are </label>
+          <label style={{color:'#ba097d','marginTop':heightScreen(10),paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}>Try it out &gt; </label>
         </label>
         <img
-          style={{display: 'flex',maxWidth: '50%', maxHeight: 'auto',padding:'5%', transform: [{ rotate: '14deg' }],}}
+          style={{display: 'flex',maxWidth: '50%', maxHeight: 'auto',alignSelf:'flex-end', transform: [{ rotate: '14deg' }],paddingBottom:heightScreen(116)}}
           src={ico_chart} alt="ico_chart"
         />
       </nav>

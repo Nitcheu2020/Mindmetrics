@@ -14,7 +14,7 @@ const widthScreen = (taille) =>  {
 const  Gauge = (props) => {
     return (
         <div style={{alignItems:'center',justifyContent:'center'}}>
-        <label style={{fontFamily:'Sans Open Light',alignSelf:'center',display:'flex',fontSize:mediumFontSize,paddingBottom:paddingText,alignSelf:'center'}}>{props.title}</label>
+        <label style={{fontFamily:'Sans Open Light',alignSelf:'center',display:'flex',fontSize:mediumFontSize,paddingBottom:paddingText,}}>{props.title}</label>
         <label style={{fontFamily:'Sans Open Light',fontSize:smallFontSize,paddingBottom:paddingText}}>{props.description} s'aksdapodiad'askmasdnkasoidna d;aoskdnas</label>
         <div style={{justifyContent:'center',alignItems:'center',flexDirection:'row',display:'flex',flex:1,alignSelf:'center',paddingBottom:heightScreen(30)}}>
             

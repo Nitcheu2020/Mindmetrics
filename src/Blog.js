@@ -1,5 +1,5 @@
 
-import React, { Component,useState,useEffect } from "react";
+import React, { useState } from "react";
 import {
   FacebookShareCount,
   FacebookShareButton,
@@ -11,14 +11,8 @@ import {
   TwitterIcon,
   LinkedinIcon,
 } from "react-share";
-import {Link} from 'react-router-dom';
-import logo from "./img/logo.png";
-
 const widthScreen = (taille) =>  {
   return taille * 100/2063 + 'vw';
-}
-const heightScreen = (taille) =>  {
-  return taille * 100/2610 + 'vw';
 }
 
 function Blog(props) {

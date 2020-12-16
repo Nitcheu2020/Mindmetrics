@@ -386,9 +386,8 @@ const onSiteChanged = (e) => {
       </div>
     );
           //style={{ alignItems:'center',width:'100%'}}
-    return (
-      <ErrorBoundary>
-        <div style={{justifyContent:'center',display:'flex',alignItems:'center',backgroundColor:'#D3D3D3',}}>
+          /*
+            <div style={{justifyContent:'center',display:'flex',alignItems:'center',backgroundColor:'#D3D3D3',}}>
           {this.state.user? 
           <>
           <Link to="/" style={{ textDecoration: 'none' }}>
@@ -399,6 +398,10 @@ const onSiteChanged = (e) => {
           </>
           :null}
         </div>
+          */
+    return (
+      <ErrorBoundary>
+        
 
           {!this.state.user ? <div style={{display:'flex',flexDirection:'column'}}> 
           <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column',flex:1,position:'relative'}}>
