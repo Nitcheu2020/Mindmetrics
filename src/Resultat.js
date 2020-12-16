@@ -61,7 +61,43 @@ const Resultat = (props) => {
               }
         }
 
+function  takeshot () { 
+  // Use the html2canvas 
+  // function to take a screenshot 
+  // and append it 
+  //canvasRef.current.getContext('2d')
+
+  // to the output div 
+  const  id =  guid();
+  html2canvas(photoRef.current).then( 
+      function (canvas) { 
+        let image = new Image();
+        image.src = canvas.toDataURL();
+        setImgSrc(image.src);
+        const imageRef = firebaseService.storage().ref('images').child(id)
+         imageRef.putString(image.src, 'data_url').then(function(snapshot) {
+         // console.log('Uploaded a data_url string!',snapshot);
+        //  console.log('name',imageRef.name);
+        //  console.log('fullpath.... ','https://firebasestorage.googleapis.com/v0/b/mindmetrics.appspot.com/o/'+imageRef.fullPath);
+
+      }).then(() => imageRef.getDownloadURL())
+      .then(url =>{
+       /* const imageRef = firebaseService.storage().ref('images').child(guid())
+        var storageRef = firebase.storage().ref();
+        var imagesRef = storageRef.child('images/');
+        // Data URL string
+         imageRef.putString(url, 'data_url').then(function(snapshot) {
+          console.log('Uploaded a data_url string!',snapshot);
+         // console.log('url',imageRef.getDownloadURL())
+      }) */
+        console.log('Finally getting the URL...',url);
+        setUrl(url);
+      })
+      }) 
+}
+
         decompte();
+        takeshot ();
       }, [])
 /*    
 // Create a root reference
@@ -73,7 +109,10 @@ ref.putString(message, 'data_url').then(function(snapshot) {
 });*/
 
     let location = useLocation();
-
+    //save upgrade and save the result image in the storage.. or database ....  => i can not save the picture because the percentile will change depending onthe user that has submitted their score in the meantime....
+    // Set the NExt Buton and also make sure the last set of Qestion remains and the submit button on the bottom ...
+    
+//console.log("location.....",location.pathname);
     const [showResult, SetShowResult] = useState(false);
     const [progress, SetProgress] = useState(0);
     const [counting, setCounting] = useState(true);   //useState(location.state.couting);
@@ -81,6 +120,7 @@ ref.putString(message, 'data_url').then(function(snapshot) {
     const [isLoaded,setIsLoaded] = useState(false);
     const [items,setItems] = useState([]);
     const [ imgSrc, setImgSrc] = useState(null);
+    const [ url, setUrl] = useState(null);
 
 let background = location.state && location.state.progress;
 
@@ -115,39 +155,6 @@ function guid() {
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
-const  takeshot =() => { 
-  // Use the html2canvas 
-  // function to take a screenshot 
-  // and append it 
-  //canvasRef.current.getContext('2d')
-
-  // to the output div 
-  const  id =  guid();
-  html2canvas(photoRef.current).then( 
-      function (canvas) { 
-        let image = new Image();
-        image.src = canvas.toDataURL();
-        setImgSrc(image.src);
-        const imageRef = firebaseService.storage().ref('images').child(id)
-         imageRef.putString(image.src, 'data_url').then(function(snapshot) {
-         // console.log('Uploaded a data_url string!',snapshot);
-        //  console.log('name',imageRef.name);
-        //  console.log('fullpath.... ','https://firebasestorage.googleapis.com/v0/b/mindmetrics.appspot.com/o/'+imageRef.fullPath);
-
-      }).then(() => imageRef.getDownloadURL())
-      .then(url =>{
-       /* const imageRef = firebaseService.storage().ref('images').child(guid())
-        var storageRef = firebase.storage().ref();
-        var imagesRef = storageRef.child('images/');
-        // Data URL string
-         imageRef.putString(url, 'data_url').then(function(snapshot) {
-          console.log('Uploaded a data_url string!',snapshot);
-         // console.log('url',imageRef.getDownloadURL())
-      }) */
-        console.log('Finally getting the URL...',url);
-      })
-      }) 
-}
 
    /*setTimeout(() =>{ SetShowResult(true);
      move();
@@ -156,10 +163,10 @@ const  takeshot =() => {
 
    return (
      <div style={{
-      paddingTop:heightScreen(74),backgroundColor:'#d3d3d3'}}>
+      paddingTop:heightScreen(74),backgroundColor:'#d3d3d3'}} ref={photoRef} >
       <div style={{display:'flex',flexDirection:'row',backgroundColor:'#d3d3d3',justifyContent:'space-between',
           paddingLeft: widthScreen(360), paddingRight: widthScreen(360)
-      }} ref={photoRef} >
+      }} >
         <div  style={{width:'25.7vw', paddingTop: heightScreen(8)}}> 
           <nav style={{fontSize:widthScreen(35),paddingBottom:heightScreen(33), borderBottom: '2px solid 	#c0c0c0',width:'100%',marginBottom:heightScreen(33),
           fontFamily:'Open Sans Bold',
@@ -188,7 +195,7 @@ const  takeshot =() => {
               <label style={{display:'flex',fontSize:'1vw',paddingRight:'0.5vw',marginTop:-18,fontFamily:'Sans Open Bold'}}>
                 Share Your Results 
               </label>
-              <Blog/>
+              {url? <Blog url={url}/>:null}
             </div>
         </div>
 
@@ -204,7 +211,9 @@ const  takeshot =() => {
               alignItems:'center',
               width:widthScreen(621),
               backgroundColor:'white',
-              boxShadow: '1px 1px 1px 1px  #d3d3d3'
+              boxShadow: '1px 1px 1px 1px  #d3d3d3',
+              borderTop:'1px',
+              borderColor:'#d3d3d3'
           }}
         > 
                   <Gauge level ={50} title="betterthan" color="#ff0f33"/>
@@ -215,11 +224,6 @@ const  takeshot =() => {
           </div>
         
       </div>
-
-      <button style={{backgroundColor:'red'}} onClick={() =>takeshot()}> 
-            Take Screenshot 
-        </button> 
-        
       <div style={{
         position: 'relative',
         width: '100%',
@@ -241,23 +245,26 @@ const  takeshot =() => {
          position: 'absolute',
         }}>
 
-        <button class="btn" 
-          onClick={() => console.log("Cliqued")}
+        <button className="btn" 
+          onClick={() => {
+            const userId = firebaseService.auth().currentUser.uid;
+            firebaseService.database().ref('premium/').push(userId);  
+          }}
           onMouseOver={() => console.log("hover")}
           style={{
-
-           
             display:'flex',
-    alignSelf:'center',
-    color:'white',
-    'backgroundColor':'#F49608',
-    'borderRadius':20,
-    padding: 7,
-    marginTop:5,
-    marginBottom:15,
-    borderColor:'transparent',
-    fontFamily:'Sans Open Light',
-    fontSize:21,
+            alignSelf:'center',
+            color:'white',
+            'backgroundColor':'#F49608',
+            'borderRadius':20,
+            paddingLeft:widthScreen(30),
+            paddingRight:widthScreen(30),
+            paddingTop:heightScreen(18),
+            paddingBottom:heightScreen(18),
+            marginBottom:15,
+            borderColor:'transparent',
+            fontFamily:'Open Sans Light',
+            fontSize:widthScreen(20.5),
            /*top: '50%',
            left: '50%',
            transform: 'translate(-50%, -50%)',
@@ -279,7 +286,7 @@ const  takeshot =() => {
         </div>
 
       </div>
-      <Footer text={true}/>
+      <Footer text={true} url={url}/>
     </div> 
 
     );
