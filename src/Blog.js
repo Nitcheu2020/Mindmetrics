@@ -1,5 +1,5 @@
 
-import React, { Component } from "react";
+import React, { useState } from "react";
 import {
   FacebookShareCount,
   FacebookShareButton,
@@ -11,19 +11,14 @@ import {
   TwitterIcon,
   LinkedinIcon,
 } from "react-share";
-import logo from "./img/logo.png";
-
 const widthScreen = (taille) =>  {
   return taille * 100/2063 + 'vw';
 }
-const heightScreen = (taille) =>  {
-  return taille * 100/2610 + 'vw';
-}
 
-function Blog() {
-    const shareUrl = 'http://github.com';
-    const title = 'Mindmetrics';
-
+function Blog(props) {
+    //const shareUrl = 'http://github.com';
+    const title =  "This is my Personality Test Score that i took on:  "
+    const [ shareUrl, setShareUrl] = useState(props.url? props.url:'http://mindmetrics.io/');
   return (
       <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
         <div className="Demo__some-network" style={{paddingRight:widthScreen(5)}}>

@@ -1,8 +1,5 @@
-import ReactDOM from "react-dom";
-import React, { Component } from "react";
-import {
-    Link
-  } from "react-router-dom";
+
+import React from "react";
   import social_icons from './img/social_icons.png';
 import logo_footer from './img/logo_footer.png';
 import Menu from './Menu';
@@ -23,7 +20,7 @@ const  Footer =(props)=>{
           }}>
               <label  style={{alignSelf:'center',fontSize:widthScreen(40),fontFamily:'Open Sans Light',paddingBottom:heightScreen(36)}}> Ask Your Friends and Family to Take the Test Too!</label>
                 <div style={{alignSelf:'center'}}> 
-                  <Blog/>
+                  <Blog url={props.url}/>
                 </div>
               </div>:null
           }
