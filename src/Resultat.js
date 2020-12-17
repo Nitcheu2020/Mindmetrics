@@ -10,7 +10,7 @@ import Blog from './Blog';
 import MindButton from './components/MindButton';
 import Footer from './Footer';
 import {useLocation } from "react-router-dom";
-
+import TextKey from './text/TextKey';
 const premiumButtonStyle = {
   top: '50%',
   left: '50%',
@@ -167,28 +167,24 @@ return (
     <div style={sousContainer} >
       <div  style={paddingName}> 
         <nav style={navName}>
-          Your Name 
+          {TextKey.resultPage.yourName}
         </nav>
         <nav>
-          <label style={{fontSize:widthScreen(26),fontFamily:'Open Sans Italic'}}>You are :</label> 
+<label style={{fontSize:widthScreen(26),fontFamily:'Open Sans Italic'}}>{TextKey.resultPage.youAre}</label> 
         </nav>
-        <label style={{fontSize:widthScreen(38),fontFamily:'Open Sans Italic',paddingBottom:heightScreen(29)}}>Helpful and Analytical</label> 
+<label style={{fontSize:widthScreen(38),fontFamily:'Open Sans Italic',paddingBottom:heightScreen(29)}}>{TextKey.resultPage.helpful}</label> 
         <nav style={{width:'25.7vw',display:'flex',paddingRight:'5vw'}}>
           <label style={{ borderBottom: '2px solid 	#c0c0c0',paddingBottom:'1vw',fontSize:widthScreen(22),fontFamily:'Open Sans Light'}}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            {TextKey.resultPage.paragraph.first}
             {<br/>} {<br/>}
-            Ut enim ad minim veniam, quis nostrud exercitation
-            ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            {TextKey.resultPage.paragraph.second}
             {<br/>} {<br/>}
-            Duis aute irure dolor in reprehenderit in voluptate 
-            velit esse cillum dolore eu fugiat nulla pariatur. 
-            Excepteur sint non proident.
+            {TextKey.resultPage.paragraph.third}
           </label>
         </nav>
         <div style={{paddingTop:heightScreen(40),flexDirection:'row',display:'flex',justifyContent:'flex-start', alignItems:'center',}}>
           <label style={{display:'flex',fontSize:'1vw',paddingRight:'0.5vw',marginTop:-18,fontFamily:'Open Sans Bold'}}>
-            Share Your Results 
+            {TextKey.resultPage.shareResult} 
           </label>
           {url? <Blog url={url}/>:null}
         </div>
@@ -217,7 +213,7 @@ return (
       <div 
         style={premiumButtonStyle}
       >
-        <MindButton paddingHorizontal={30} func={savingPremium} textSize={widthScreen(20.5)} text='GET PREMIUM REPORTS' />
+        <MindButton paddingHorizontal={30} func={savingPremium} textSize={widthScreen(20.5)} text={TextKey.resultPage.premiumReport} />
       </div>
     </div>
     <Footer text={true} url={url}/>

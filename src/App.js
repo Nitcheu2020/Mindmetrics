@@ -19,6 +19,8 @@ import Footer from './Footer';
 import Gauge from './Gauge';
 import Menu from './Menu';
 import firebase from "firebase/app";
+import TextKey from './text/TextKey';
+
 import {
   useLocation,
 } from "react-router-dom";
@@ -126,7 +128,7 @@ return (
           <>
             <Menu justifyContent='flex-end'/> 
             <Link to="/description" style={{textDecoration: 'none',}} transition="glide-right">
-              <MindButton paddingHorizontal='30'  textSize={fontSize} text='TAKE TEST' />
+              <MindButton paddingHorizontal='30'  textSize={fontSize} text={TextKey.button.takeTest} />
             </Link>
           </>:null}
         </div>
@@ -178,7 +180,7 @@ function Home() {
         <label style={{fontSize:widthScreen(22),fontFamily:'Open Sans Light',paddingBottom:heightScreen(29)}} >and accurate Personality report </label>
       </label>
       <Link to="/description" transition="glide-right" style={{ textDecoration: 'none',}}>
-        <MindButton  textSize={widthScreen(22)} text='GET FREE ANALYSIS' marginBottom={heightScreen(53)}/>
+        <MindButton  textSize={widthScreen(22)} text={TextKey.button.freeAnalysis} marginBottom={heightScreen(53)}/>
       </Link>
       <img
         style={{
@@ -250,7 +252,7 @@ function Home() {
       >
         <label style ={{'fontSize':widthScreen(40),'fontFamily':'Open Sans Light',paddingBottom:heightScreen(22)}}>Discover who You are....</label>
         <Link to="/description" transition="glide-right">
-          <MindButton  textSize={widthScreen(22)} text='GET FREE ANALYSIS' />
+          <MindButton  textSize={widthScreen(22)} text={TextKey.button.freeAnalysis} />
         </Link>
       </div>
     </div>

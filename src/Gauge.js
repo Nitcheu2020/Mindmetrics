@@ -15,7 +15,7 @@ const  Gauge = (props) => {
     return (
         <div style={{alignItems:'center',justifyContent:'center'}}>
         <label style={{fontFamily:'Sans Open Light',alignSelf:'center',display:'flex',fontSize:mediumFontSize,paddingBottom:paddingText,}}>{props.title}</label>
-        <label style={{fontFamily:'Sans Open Light',fontSize:smallFontSize,paddingBottom:paddingText}}>{props.description} s'aksdapodiad'askmasdnkasoidna d;aoskdnas</label>
+        <label style={{fontFamily:'Sans Open Light',fontSize:smallFontSize,paddingBottom:paddingText}}>{props.description}</label>
         <div style={{justifyContent:'center',alignItems:'center',flexDirection:'row',display:'flex',flex:1,alignSelf:'center',paddingBottom:heightScreen(30)}}>
             
             <div style={{backgroundColor:'#DCDCDC',borderRadius:5,display:'flex',flex:1,marginRight:widthScreen(33)}}>

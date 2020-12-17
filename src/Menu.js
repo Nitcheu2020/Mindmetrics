@@ -1,4 +1,5 @@
 import React from 'react';
+import TextKey from './text/TextKey';
 import {
     Link
   } from "react-router-dom";
@@ -25,12 +26,17 @@ const  Menu = (props) => {
     alignItems:'flex-end',
     alignSelf:'center',
   };
-  
+
   return (
     <nav style={container}>
-      <Link to="/" style={styleMenu}>HOME</Link>
-      <Link to="/description" style={styleMenu}>HOW IT WORKS</Link>
-      <Link to="/contact" style={styleMenu}>CONTACT</Link>
+      <Link to="/" style={styleMenu}>
+        {TextKey.menu.home}</Link>
+      <Link to="/description" style={styleMenu}>
+        {TextKey.menu.hwItW}
+      </Link>
+      <Link to="/contact" style={styleMenu}>
+        {TextKey.menu.contact}
+      </Link>
     </nav>
   );
 }

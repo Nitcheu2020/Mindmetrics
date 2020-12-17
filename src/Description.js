@@ -20,6 +20,7 @@ import {Motion, spring} from 'react-motion';
 import {
   Link,withRouter,useLocation
 } from "react-router-dom";
+import TextKey from './text/TextKey';
 
 import {TransitionGroup,CSSTransition}  from 'react-transition-group';
 var  questionsSuivante = 0;
@@ -318,16 +319,16 @@ if (showResult) return (
           }}
         >
           <div>
-            <label style={{marginLeft:widthScreen(360),fontSize:widthScreen(46.5),fontFamily:'Open Sans Light',paddingBottom:heightScreen(29)}}> Take The Personality Test</label>
+            <label style={{marginLeft:widthScreen(360),fontSize:widthScreen(46.5),fontFamily:'Open Sans Light',paddingBottom:heightScreen(29)}}>{TextKey.testPage.takeTest}</label>
           </div>
-          <label style={{width:widthScreen(482.63),marginLeft:widthScreen(360),fontFamily:'Open Sans Light',fontSize:widthScreen(20)}} > Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </label>
+        <label style={{width:widthScreen(482.63),marginLeft:widthScreen(360),fontFamily:'Open Sans Light',fontSize:widthScreen(20)}} >{TextKey.testPage.paragraph}</label>
         </div>
         <label style={{color:'red',alignSelf:'center'}}> 
           {this.state.message}
         </label>
       </div>
       <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column',flex:1}} >
-        <label style={{display:'flex',alignSelf:'center',padding:10,fontFamily:'Open Sans Regular',fontSize:widthScreen(27.5)}}>Please enter your information to take the exam</label>
+        <label style={{display:'flex',alignSelf:'center',padding:10,fontFamily:'Open Sans Regular',fontSize:widthScreen(27.5)}}>{TextKey.testPage.invitation}</label>
         <form  style={numberCircle} onSubmit={this.handleSubmit}>
           <input type="text" value={this.state.firstName} onChange={this.setFirstName} placeholderStyle={{fontSize:widthScreen(22),fontFamily:'Open Sans Regular',paddingLeft:25}} style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3,marginBottom:heightScreen(22)}} placeholder="FIRST NAME" />
           <input type="text" value={this.state.lastName} onChange={this.setLastName} style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3,marginBottom:heightScreen(22)}} placeholder="LAST NAME" />
@@ -364,11 +365,11 @@ if (showResult) return (
                 {elemnt.val}
               </label>
               <tr style={{justifyContent:'space-around',alignItems:'center',display:'flex'}}>
-                  <label style={{display:'flex',paddingRight:widthScreen(41),color:'#41ac97',fontFamily:'Open Sans Bold',fontWeight:'bold'}}>Agree</label>
+          <label style={{display:'flex',paddingRight:widthScreen(41),color:'#41ac97',fontFamily:'Open Sans Bold',fontWeight:'bold'}}>{TextKey.testPage.agree}</label>
                   {
                       qcm(elemnt.key)
                   }
-                  <label style={{display:'flex',color:'#86207C',fontSize:18,fontFamily:'Open Sans Bold',}}>Disagree</label>
+                  <label style={{display:'flex',color:'#86207C',fontSize:18,fontFamily:'Open Sans Bold',}}>{TextKey.testPage.disagree}</label>
               </tr>
             </div>
           ))}
