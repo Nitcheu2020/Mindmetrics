@@ -4,7 +4,7 @@ import React from "react";
 import logo_footer from './img/logo_footer.png';
 import Menu from './Menu';
 import Blog from './Blog';
-
+import TextKey from './text/TextKey';
 const widthScreen = (taille) =>  {
   return taille * 100/2063 + 'vw';
 }
@@ -18,7 +18,7 @@ const  Footer =(props)=>{
           {props.text?<div style={{backgroundColor:'#CDCDCD',justifyContent:'center',display:'flex',padding:'2%',alignSelf:'flex-end',flexDirection:'column',
             maringBottom:heightScreen(60)
           }}>
-              <label  style={{alignSelf:'center',fontSize:widthScreen(40),fontFamily:'Open Sans Light',paddingBottom:heightScreen(36)}}> Ask Your Friends and Family to Take the Test Too!</label>
+              <label  style={{alignSelf:'center',fontSize:widthScreen(40),fontFamily:'Open Sans Light',paddingBottom:heightScreen(36)}}>{TextKey.footer.ask}</label>
                 <div style={{alignSelf:'center'}}> 
                   <Blog url={props.url}/>
                 </div>
@@ -37,7 +37,6 @@ const  Footer =(props)=>{
             //  maxWidth:'100%',
             }}
           >
-              
             <Menu/>
             <img
               style={{display: 'flex',alignSelf:'flex-end',width: '10%',
@@ -75,7 +74,7 @@ const  Footer =(props)=>{
               >
                    R
               </label>
-              <label style={{display:'flex',padding:10,color:'#CDC'}}> Mindmetrics Technology. All rights reserved.</label>
+              <label style={{display:'flex',padding:10,color:'#CDC'}}>{TextKey.footer.right}</label>
             </nav>
             <img
               style={{display: 'flex',transform: [{ rotate: '14deg' }],alignSelf:'flex-end',paddingRight:widthScreen(360)}}
