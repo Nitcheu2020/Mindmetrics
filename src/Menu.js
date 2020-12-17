@@ -3,8 +3,7 @@ import {
     Link
   } from "react-router-dom";
 
-
-const widthScreen = (taille) =>  {
+  const widthScreen = (taille) =>  {
   return taille * 100/2063 + 'vw';
 }
 const  fontSize = widthScreen(19);
@@ -17,28 +16,22 @@ const styleMenu = {
     fontFamily: 'Open Sans Light'
 };
 
-/*
-
-            
-            <Link to="/blog" style={styleMenu}>Blog</Link>
-            <Link to="/research" style={styleMenu} >RESEARCH</Link>
-*/
 const  Menu = (props) => {
-    return (
-        <nav style={{
-            flex:1,
-            //'fontWeight': 'bold',
-            display: 'flex',
-            flexDirection:'row',
-            justifyContent:props.justifyContent,
-            alignItems:'flex-end',
-            alignSelf:'center',
-            //display:'inline-flex',
-          }}>
-            <Link to="/" style={styleMenu}>HOME</Link>
-            <Link to="/description" style={styleMenu}>HOW IT WORKS</Link>
-            <Link to="/contact" style={styleMenu}>CONTACT</Link>
-          </nav>
-    );
+  const container = { 
+    flex:1,
+    display: 'flex',
+    flexDirection:'row',
+    justifyContent:props.justifyContent,
+    alignItems:'flex-end',
+    alignSelf:'center',
+  };
+  
+  return (
+    <nav style={container}>
+      <Link to="/" style={styleMenu}>HOME</Link>
+      <Link to="/description" style={styleMenu}>HOW IT WORKS</Link>
+      <Link to="/contact" style={styleMenu}>CONTACT</Link>
+    </nav>
+  );
 }
 export default Menu;

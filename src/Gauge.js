@@ -19,10 +19,10 @@ const  Gauge = (props) => {
         <div style={{justifyContent:'center',alignItems:'center',flexDirection:'row',display:'flex',flex:1,alignSelf:'center',paddingBottom:heightScreen(30)}}>
             
             <div style={{backgroundColor:'#DCDCDC',borderRadius:5,display:'flex',flex:1,marginRight:widthScreen(33)}}>
-                <div style={{height:heightScreen(28.94),width:props.level +"%",backgroundColor:props.color,borderRadius:6,display:'flex'}}/>
+                <div style={{height:props.height?props.height:heightScreen(28.94),width:props.level +"%",backgroundColor:props.color,borderRadius:6,display:'flex'}}/>
             </div>
-            <label style={{display:'flex', padding:5,fontFamily:'Sans Open Light',fontSize:props.fontSize?props.fontSize :null,
-            color:props.fontColor?props.fontColor:null}}>{props.level? props.level.toFixed(2): props.level }%</label>
+            <label style={{display:'flex', padding:5,fontFamily:props.fontFamily?props.fontFamily:'Sans Open Light',fontSize:props.fontSize?props.fontSize :null,
+            color:props.color?props.color:null}}>{props.level? props.level.toFixed(2): props.level }%</label>
         </div>
         </div>
     );
