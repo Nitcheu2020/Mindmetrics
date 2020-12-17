@@ -23,6 +23,7 @@ const widthScreen = (taille) =>  {
          fontFamily:'Open Sans Light',
          fontSize:props.textSize,
          marginBottom: props.marginBottom,
+         marginTop:props.marginTop,
        }} 
        onClick={props.func?props.func: console.log('button' + props.text + 'clicked')}
     >

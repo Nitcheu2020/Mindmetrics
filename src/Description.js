@@ -21,6 +21,7 @@ import {
   Link,withRouter,useLocation
 } from "react-router-dom";
 import TextKey from './text/TextKey';
+import MindButton from './components/MindButton';
 
 import {TransitionGroup,CSSTransition}  from 'react-transition-group';
 var  questionsSuivante = 0;
@@ -247,15 +248,6 @@ const handleClick = (question,elmnt) => {
     answers[question-1] = rslt;
     this.setState({ selected: elmnt.key, answers });  
     console.log("Fin",this.state.fin);
-    setTimeout(() =>{
-      const {debut,fin} = this.state;
-      if (nextQuestion.length ===5 && fin<100){
-        this.setState({debut:debut+5,fin:fin+5,inProp:true});
-        nextQuestion=[];
-      }else {
-        this.setState({inProp:false})
-      }
-    }, 2000);
   }catch (error) {
     this.setState({ error });
   }
@@ -276,6 +268,17 @@ const qcm = (question) => {
       </td>
     ));
 };
+
+const nextPage = () =>{
+  const {debut,fin} = this.state;
+    if (nextQuestion.length ===5 && fin<100){
+      this.setState({debut:debut+5,fin:fin+5,inProp:true});
+      nextQuestion=[];
+    }else {
+      this.setState({inProp:false})
+  }
+}
+
 var il = 0;
 var decompte =0;
 var montrer = false;
@@ -443,6 +446,11 @@ if (showResult) return (
         :null}
     </div> 
   </> : null } 
+    {nextQuestion.length ===5 ?
+       <div style={{alignItems:'center',justifyContent:'center',alignSelf:'center',display:'flex'}}>
+       <MindButton paddingHorizontal={30} func={nextPage} textSize={widthScreen(30)} text="Next &rarr;" marginTop={heightScreen(50)} marginBottom={heightScreen(112)}/>
+       </div>: null
+    }       
     <Footer text={true}/>
   </ErrorBoundary>
     );
