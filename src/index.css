@@ -44,3 +44,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.submit {
+  background:none;
+  border:none;
+  color:#FFF;
+  font-family:Verdana, Geneva, sans-serif;
+  cursor:pointer;
+}

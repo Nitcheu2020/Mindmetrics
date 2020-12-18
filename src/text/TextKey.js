@@ -31,6 +31,7 @@ const TextKey = {
         invitation:'Please enter your information to take the exam',
         agree:'Agree',
         disagree:'Disagree'
-    } 
+    },
+    'shareApi':" Austin should change this test for the shareable api" 
 }
 export default TextKey;

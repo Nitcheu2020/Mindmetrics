@@ -44,6 +44,13 @@ const heightScreen = (taille) =>  {
 const  fontSize = widthScreen(19);
 const padding = widthScreen(12);
 
+const styleMenu = { 
+  textDecoration: 'none',
+  paddingRight:'2%',
+  display:'flex',
+  fontSize:fontSize,
+  fontFamily: 'Open Sans Light'
+};
 const divStyle = {
  // flex:1,
   backgroundColor: '#FFFAFA',//'#d3d3d3',
@@ -204,13 +211,17 @@ function Home() {
         <label> Your writing is a sample of how you think.Studying the patterns we've found in the way certain people of </label>
         <label>certain personalities use words, we can use your writing to determine using data,what kind of Personality</label>
         <label>you have exactly.</label>
-        <label style={{color:'#ba097d','marginTop':heightScreen(10),alignSelf:'center',paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}>find ou more &gt; </label>
+        <Link to="/description" transition="glide-right" style={{ textDecoration: 'none',}}>
+          <label style={{color:'#ba097d','marginTop':heightScreen(10),alignSelf:'center',paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}>find ou more &gt; </label>
+        </Link>
       </label>
       <nav style={{display:'flex','flexDirection':'row',justifyContent:'center'}}>
         <label style={{display: 'flex','flexDirection':'column'}}>
           <label style={{fontSize:widthScreen(40), fontFamily:'Open Sans Light'}}> Data Driven and Scientific  </label>
           <label style={{fontSize:widthScreen(22), fontFamily:'Open Sans Light',width:widthScreen(298.47)}}>Using data and natural language processing we're able to predict your Personality based on the most popular Personality model used in the psychology community, the Five Factor Personality model</label>
-          <label style={{color:'#ba097d','marginTop':heightScreen(10),paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}>find ou more &gt; </label>
+          <Link to="/description" transition="glide-right" style={{ textDecoration: 'none',}}>
+            <label style={{color:'#ba097d','marginTop':heightScreen(10),paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}>find ou more &gt; </label>
+            </Link>
         </label>
         <img
           style={{display: 'flex',maxWidth: '50%', maxHeight: 'auto',padding:'5%'}}
@@ -225,14 +236,18 @@ function Home() {
         <label style={{display: 'flex','justifyContent':'center','flexDirection':'column',width:widthScreen(300)}}>
           <label style={{fontFamily:'Open Sans Light',fontSize:widthScreen(40),paddingBottom:heightScreen(30),marginBottom:heightScreen(33)}}> Easy to Use  </label>
           <label style={{fontFamily:'Open Sans Light',fontSize:widthScreen(22)}}> Faster than any other personality analysis out there. Just choose where and what you want us to analyze: your twitter , Facebook or Copy and paste  you blog, We'll have it analyzed in seconds.</label>
-          <label style={{color:'#ba097d','marginTop':heightScreen(10),alignSelf:'center',paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}>Try it out &gt; </label>
+          <Link to="/description" transition="glide-right" style={{ textDecoration: 'none',}}>
+            <label style={{color:'#ba097d','marginTop':heightScreen(10),alignSelf:'center',paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}>Try it out &gt; </label>
+          </Link>
         </label>
       </nav>
       <nav style={{display:'flex','flexDirection':'row',paddingLeft:widthScreen(380),paddingRight:widthScreen(380)}}>
         <label style={{display: 'flex','flexDirection':'column',paddingTop:heightScreen(116)}}>
           <label style={{fontFamily:'Open Sans Light',fontSize:widthScreen(40),paddingBottom:heightScreen(30),marginBottom:heightScreen(33)}}> Detailed Personality Reports  </label>
           <label style={{fontFamily:'Open Sans Light',fontSize:widthScreen(22),width:'30%',display:'flex',alignSelf:'flex-start'}}>Free reports includes your personality profile, including 5 majors traits, values , and needs and text summary as well as graph representation of who you are </label>
-          <label style={{color:'#ba097d','marginTop':heightScreen(10),paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}>Try it out &gt; </label>
+          <Link to="/description" transition="glide-right" style={{ textDecoration: 'none',}}>
+            <label style={{color:'#ba097d','marginTop':heightScreen(10),paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}>Try it out &gt; </label>
+          </Link>
         </label>
         <img
           style={{display: 'flex',maxWidth: '50%', maxHeight: 'auto',alignSelf:'flex-end', transform: [{ rotate: '14deg' }],paddingBottom:heightScreen(116)}}
@@ -251,7 +266,7 @@ function Home() {
         }}
       >
         <label style ={{'fontSize':widthScreen(40),'fontFamily':'Open Sans Light',paddingBottom:heightScreen(22)}}>Discover who You are....</label>
-        <Link to="/description" transition="glide-right">
+        <Link to="/description" transition="glide-right" style={{ textDecoration: 'none',}}>
           <MindButton  textSize={widthScreen(22)} text={TextKey.button.freeAnalysis} />
         </Link>
       </div>

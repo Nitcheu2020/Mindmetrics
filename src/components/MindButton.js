@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 
 const widthScreen = (taille) =>  {
     return taille * 100/2063 + 'vw';
@@ -9,11 +9,12 @@ const widthScreen = (taille) =>  {
   const  fontSize = widthScreen(19);
 
   const MindButton = (props) => {
-   return (
+    const [styler,setStyler] = useState('#F49608');
+    return (
     <button style={{
         position:'relative',
          color:'white',
-         'backgroundColor':'#F49608',
+         'backgroundColor':styler,
          'borderRadius':widthScreen(50),
          paddingTop: heightScreen(18),
          paddingBottom: heightScreen(15),
@@ -24,7 +25,9 @@ const widthScreen = (taille) =>  {
          fontSize:props.textSize,
          marginBottom: props.marginBottom,
          marginTop:props.marginTop,
+         cursor: 'pointer'
        }} 
+       onMouseEnter= {() => setStyler('red')}
        onClick={props.func?props.func: console.log('button' + props.text + 'clicked')}
     >
         {props.text}
