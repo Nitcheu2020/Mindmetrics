@@ -114,10 +114,18 @@ function guid() {
 const savingPremium = () =>{
   const userId = firebaseService.auth().currentUser.uid;
   firebaseService.database().ref('premium').once("value",snapshot => {
-    if (!Object.values(snapshot.val()).includes(userId)){
+    if (snapshot.exists()){
+      firebaseService.database().ref('premium').once("value",snapshot => {
+        if (!Object.values(snapshot.val()).includes(userId)){
+          firebaseService.database().ref('premium/').push(userId);  
+        }
+      });
+    }
+    else{
       firebaseService.database().ref('premium/').push(userId);  
     }
   });
+  alert("You have successfully been added to the Wait List for the premium Test. we will contact you soon ")
 }
 
 const gaugeStyle ={
@@ -163,16 +171,16 @@ const navName = {
 };
 
 return (
-  <div style={container} ref={photoRef} >
-    <div style={sousContainer} >
+  <div style={container}  >
+    <div style={sousContainer} ref={photoRef}>
       <div  style={paddingName}> 
         <nav style={navName}>
           {TextKey.resultPage.yourName}
         </nav>
         <nav>
-<label style={{fontSize:widthScreen(26),fontFamily:'Open Sans Italic'}}>{TextKey.resultPage.youAre}</label> 
+            <label style={{fontSize:widthScreen(26),fontFamily:'Open Sans Italic'}}>{TextKey.resultPage.youAre}</label> 
         </nav>
-<label style={{fontSize:widthScreen(38),fontFamily:'Open Sans Italic',paddingBottom:heightScreen(29)}}>{TextKey.resultPage.helpful}</label> 
+        <label style={{fontSize:widthScreen(38),fontFamily:'Open Sans Italic',paddingBottom:heightScreen(29)}}>{TextKey.resultPage.helpful}</label> 
         <nav style={{width:'25.7vw',display:'flex',paddingRight:'5vw'}}>
           <label style={{ borderBottom: '2px solid 	#c0c0c0',paddingBottom:'1vw',fontSize:widthScreen(22),fontFamily:'Open Sans Light'}}>
             {TextKey.resultPage.paragraph.first}
@@ -189,9 +197,9 @@ return (
           {url? <Blog url={url}/>:null}
         </div>
       </div>
-      <div  style={gaugeStyle} > 
-        <Gauge level ={50} title="betterthan" color="#ff0f33"/>
-        <Gauge level ={80} title="betterthan1" color="#41ac97"/>
+      <div  style={gaugeStyle}> 
+        <Gauge level ={resultat1level} title="betterthan" color="#ff0f33"/>
+        <Gauge level ={resultat2level} title="betterthan1" color="#41ac97"/>
         <Gauge level ={resultat3level} title="betterthan2" color="#cb0c86"/>
         <Gauge level ={resultat4level} title="betterthan3" color="#04b2ca"/>
         <Gauge level ={resultat5level} title="betterthan4" color="#2c719d"/>
