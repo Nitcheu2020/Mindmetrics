@@ -6,6 +6,8 @@ import scheme_small from './img/scheme_small.png';
 import hand from './img/hand.png';
 import main from './img/main.png';
 import people from './img/people.png';
+import Gauge from './Gauge';
+import duplicatePeople from  './img/duplicatePeople.png';
 
 import ico_chart from './img/ico_chart.png';
 import social_icons from './img/social_icons.png';
@@ -66,7 +68,7 @@ const  Home =(props) =>{
             <label style={{color:'#ba097d','marginTop':heightScreen(10),alignSelf:'center',paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}>{TextKey.home.findOrMore} &gt; </label>
           </Link>
         </label>
-        <nav style={{display:'flex','flexDirection':'row',justifyContent:'center'}}>
+        <nav style={{display:'flex','flexDirection':'row',width:'100%',alignItems:'center',justifyContent:'flex-end',borderTop: '1px solid #d3d3d3',marginTop:heightScreen(86)}}>
           <label style={{display: 'flex','flexDirection':'column'}}>
             <a style={{fontSize:widthScreen(40), fontFamily:'Open Sans Light'}} name="hwItW"> {TextKey.home.dataDriven} </a>
         <label style={{fontSize:widthScreen(22), fontFamily:'Open Sans Light',width:widthScreen(298.47)}}>{TextKey.home.usingData}</label>
@@ -75,13 +77,12 @@ const  Home =(props) =>{
               </Link>
           </label>
           <img
-            style={{display: 'flex',maxWidth: '50%', maxHeight: 'auto',padding:'5%'}}
-            src={people} alt="scheme" 
+            src={duplicatePeople} alt="duplicatePeople" 
           />
         </nav>
         <nav style={{display:'flex','flexDirection':'row',backgroundColor:'#d3d3d3',width:'100%',paddingTop:heightScreen(50),paddingBottom:heightScreen(50),alignItems:'center',justifyContent:'center'}}>
           <img
-            style={{display: 'flex',maxWidth: widthScreen(1503), maxHeight: 'auto',alignSelf:'flex-end',paddingRight:widthScreen(50)}}
+            style={{display: 'flex',maxWidth: widthScreen(503), maxHeight: 'auto',alignSelf:'flex-end',paddingRight:widthScreen(50)}}
             src={main} alt="hand"
           />
           <label style={{display: 'flex','justifyContent':'center','flexDirection':'column',width:widthScreen(300)}}>
@@ -100,10 +101,14 @@ const  Home =(props) =>{
               <label style={{color:'#ba097d','marginTop':heightScreen(10),paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}>{TextKey.home.tryOut}&gt; </label>
             </Link>
           </label>
-          <img
-            style={{display: 'flex',maxWidth: '50%', maxHeight: 'auto',alignSelf:'flex-end', transform: [{ rotate: '14deg' }],paddingBottom:heightScreen(116)}}
-            src={ico_chart} alt="ico_chart"
-          />
+          <div style={{display:'flex',flexDirection:'column',width:'50%'}}>
+            <Gauge level ={42} title="Extraversion" color="#ff0f33"/>
+            <Gauge level ={24} title="Agreeableness" color="#41ac97"/>
+            <Gauge level ={76} title="Conscientiousness" color="#cb0c86"/>
+            <Gauge level ={98} title="Emotional" color="#04b2ca"/>
+            <Gauge level ={100} title="Stability/Intellect" color="#2c719d"/>
+            <Gauge level ={100} title="Stability/Intellect" color="#86207c"/>
+          </div>
         </nav>
         <div 
           style ={{display: 'flex',
