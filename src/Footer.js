@@ -2,6 +2,8 @@
 import React from "react";
   import social_icons from './img/social_icons.png';
 import logo_footer from './img/logo_footer.png';
+import imgbackground from './img/imgbackground.png';
+
 import Menu from './Menu';
 import Blog from './Blog';
 import TextKey from './text/TextKey';
@@ -14,7 +16,7 @@ const heightScreen = (taille) =>  {
 
 const  Footer =(props)=>{
     return (
-        <div style={{maxWidth:'100%',backgroundColor:'white'}}>
+        <div style={{maxWidth:'100%',backgroundColor:'white', backgroundImage: `url(${imgbackground})`}}>
           {props.text?<div style={{backgroundColor:'#CDCDCD',justifyContent:'center',display:'flex',padding:'2%',alignSelf:'flex-end',flexDirection:'column',
             maringBottom:heightScreen(60)
           }}>

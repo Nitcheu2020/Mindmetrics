@@ -31,6 +31,26 @@ const TextKey = {
         invitation:'Please enter your information to take the exam',
         agree:'Agree',
         disagree:'Disagree'
-    } 
+    },
+    'shareApi':" Austin should change this test for the shareable api",
+    'home':{
+        title:"Your True Personality Revealed",
+        writing:"We use your writing and social media profiles to build you a detailed ",
+        report: "and accurate Personality report",
+        words:"What Your Words ",
+        about:"Says About You ",
+        writingSample:"Your writing is a sample of how you think.Studying the patterns we've found in the way certain people of",
+        wordAndPersonality:"certain personalities use words, we can use your writing to determine using data,what kind of Personality",
+        exactly:"you have exactly.",
+        findOrMore:"find ou more",
+        dataDriven:"Data Driven and Scientific ",
+        usingData:"Using data and natural language processing we're able to predict your Personality based on the most popular Personality model used in the psychology community, the Five Factor Personality model",
+        easyToUse:" Easy to Use  ",
+        faster:"Faster than any other personality analysis out there. Just choose where and what you want us to analyze: your twitter , Facebook or Copy and paste  you blog, We'll have it analyzed in seconds.",
+        tryOut:"Try it out",
+        detailedPersonality:" Detailed Personality Reports  ",
+        freeReport:"Free reports includes your personality profile, including 5 majors traits, values , and needs and text summary as well as graph representation of who you are",
+        discover:"Discover who You are....",
+    }
 }
 export default TextKey;

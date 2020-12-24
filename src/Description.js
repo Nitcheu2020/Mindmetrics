@@ -16,11 +16,14 @@ import ModalAnswers from './ModalAnswers';
 import Gauge from './Gauge';
 import QuestionnaireBrute from './QuestionnaireBrute';
 import response from './response';
+import Resultat from './Resultat';
+
 import {Motion, spring} from 'react-motion';
 import {
   Link,withRouter,useLocation
 } from "react-router-dom";
 import TextKey from './text/TextKey';
+import MindButton from './components/MindButton';
 
 import {TransitionGroup,CSSTransition}  from 'react-transition-group';
 var  questionsSuivante = 0;
@@ -55,7 +58,8 @@ const numberCircle ={
   'textAlign': 'center',
   alignSelf:'center',
   alignItems: 'center',
-  flexDirection:'column'
+  flexDirection:'column',
+  cursor: 'pointer'
 };
 
 class Description extends Component {
@@ -86,6 +90,7 @@ class Description extends Component {
       betterthan3:17,
       betterthan4:19,
       inProp:false,
+      hadTakenTest:false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.setPassword = this.setPassword.bind(this);
@@ -94,7 +99,23 @@ class Description extends Component {
 }
 
 componentDidMount() {
-	this.authSubscription = firebaseService.auth().onAuthStateChanged((user) => {
+  this.authSubscription = firebaseService.auth().onAuthStateChanged((user) => {
+    const userId = user?.uid;
+    firebaseService.database().ref(`scores/category/1/${userId}`).once("value", snapshot => {
+    if (snapshot.exists()){
+       console.log("exists!");
+      
+      this.getValue(1,'betterthan');
+      this.getValue(2,'betterthan1');
+      this.getValue(3,'betterthan2');
+      this.getValue(4,'betterthan3');
+      this.getValue(5,'betterthan4');
+
+      this.setState({hadTakenTest:true});
+    }
+    else console.log("nexsite pas",userId)
+    });
+
     this.setState({
       loading: false,
       user,
@@ -118,10 +139,18 @@ setEmail (event) {
   this.setState({email: event.target.value});
 }
 
+
+
+//let userCredential = await   firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
+//update the auth profile
+//await userCredential.user.updateProfile({displayName: this.state.firstName  + this.state.lastName,});
+
 handleSubmit(event) {
   firebaseService.auth()
   .createUserWithEmailAndPassword(this.state.email, this.state.password)
-  .then(() => this.setState({message:'User Account created successfully', showExam:true}))
+  .then((user) => {
+  this.setState({message:'User Account created successfully', showExam:true});
+  })
   .catch((error) =>{
   console.log(error);
     var errorCode = error.code;
@@ -179,10 +208,10 @@ getValue = (cate,betterthan) => {
     });
 
     let findees = donne.lastIndexOf(percentile);
-    console.log("index of ",findees);
+    //console.log("index of ",findees);
     let percc = Math.floor(findees +1) *100/donne.length;
     this.setState({[betterthan]:percc});
-    console.log("percc!!!!!!!",percc);
+   // console.log("percc!!!!!!!",percc);
     //end percentile 
     let jsonObj ={} ;
     sortedCategory.forEach( x => jsonObj[Object.keys(x)] = x[Object.keys(x)] )
@@ -228,7 +257,7 @@ const onAddressChanged =(e) => {
 
 const handleClick = (question,elmnt) => {
   const {debut,fin,progressBar} =  this.state;
-  //set the next question
+
   if (!nextQuestion.includes(question)) {
     nextQuestion.push(question);
     if (progressBar <100) this.setState({progressBar: progressBar +2});
@@ -236,33 +265,27 @@ const handleClick = (question,elmnt) => {
   let Questions = Questionnaire.slice(debut-1,fin);
   try {
     let answers = [...this.state.answers];
+   // console.log(answers);
+    let choosen = Questionnaire.find( x => x.key === question);
     let rslt = {
       keyresponse: elmnt.key,
       number: question,
-      question: Questionnaire[question].val,
+      question: choosen.val, //=> Questionnaire devrait filtrer ou find ddans le questionnaire celui qui a la cle quon recherche et non prendre simplement celui a cette position du tableau...
       response: response[elmnt.key-1].valeur,
-      category: Questionnaire[question].category,
-      score: Questionnaire[question].category>0 ? response[elmnt.key-1].key:response[elmnt.key-1].quote,
+      category: choosen.category,
+      score: choosen.category>0 ? response[elmnt.key-1].key:response[elmnt.key-1].quote,
     };
+    //console.log(rslt);
     answers[question-1] = rslt;
     this.setState({ selected: elmnt.key, answers });  
-    console.log("Fin",this.state.fin);
-    setTimeout(() =>{
-      const {debut,fin} = this.state;
-      if (nextQuestion.length ===5 && fin<100){
-        this.setState({debut:debut+5,fin:fin+5,inProp:true});
-        nextQuestion=[];
-      }else {
-        this.setState({inProp:false})
-      }
-    }, 2000);
+   // console.log("Fin",this.state.fin);
   }catch (error) {
     this.setState({ error });
   }
 }
 const qcm = (question) => {
   let answers = [...this.state.answers];
-  if (question === 50) console.log("QUESTION sdfdsfdfs 50 ");
+  //console.log("????????",question);
     return response.map((elmnt) => (
       <td key={elmnt.key} style={{ paddingRight: widthScreen(40) }}>
         <button 
@@ -271,11 +294,23 @@ const qcm = (question) => {
             (answers[question-1])  && answers[question-1].keyresponse === elmnt.key ? styles['radioButtonClicked' + elmnt.key] : styles['radioButton' + elmnt.key]
           } 
           onClick={()=> {
+            console.log('numero clicked',question === 50);
             handleClick(question,elmnt)}}
         />
       </td>
     ));
 };
+
+const nextPage = () =>{
+  const {debut,fin} = this.state;
+    if (nextQuestion.length ===5 && fin<100){
+      this.setState({debut:debut+5,fin:fin+5,inProp:true});
+      nextQuestion=[];
+    }else {
+      this.setState({inProp:false})
+  }
+}
+
 var il = 0;
 var decompte =0;
 var montrer = false;
@@ -290,7 +325,7 @@ const move =() =>{
       } else {
         width++;
         decompte = width
-        console.log(decompte);
+        //console.log(decompte);
         this.setState({progress:width});
       }
     }
@@ -302,13 +337,27 @@ const move =() =>{
 const {showResult,progress} = this.state;
 
 if (showResult) return (
-  <div  
-    style={{display:'flex',flex:1,justifyContent:'center',alignItems:'center', margin:'25%'}}
-  >
+    <div style={{alignItems:'center',justifyContent:'center',alignSelf:'center',paddingLeft:50}}>
       <Gauge fontSize="34" fontColor='#86207C' level ={progress} title="Score Calculation" color="orange"/>
-  </div>
+    </div>
 );
-          
+       
+
+/*const displayName = firebaseService.auth().currentUser?.displayName;
+
+ this.state.betterthan,
+        this.state.betterthan1,
+        this.state.betterthan2,
+        this.state.betterthan3,
+        this.state.betterthan4,
+
+console.log(displayName);*/
+if (this.state.hadTakenTest) return  <Resultat resultat1level={this.state.betterthan} 
+                                               resultat2level={this.state.betterthan1} 
+                                               resultat3level={this.state.betterthan2}
+                                               resultat4level={this.state.betterthan3} 
+                                               resultat5level={this.state.betterthan4}
+                                      />;
  return (
   <ErrorBoundary>
     {!this.state.user ? <div style={{display:'flex',flexDirection:'column'}}> 
@@ -327,14 +376,14 @@ if (showResult) return (
           {this.state.message}
         </label>
       </div>
-      <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column',flex:1}} >
+      <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column',flex:1,}} >
         <label style={{display:'flex',alignSelf:'center',padding:10,fontFamily:'Open Sans Regular',fontSize:widthScreen(27.5)}}>{TextKey.testPage.invitation}</label>
         <form  style={numberCircle} onSubmit={this.handleSubmit}>
-          <input type="text" value={this.state.firstName} onChange={this.setFirstName} placeholderStyle={{fontSize:widthScreen(22),fontFamily:'Open Sans Regular',paddingLeft:25}} style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3,marginBottom:heightScreen(22)}} placeholder="FIRST NAME" />
-          <input type="text" value={this.state.lastName} onChange={this.setLastName} style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3,marginBottom:heightScreen(22)}} placeholder="LAST NAME" />
-          <input type="email" value={this.state.email} onChange={this.setEmail} style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3,marginBottom:heightScreen(22)}} placeholder="EMAIL ADDRESS" />
-          <input type="password" value={this.state.password} onChange={this.setPassword}  style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3}} placeholder="PASSWORD"/>
-          <input type="submit" value="Begin The Exam &rarr;"  
+          <input required type="text" value={this.state.firstName} onChange={this.setFirstName} placeholderStyle={{fontSize:widthScreen(22),fontFamily:'Open Sans Regular',paddingLeft:25}} style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3,marginBottom:heightScreen(22)}} placeholder="FIRST NAME" />
+          <input required type="text" value={this.state.lastName} onChange={this.setLastName} style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3,marginBottom:heightScreen(22)}} placeholder="LAST NAME" />
+          <input required type="email" value={this.state.email} onChange={this.setEmail} style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3,marginBottom:heightScreen(22)}} placeholder="EMAIL ADDRESS" />
+          <input required type="password"  value={this.state.password} onChange={this.setPassword}  style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3}} placeholder="PASSWORD"/>
+          <input type="submit"   id="submit" value="Begin The Exam &rarr;"  
             style={styles.submit}
         />
         </form>
@@ -365,11 +414,11 @@ if (showResult) return (
                 {elemnt.val}
               </label>
               <tr style={{justifyContent:'space-around',alignItems:'center',display:'flex'}}>
-          <label style={{display:'flex',paddingRight:widthScreen(41),color:'#41ac97',fontFamily:'Open Sans Bold',fontWeight:'bold'}}>{TextKey.testPage.agree}</label>
+                <label style={{display:'flex',color:'#86207C',fontSize:18,fontFamily:'Open Sans Bold',paddingRight:widthScreen(41),}}>{TextKey.testPage.disagree}</label>
                   {
                       qcm(elemnt.key)
                   }
-                  <label style={{display:'flex',color:'#86207C',fontSize:18,fontFamily:'Open Sans Bold',}}>{TextKey.testPage.disagree}</label>
+                  <label style={{display:'flex',color:'#41ac97',fontFamily:'Open Sans Bold',fontWeight:'bold'}}>{TextKey.testPage.agree}</label>
               </tr>
             </div>
           ))}
@@ -406,7 +455,7 @@ if (showResult) return (
               answers:answers.filter( val => val !==undefined),
               groupAnswer: rsultFinal
             };
-            console.log(resp);
+           // console.log(resp);
             firebaseService.database().ref('users/' + userId + '/').set(
               resp
             );
@@ -434,15 +483,16 @@ if (showResult) return (
 
           }}
         >
-          <button style={styles.butonSubmit}
-            onClick ={() => console.log("clicked")}
-          >
-            Submit Answers
-          </button>
+          <MindButton paddingHorizontal={30} func={nextPage} textSize={widthScreen(40)} text="Submit Answers" marginTop={heightScreen(50)} marginBottom={heightScreen(112)}/>
         </Link>
         :null}
     </div> 
   </> : null } 
+    {nextQuestion.length ===5 && this.state.progressBar <100 ?
+       <div style={{alignItems:'center',justifyContent:'center',alignSelf:'center',display:'flex'}}>
+       <MindButton paddingHorizontal={58} func={nextPage} textSize={widthScreen(30)} text="Next &rarr;" marginTop={heightScreen(50)} marginBottom={heightScreen(112)}/>
+       </div>: null
+    }       
     <Footer text={true}/>
   </ErrorBoundary>
     );
@@ -524,37 +574,37 @@ radioButton1: {
   width: widthScreen(68),
   height: widthScreen(68),
   'border-radius': '50%',
-  borderColor:'#41ac97'
+  borderColor:'#86207C'
 },
 radioButtonClicked1: {
 width: widthScreen(68),
 height: widthScreen(68),
 'border-radius': '50%',
-backgroundColor:'#41ac97',
+backgroundColor: '#86207C',
 },
 radioButton2: {
   width: widthScreen(50),
   height: widthScreen(50),
   'border-radius': '50%',
-  borderColor:'#41ac97'
+  borderColor:'#86207C'
 },
 radioButtonClicked2: {
 width: widthScreen(50),
 height: widthScreen(50),
 'border-radius': '50%',
-backgroundColor:'#41ac97',
+backgroundColor:'#86207C',
 },
 radioButton3: {
   width: widthScreen(42),
   height: widthScreen(42),
   'border-radius': '50%',
-  borderColor:'#41ac97'
+  borderColor:'#86207C'
 },
 radioButtonClicked3: {
 width: widthScreen(42),
 height: widthScreen(42),
 'border-radius': '50%',
-backgroundColor:'#41ac97',
+backgroundColor:'#86207C',
 },
 radioButton4: {
   width: widthScreen(34),
@@ -571,37 +621,37 @@ radioButton5: {
   width: widthScreen(42),
   height: widthScreen(42),
   'border-radius': '50%',
-  borderColor: '#86207C',
+  borderColor:'#41ac97',
 },
 radioButtonClicked5: {
 width: widthScreen(42),
 height:widthScreen(42),
 'border-radius': '50%',
-backgroundColor:'#86207C',
+backgroundColor:'#41ac97',
 },
 radioButton6: {
   width: widthScreen(52.25),
   height: widthScreen(52.25),
   'border-radius': '50%',
-  borderColor: '#86207C',
+  borderColor: '#41ac97',
 },
 radioButtonClicked6: {
 width: widthScreen(52.25),
 height: widthScreen(52.25),
 'border-radius': '50%',
-backgroundColor:'#86207C',
+backgroundColor:'#41ac97',
 },
 radioButton7: {
   width: widthScreen(68),
   height: widthScreen(68),
   'border-radius': '50%',
-  borderColor: '#86207C',
+  borderColor: '#41ac97',
 },
 radioButtonClicked7: {
 width: widthScreen(68),
 height: widthScreen(68),
 'border-radius': '50%',
-backgroundColor:'#86207C',
+backgroundColor:'#41ac97',
 }
 };
 

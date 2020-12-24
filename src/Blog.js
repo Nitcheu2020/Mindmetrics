@@ -11,13 +11,15 @@ import {
   TwitterIcon,
   LinkedinIcon,
 } from "react-share";
+import TextKey from './text/TextKey';
+
 const widthScreen = (taille) =>  {
   return taille * 100/2063 + 'vw';
 }
 
 function Blog(props) {
     //const shareUrl = 'http://github.com';
-    const title =  "This is my Personality Test Score that i took on:  "
+    const title =  TextKey.shareApi;
     const [ shareUrl, setShareUrl] = useState(props.url? props.url:'http://mindmetrics.io/');
   return (
       <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
