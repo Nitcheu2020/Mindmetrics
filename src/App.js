@@ -47,7 +47,7 @@ const styleMenu = {
 };
 const divStyle = {
  // flex:1,
-  backgroundColor: '#FFFAFA',//'#d3d3d3',
+  backgroundColor: '#d3d3d3', //'#FFFAFA',
   //'fontWeight': 'bold',
    display: 'flex',
   'flexDirection':'row',
