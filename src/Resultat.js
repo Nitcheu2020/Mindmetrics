@@ -11,6 +11,17 @@ import MindButton from './components/MindButton';
 import Footer from './Footer';
 import {useLocation } from "react-router-dom";
 import TextKey from './text/TextKey';
+import Reportblurred from  './img/Reportblurred.jpg' ;
+import getpremiumillustration from './img/getpremiumillustration.png';
+import ico_discuss from './img/ico_discuss.png';
+
+const widthScreen = (taille) =>  {
+  return taille * 100/2063 + 'vw';
+}
+const heightScreen = (taille) =>  {
+  return taille * 100/2610 + 'vw';
+} 
+
 const premiumButtonStyle = {
   top: '50%',
   left: '50%',
@@ -19,15 +30,22 @@ const premiumButtonStyle = {
   marginRight: '-50%',
   transform: 'translate(-50%, -50%)',
   position:'absolute',
+  alignItems:'column',
+  borderColor:'#d3d3d3',
+  borderStyle:'groove',
+  borderRadius:4,
+  paddingLeft:heightScreen(100),
+  paddingRight:heightScreen(100),
+  paddingTop:heightScreen(100),
+  paddingBottom:heightScreen(100),
+  display:'flex',
+  flexDirection:'column',
+  alignItems:'center'
+  
 };
 
 Modal.setAppElement('#root');
-const widthScreen = (taille) =>  {
-  return taille * 100/2063 + 'vw';
-}
-const heightScreen = (taille) =>  {
-  return taille * 100/2610 + 'vw';
-} 
+
 
 const Resultat = (props) => {
   const photoRef = useRef(null);
@@ -84,23 +102,28 @@ const [ url, setUrl] = useState(null);
 let background = location.state && location.state.progress;
 
   
-let resultat1level =  location.state && location.state.resultat1level;
-let resultat2level =  location.state && location.state.resultat2level;
-let resultat3level =  location.state && location.state.resultat3level;
-let resultat4level =  location.state && location.state.resultat4level;
-let resultat5level =  location.state && location.state.resultat5level;
+let resultat1level =  props.resultat1level ? props.resultat1level : location.state && location.state.resultat1level;
+let resultat2level =  props.resultat2level ? props.resultat2level : location.state && location.state.resultat2level;
+let resultat3level =  props.resultat3level ? props.resultat3level : location.state && location.state.resultat3level;
+let resultat4level =  props.resultat4level ? props.resultat4level : location.state && location.state.resultat4level;
+let resultat5level =  props.resultat5level ? props.resultat5level : location.state && location.state.resultat5level;
 
-let resultat1title =  location.state && location.state.resultat1title;
-let resultat2title =  location.state && location.state.resultat2title;
-let resultat3title =  location.state && location.state.resultat3title;
-let resultat4title =  location.state && location.state.resultat4title;
-let resultat5title =  location.state && location.state.resultat5title;
+var text1=-1, text2=-1, text3=-1, text4=-1 , text5=-1;
 
-let resultat1color =  location.state && location.state.resultat1color;
-let resultat2color =  location.state && location.state.resultat2color;
-let resultat3color =  location.state && location.state.resultat3color;
-let resultat4color =  location.state && location.state.resultat4color;
-let resultat5color =  location.state && location.state.resultat5color;
+
+ 
+text1 =  resultat1level>50 ? 'More energetic and pronounced engagement with the external world. Likes high group visibility, talking, and asserting themselves.' : 'Needs less stimulation and are more independent of their social world. It does not mean they are shy, un-friendly, or antisocial.'
+
+text2 = resultat2level>50 ? 'Value getting along with others. They have a more optimistic view of human nature.' : 'Value self interests over others. They are more skeptical of others\' motives.'
+
+text3 = resultat3level>50 ?  'More self-disciplined, dutiful, or aiming for achievement against measures or outside expectations.' :  'More likely to prefer the spontaneous over the planned.'
+
+text4 = resultat4level>50 ? '**This demo cannot diagnose a mental illness.**  More likely to have negative emotions or get upset. It could mean they are going through a tough time.' : 'More calm and less likely to get upset. It does not mean they are positive, or happy people.'
+
+text5 = resultat5level>50 ? 'Openness to experience. Higher: Intellectually curious, emotionally-aware, sensitive to beauty and willing to try new things.' : 'Preferring the plain, straightforward, and obvious over the complex, ambiguous, and subtle.'
+
+
+
 
 function guid() {
   function s4() {
@@ -170,12 +193,13 @@ const navName = {
   fontFamily:'Open Sans Bold',
 };
 
+const displayName = firebaseService.auth().currentUser?.displayName;
 return (
   <div style={container}  >
     <div style={sousContainer} ref={photoRef}>
       <div  style={paddingName}> 
         <nav style={navName}>
-          {TextKey.resultPage.yourName}
+          {TextKey.resultPage.yourName} {displayName? displayName:""}
         </nav>
         <nav>
             <label style={{fontSize:widthScreen(26),fontFamily:'Open Sans Italic'}}>{TextKey.resultPage.youAre}</label> 
@@ -183,11 +207,15 @@ return (
         <label style={{fontSize:widthScreen(38),fontFamily:'Open Sans Italic',paddingBottom:heightScreen(29)}}>{TextKey.resultPage.helpful}</label> 
         <nav style={{width:'25.7vw',display:'flex',paddingRight:'5vw'}}>
           <label style={{ borderBottom: '2px solid 	#c0c0c0',paddingBottom:'1vw',fontSize:widthScreen(22),fontFamily:'Open Sans Light'}}>
-            {TextKey.resultPage.paragraph.first}
+            {text1}
             {<br/>} {<br/>}
-            {TextKey.resultPage.paragraph.second}
+            {text2}
             {<br/>} {<br/>}
-            {TextKey.resultPage.paragraph.third}
+            {text3}
+            {<br/>} {<br/>}
+            {text4}
+            {<br/>} {<br/>}
+            {text5}
           </label>
         </nav>
         <div style={{paddingTop:heightScreen(40),flexDirection:'row',display:'flex',justifyContent:'flex-start', alignItems:'center',}}>
@@ -198,11 +226,22 @@ return (
         </div>
       </div>
       <div  style={gaugeStyle}> 
-        <Gauge level ={resultat1level} title="betterthan" color="#ff0f33"/>
-        <Gauge level ={resultat2level} title="betterthan1" color="#41ac97"/>
-        <Gauge level ={resultat3level} title="betterthan2" color="#cb0c86"/>
-        <Gauge level ={resultat4level} title="betterthan3" color="#04b2ca"/>
-        <Gauge level ={resultat5level} title="betterthan4" color="#2c719d"/>
+        <Gauge level ={resultat1level} title="Extraversion" color="#ff0f33"/>
+        <Gauge level ={resultat2level} title="Agreeableness" color="#41ac97"/>
+        <Gauge level ={resultat3level} title="Conscientiousness" color="#cb0c86"/>
+        <Gauge level ={resultat4level} title="Emotional" color="#04b2ca"/>
+        <Gauge level ={resultat5level} title="Stability/Intellect" color="#2c719d"/>
+        <div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+          <img  
+          src={ico_discuss} 
+            style={{
+              width: '10%',
+              height: 'auto',
+            }} 
+            alt="ico_discuss"
+          />  
+          <label style={{paddingLeft:10,fontFamily:'Open Sans Bold',fontSize:widthScreen(20),}}> How to read this Report ?</label>
+        </div>
       </div>
     </div>
     <div style={{
@@ -211,17 +250,28 @@ return (
       maxWidth: '100%'
     }}>
       <img  
-        src={bgHeader} 
+        src={Reportblurred} 
         style={{
           width: '100%',
           height: 'auto',
         }} 
-        alt="bgHeader"
+        alt="Reportblurred"
       />  
+
       <div 
         style={premiumButtonStyle}
       >
-        <MindButton paddingHorizontal={30} func={savingPremium} textSize={widthScreen(20.5)} text={TextKey.resultPage.premiumReport} />
+        <MindButton paddingHorizontal={30}func={savingPremium} textSize={widthScreen(20.5)} marginBottom={50}  text={TextKey.resultPage.premiumReport} />
+        <img  
+        src={getpremiumillustration} 
+          style={{
+            width: '40%',
+            height: 'auto',
+           // margin:10
+          }} 
+          alt="Reportblurred"
+        /> 
+        
       </div>
     </div>
     <Footer text={true} url={url}/>

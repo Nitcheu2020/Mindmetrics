@@ -28,12 +28,24 @@ Modal.setAppElement('#root')
 const ModalAnswers = props => {
   
   var subtitle;
-  const [modalIsOpen,setIsOpen] = React.useState(props.modalOpen);
+const [modalIsOpen,setIsOpen] = React.useState(props.modalOpen);
+ 
+ 
+
+  //const [modalIsOpen,setIsOpen] = React.useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
+ 
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
     subtitle.style.color = '#f00';
   }
  
+  function closeModal(){
+    setIsOpen(false);
+  }
+
   /*
     <Modal
       isOpen={props.modalIsOpen}
@@ -46,15 +58,24 @@ const ModalAnswers = props => {
     </Modal>
     
   */
- 
+ console.log("In Modal",modalIsOpen);
   return (
-    <div style={{display:'flex',flex:1,maxWidth:'100%'}}>
-    
-
-      <h2 ref={_subtitle => (subtitle = _subtitle)}>Result Page</h2>
-      <button onClick={props.closeModal}>close</button>
-      {props.composant}
-      <Blog/>
+    <div style={{alignItems:'center',display:'flex',justifyContent:'center'}}>
+    <Modal
+      isOpen={modalIsOpen}
+      onAfterOpen={afterOpenModal}
+      onRequestClose={props.closeModal}
+      style={customStyles}
+      contentLabel="Example Modal"
+    >
+      <h2 ref={_subtitle => (subtitle = _subtitle)}>Email:</h2>
+      <h3 ref={_subtitle => (subtitle = _subtitle)}>pascal@mindmetrics.io</h3>
+      <h3 ref={_subtitle => (subtitle = _subtitle)}>pascal@mindmetrics.io</h3>
+      
+      <h2 ref={_subtitle => (subtitle = _subtitle)}>Phone:</h2>
+      <h3 ref={_subtitle => (subtitle = _subtitle)}>(+1) 415-881-7413</h3>
+      <h3 ref={_subtitle => (subtitle = _subtitle)}>(+1) 415-881-7413</h3>
+    </Modal>
   </div>
   );
 }
