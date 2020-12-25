@@ -6,6 +6,7 @@ import scheme_small from './img/scheme_small.png';
 import hand from './img/hand.png';
 import main from './img/main.png';
 import people from './img/people.png';
+import imgbackground from './img/imgbackground.png';
 import Gauge from './Gauge';
 import duplicatePeople from  './img/duplicatePeople.png';
 
@@ -33,8 +34,8 @@ const widthScreen = (taille) =>  {
 const  Home =(props) =>{
     return (
     <>
-      <div style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column',maxWidth:'100%'}}>
-    <label style={{fontSize:widthScreen(46.5),fontFamily:'Open Sans Light',paddingTop:heightScreen(64),paddingBottom:heightScreen(29)}}> {TextKey.home.title}</label>
+      <div style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column',maxWidth:'100%',backgroundImage: `url(${imgbackground})`}}>
+        <label style={{fontSize:widthScreen(46.5),fontFamily:'Open Sans Light',paddingTop:heightScreen(64),paddingBottom:heightScreen(29)}}> {TextKey.home.title}</label>
           <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column'}}>
           <label style={{fontSize:widthScreen(22),fontFamily:'Open Sans Light'}}> {TextKey.home.writing}</label>
           <label style={{fontSize:widthScreen(22),fontFamily:'Open Sans Light',paddingBottom:heightScreen(29)}} > {TextKey.home.report}</label>
@@ -93,7 +94,7 @@ const  Home =(props) =>{
             </Link>
           </label>
         </nav>
-        <nav style={{display:'flex','flexDirection':'row',paddingLeft:widthScreen(380),paddingRight:widthScreen(380)}}>
+        <nav style={{display:'flex','flexDirection':'row',paddingLeft:widthScreen(380),paddingRight:widthScreen(380),paddingBottom:heightScreen(100)}}>
           <label style={{display: 'flex','flexDirection':'column',paddingTop:heightScreen(116)}}>
         <label style={{fontFamily:'Open Sans Light',fontSize:widthScreen(40),paddingBottom:heightScreen(30),marginBottom:heightScreen(33)}}>{TextKey.home.detailedPersonality}</label>
             <label style={{fontFamily:'Open Sans Light',fontSize:widthScreen(22),width:'30%',display:'flex',alignSelf:'flex-start'}}>{TextKey.home.freeReport} </label>
@@ -101,13 +102,10 @@ const  Home =(props) =>{
               <label style={{color:'#ba097d','marginTop':heightScreen(10),paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}>{TextKey.home.tryOut}&gt; </label>
             </Link>
           </label>
-          <div style={{display:'flex',flexDirection:'column',width:'50%'}}>
+          <div style={{display:'flex',flexDirection:'column',width:'70%'}}>
             <Gauge level ={42} title="Extraversion" color="#ff0f33"/>
-            <Gauge level ={24} title="Agreeableness" color="#41ac97"/>
-            <Gauge level ={76} title="Conscientiousness" color="#cb0c86"/>
-            <Gauge level ={98} title="Emotional" color="#04b2ca"/>
-            <Gauge level ={100} title="Stability/Intellect" color="#2c719d"/>
             <Gauge level ={100} title="Stability/Intellect" color="#86207c"/>
+            <Gauge level ={100} title="Stability/Intellect" color="#f49608"/>
           </div>
         </nav>
         <div 

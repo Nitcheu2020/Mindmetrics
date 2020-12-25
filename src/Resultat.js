@@ -40,7 +40,8 @@ const premiumButtonStyle = {
   paddingBottom:heightScreen(100),
   display:'flex',
   flexDirection:'column',
-  alignItems:'center'
+  alignItems:'center',
+  backgroundColor:'rgba(0, 0, 0, 0.05)'
   
 };
 
@@ -107,6 +108,33 @@ let resultat2level =  props.resultat2level ? props.resultat2level : location.sta
 let resultat3level =  props.resultat3level ? props.resultat3level : location.state && location.state.resultat3level;
 let resultat4level =  props.resultat4level ? props.resultat4level : location.state && location.state.resultat4level;
 let resultat5level =  props.resultat5level ? props.resultat5level : location.state && location.state.resultat5level;
+
+let reslt = [resultat1level,resultat2level,resultat3level,resultat4level,resultat5level];
+let i=0, title="",numtitle=0;
+
+for (i=0;i<reslt.length;i++){
+  if (reslt[i]> reslt[numtitle]) numtitle = i;
+}
+
+switch (numtitle) {
+  case 0:
+    title =  'Extravert';
+    break;
+  case 1:
+    title =  'Agreeable';
+  case 2:
+    title =  'Conscious';
+    break;
+  case 3:
+    title =  'Emotionally Stable';
+    break;
+  case 4:
+    title = 'Intellectual';
+    break;
+
+  default:
+    break;
+}
 
 var text1=-1, text2=-1, text3=-1, text4=-1 , text5=-1;
 
@@ -204,7 +232,7 @@ return (
         <nav>
             <label style={{fontSize:widthScreen(26),fontFamily:'Open Sans Italic'}}>{TextKey.resultPage.youAre}</label> 
         </nav>
-        <label style={{fontSize:widthScreen(38),fontFamily:'Open Sans Italic',paddingBottom:heightScreen(29)}}>{TextKey.resultPage.helpful}</label> 
+        <label style={{fontSize:widthScreen(38),fontFamily:'Open Sans Italic',paddingBottom:heightScreen(29)}}>{title}</label> 
         <nav style={{width:'25.7vw',display:'flex',paddingRight:'5vw'}}>
           <label style={{ borderBottom: '2px solid 	#c0c0c0',paddingBottom:'1vw',fontSize:widthScreen(22),fontFamily:'Open Sans Light'}}>
             {text1}

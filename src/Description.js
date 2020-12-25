@@ -320,7 +320,7 @@ const move =() =>{
     il = 1;
     const  frame = () =>{
       if (width >= 100) {
-        this.setState({showResult: true});
+       // this.setState({showResult: true});
         return ;
       } else {
         width++;
@@ -332,6 +332,49 @@ const move =() =>{
     var width = 1;
     var id = setInterval(frame, 50);
   }
+}
+
+const submit =() => {
+  //e.preventDefault()
+  const userId = firebaseService.auth().currentUser.uid;
+  const {answers} = this.state;
+  let sorted =[];
+  let sommation = answers.map( element =>   { 
+    let filtre = answers.filter( x => Math.abs(x.category) === element.category);
+    if ((filtre.length !== 0) &&  !sorted.includes(element.category)) {      
+      let score = 0;
+      score =  filtre.map ( val => Number(val.score)).reduce ( (acc,curr) => acc + curr) ;
+      sorted.push(element.category);
+      return { 
+          [element.category]: filtre,
+          score:score
+      }
+    }
+  })
+  let rsultFinal = sommation.filter( x => x !== undefined);
+  rsultFinal.forEach( val =>  {
+    firebaseService.database().ref('scores/' + 'category' + '/' + [Object.keys(val)[0]] + '/' + userId).set(
+      val.score
+    );
+  });
+  let resp ={
+    answers:answers.filter( val => val !==undefined),
+    groupAnswer: rsultFinal
+  };
+ // console.log(resp);
+  firebaseService.database().ref('users/' + userId + '/').set(
+    resp
+  );
+  this.getValue(1,'betterthan');
+  this.getValue(2,'betterthan1');
+  this.getValue(3,'betterthan2');
+  this.getValue(4,'betterthan3');
+  this.getValue(5,'betterthan4');
+  this.setState({showResult:true});
+  move();
+  setTimeout(() => {
+    this.setState({hadTakenTest:true,showResult:false})
+  },5000);
 }
 
 const {showResult,progress} = this.state;
@@ -426,65 +469,7 @@ if (this.state.hadTakenTest) return  <Resultat resultat1level={this.state.better
       </div>
       <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
         { this.state.progressBar >=100?
-        <Link 
-          style={{ textDecoration: 'none' }}
-          onClick={ (e)=> {
-            e.preventDefault()
-            const userId = firebaseService.auth().currentUser.uid;
-            const {answers} = this.state;
-            let sorted =[];
-            let sommation = answers.map( element =>   { 
-              let filtre = answers.filter( x => Math.abs(x.category) === element.category);
-              if ((filtre.length !== 0) &&  !sorted.includes(element.category)) {      
-                let score = 0;
-                score =  filtre.map ( val => Number(val.score)).reduce ( (acc,curr) => acc + curr) ;
-                sorted.push(element.category);
-                return { 
-                    [element.category]: filtre,
-                    score:score
-                }
-              }
-            })
-            let rsultFinal = sommation.filter( x => x !== undefined);
-            rsultFinal.forEach( val =>  {
-              firebaseService.database().ref('scores/' + 'category' + '/' + [Object.keys(val)[0]] + '/' + userId).set(
-                val.score
-              );
-            });
-            let resp ={
-              answers:answers.filter( val => val !==undefined),
-              groupAnswer: rsultFinal
-            };
-           // console.log(resp);
-            firebaseService.database().ref('users/' + userId + '/').set(
-              resp
-            );
-            this.getValue(1,'betterthan');
-            this.getValue(2,'betterthan1');
-            this.getValue(3,'betterthan2');
-            this.getValue(4,'betterthan3');
-            this.getValue(5,'betterthan4');
-            this.setState({showResult:true});
-            move();
-            setTimeout(() => {
-              this.props.history.push({
-                pathname: "/resultat",
-                state:{ 
-                  progress: this.state.betterthan4,
-                  counting:true,
-                  resultat1level:  this.state.betterthan,
-                  resultat2level: this.state.betterthan1,
-                  resultat3level: this.state.betterthan2,
-                  resultat4level: this.state.betterthan3,
-                  resultat5level: this.state.betterthan4,
-                }
-              })
-            },5000);
-
-          }}
-        >
-          <MindButton paddingHorizontal={30} func={nextPage} textSize={widthScreen(40)} text="Submit Answers" marginTop={heightScreen(50)} marginBottom={heightScreen(112)}/>
-        </Link>
+        <MindButton paddingHorizontal={30} func={submit} textSize={widthScreen(40)} text="Submit Answers" marginTop={heightScreen(50)} marginBottom={heightScreen(112)}/>
         :null}
     </div> 
   </> : null } 
