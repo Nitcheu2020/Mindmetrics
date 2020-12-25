@@ -227,7 +227,7 @@ return (
     <div style={sousContainer} ref={photoRef}>
       <div  style={paddingName}> 
         <nav style={navName}>
-          {TextKey.resultPage.yourName} {displayName? displayName:""}
+          {displayName? displayName:""}
         </nav>
         <nav>
             <label style={{fontSize:widthScreen(26),fontFamily:'Open Sans Italic'}}>{TextKey.resultPage.youAre}</label> 
