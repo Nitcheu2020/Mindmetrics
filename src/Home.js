@@ -1,6 +1,7 @@
 import React from 'react';
 
 import result from "./img/result.png";
+import results from "./img/results.png";
 import faces from './img/faces.png';
 import scheme_small from './img/scheme_small.png';
 import hand from './img/hand.png';
@@ -49,7 +50,7 @@ const  Home =(props) =>{
             display: 'flex',
             maxWidth: '100%', maxHeight: '100%',
           }}
-          src={result} alt="result" 
+          src={results} alt="results" 
         />
         <img
           style={{
