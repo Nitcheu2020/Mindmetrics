@@ -69,7 +69,7 @@ const  Home =(props) =>{
             <label style={{color:'#ba097d','marginTop':heightScreen(10),alignSelf:'center',paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}>{TextKey.home.findOrMore} &gt; </label>
           </Link>
         </label>
-        <nav style={{display:'flex','flexDirection':'row',width:'100%',alignItems:'center',justifyContent:'flex-end',borderTop: '1px solid #d3d3d3',marginTop:heightScreen(86)}}>
+        <nav style={{display:'flex','flexDirection':'row',width:'100%',alignItems:'center',justifyContent:'center',borderTop: '1px solid #d3d3d3',marginTop:heightScreen(86)}}>
           <label style={{display: 'flex','flexDirection':'column',paddingRight:widthScreen(125)}}>
             <a style={{fontSize:widthScreen(40), fontFamily:'Open Sans Light',width:widthScreen(298.47)}} name="hwItW"> {TextKey.home.dataDriven} </a>
             <label style={{fontSize:widthScreen(22), fontFamily:'Open Sans Light',width:widthScreen(298.47)}}>{TextKey.home.usingData}</label>
