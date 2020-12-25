@@ -92,9 +92,11 @@ class Description extends Component {
       inProp:false,
       hadTakenTest:false
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
+    //this.handleSubmit = this.handleSubmit.bind(this);
     this.setPassword = this.setPassword.bind(this);
     this.setEmail = this.setEmail.bind(this);
+    this.setFirstName = this.setFirstName.bind(this);
+    this.setLastName =  this.setLastName.bind(this);
     this.timeout = null;
 }
 
@@ -131,44 +133,22 @@ componentWillUnmount() {
 }
 
 setPassword(event) {
-  console.log('password', event.target.value);
   this.setState({password: event.target.value});
 }
+
+setFirstName(event) {
+  this.setState({firstName: event.target.value});
+}
+
+setLastName(event) {
+  this.setState({lastName: event.target.value});
+}
+
 setEmail (event) {
   console.log('email', event.target.value);
   this.setState({email: event.target.value});
 }
 
-
-
-//let userCredential = await   firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
-//update the auth profile
-//await userCredential.user.updateProfile({displayName: this.state.firstName  + this.state.lastName,});
-
-handleSubmit(event) {
-  let creationCompt = firebaseService.auth().createUserWithEmailAndPassword(this.state.email, this.state.password) ;
-
-  creationCompt.then((user) => {
-  this.setState({message:'User Account created successfully', showExam:true});
-  })
-  .catch((error) =>{
-  console.log(error);
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    if (errorMessage === "The email address is already in use by another account."){
-        this.setState({message: "Email has already been created"});
-        firebaseService.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-        .then(()  =>{
-          firebaseService.auth()
-          .signInWithEmailAndPassword(this.state.email, this.state.password);
-        }) 
-      .then(() => this.setState({message:'Sign In Successful because account has been created alreay',showExam:true}))
-      .catch( error => this.setState({message: "???????????????????????" + error.message}))
-    }
-    else this.setState({message: "!!!!!!!!!!!!!!!!!!!!!!!!!" + errorMessage});
-  });
-  event.preventDefault();
-}
 submitAnswers = () =>{
   const {answers} = this.state;
   const userId = firebaseService.auth().currentUser.uid;
@@ -254,6 +234,44 @@ const onAddressChanged =(e) => {
     address: e.currentTarget.value
   });
 }
+
+const handleSubmit =(event) => {
+  firebaseService.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((user) => {
+    this.setState({message:'User Account created successfully', showExam:true});
+    })
+    .then(() =>{
+      firebaseService.auth().onAuthStateChanged(user => {
+        if (user) {
+          console.log(this.state.lastName);
+          user.updateProfile({ // <-- Update Method here
+            displayName: this.state.firstName + " " + this.state.lastName,
+          }).then(() =>{
+            console.log("click the link in your email to verify your account");
+          }, error => {
+            console.log("update failed",error);
+          });     
+        }
+      });
+    })
+    .catch((error) =>{
+    console.log(error);
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      if (errorMessage === "The email address is already in use by another account."){
+          this.setState({message: "Email has already been created"});
+          firebaseService.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+          .then(()  =>{
+            firebaseService.auth()
+            .signInWithEmailAndPassword(this.state.email, this.state.password);
+          }) 
+        .then(() => this.setState({message:'Sign In Successful because account has been created alreay',showExam:true}))
+        .catch( error => this.setState({message: " " + error.message}))
+      }
+      else this.setState({message: " " + errorMessage});
+    });
+  
+    event.preventDefault();
+  }
 
 const handleClick = (question,elmnt) => {
   const {debut,fin,progressBar} =  this.state;
@@ -421,7 +439,7 @@ if (this.state.hadTakenTest) return  <Resultat resultat1level={this.state.better
       </div>
       <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column',flex:1,}} >
         <label style={{display:'flex',alignSelf:'center',padding:10,fontFamily:'Open Sans Regular',fontSize:widthScreen(27.5)}}>{TextKey.testPage.invitation}</label>
-        <form  style={numberCircle} onSubmit={this.handleSubmit}>
+        <form  style={numberCircle} onSubmit={handleSubmit}>
           <input required type="text" value={this.state.firstName} onChange={this.setFirstName} placeholderStyle={{fontSize:widthScreen(22),fontFamily:'Open Sans Regular',paddingLeft:25}} style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3,marginBottom:heightScreen(22)}} placeholder="FIRST NAME" />
           <input required type="text" value={this.state.lastName} onChange={this.setLastName} style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3,marginBottom:heightScreen(22)}} placeholder="LAST NAME" />
           <input required type="email" value={this.state.email} onChange={this.setEmail} style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3,marginBottom:heightScreen(22)}} placeholder="EMAIL ADDRESS" />
