@@ -146,9 +146,9 @@ setEmail (event) {
 //await userCredential.user.updateProfile({displayName: this.state.firstName  + this.state.lastName,});
 
 handleSubmit(event) {
-  firebaseService.auth()
-  .createUserWithEmailAndPassword(this.state.email, this.state.password)
-  .then((user) => {
+  let creationCompt = firebaseService.auth().createUserWithEmailAndPassword(this.state.email, this.state.password) ;
+
+  creationCompt.then((user) => {
   this.setState({message:'User Account created successfully', showExam:true});
   })
   .catch((error) =>{
