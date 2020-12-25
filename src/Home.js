@@ -9,6 +9,7 @@ import people from './img/people.png';
 import imgbackground from './img/imgbackground.png';
 import Gauge from './Gauge';
 import duplicatePeople from  './img/duplicatePeople.png';
+import personalitybars from './img/personalitybars.png';
 
 import ico_chart from './img/ico_chart.png';
 import social_icons from './img/social_icons.png';
@@ -95,19 +96,15 @@ const  Home =(props) =>{
             </Link>
           </label>
         </nav>
-        <nav style={{display:'flex','flexDirection':'row',paddingLeft:widthScreen(380),paddingRight:widthScreen(380),paddingBottom:heightScreen(100)}}>
-          <label style={{display: 'flex','flexDirection':'column',paddingTop:heightScreen(116)}}>
-        <label style={{fontFamily:'Open Sans Light',fontSize:widthScreen(40),paddingBottom:heightScreen(30),marginBottom:heightScreen(33)}}>{TextKey.home.detailedPersonality}</label>
-            <label style={{fontFamily:'Open Sans Light',fontSize:widthScreen(22),width:'30%',display:'flex',alignSelf:'flex-start'}}>{TextKey.home.freeReport} </label>
+        <nav style={{display:'flex','flexDirection':'row',paddingBottom:heightScreen(100),paddingTop:heightScreen(116),justifyContent:'center',alignItems:'center',marginLeft:widthScreen(515)}}>
+          <label style={{display: 'flex','flexDirection':'column'}}>
+            <label style={{fontFamily:'Open Sans Light',fontSize:widthScreen(40),paddingBottom:heightScreen(30),marginBottom:heightScreen(33)}}>{TextKey.home.detailedPersonality}</label>
+            <label style={{fontFamily:'Open Sans Light',fontSize:widthScreen(22),width:'80%',display:'flex',}}>{TextKey.home.freeReport} </label>
             <Link to="/description" transition="glide-right" style={{ textDecoration: 'none',}}>
               <label style={{color:'#ba097d','marginTop':heightScreen(10),paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}>{TextKey.home.tryOut}&gt; </label>
             </Link>
           </label>
-          <div style={{display:'flex',flexDirection:'column',width:'70%'}}>
-            <Gauge level ={42} title="Extraversion" color="#ff0f33"/>
-            <Gauge level ={100} title="Stability/Intellect" color="#86207c"/>
-            <Gauge level ={100} title="Stability/Intellect" color="#f49608"/>
-          </div>
+            <img  style={{maxWidth:'100%',maxHeight:'auto',paddingRight:widthScreen(380)}} src={personalitybars}/>
         </nav>
         <div 
           style ={{display: 'flex',
