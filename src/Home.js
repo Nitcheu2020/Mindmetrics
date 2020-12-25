@@ -70,7 +70,7 @@ const  Home =(props) =>{
           </Link>
         </label>
         <nav style={{display:'flex','flexDirection':'row',width:'100%',alignItems:'center',justifyContent:'center',borderTop: '1px solid #d3d3d3',marginTop:heightScreen(86)}}>
-          <label style={{display: 'flex','flexDirection':'column',paddingRight:widthScreen(125)}}>
+          <label style={{display: 'flex','flexDirection':'column'}}>
             <a style={{fontSize:widthScreen(40), fontFamily:'Open Sans Light',width:widthScreen(298.47)}} name="hwItW"> {TextKey.home.dataDriven} </a>
             <label style={{fontSize:widthScreen(22), fontFamily:'Open Sans Light',width:widthScreen(298.47)}}>{TextKey.home.usingData}</label>
             <Link to="/description" transition="glide-right" style={{ textDecoration: 'none',}}>
@@ -78,6 +78,7 @@ const  Home =(props) =>{
             </Link>
           </label>
           <img
+            style={{maxWidth:'100%'}}
             src={duplicatePeople} alt="duplicatePeople" 
           />
         </nav>
