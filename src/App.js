@@ -150,9 +150,6 @@ return (
       <Route path="/description">
       <Description />
       </Route>
-      <Route path="/resultat">
-      <Resultat {...this.props}/>
-      </Route>
       <Route path="/blog">
       <Blog />
       </Route>
