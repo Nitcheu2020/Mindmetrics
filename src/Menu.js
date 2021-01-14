@@ -33,22 +33,31 @@ const  Menu = (props) => {
 function closeModal(){
   setShowContact(false);
 }
+//style={container}
+/** */
 
   return (
-    <nav style={container}>
-      <Link to="/" style={styleMenu}>
+    <ul  style={{container}}>
+      <li><Link to="/" style={styleMenu}>
         {TextKey.menu.home}</Link>
-      <a href="#hwItW" style={styleMenu}> 
-        {TextKey.menu.hwItW}
-      </a>
-      <label to="/contact" style={styleMenu} onClick={()=> {
-        setShowContact(true);
-        console.log(showContact);
-        }}>
-        {TextKey.menu.contact}
-      </label>
+      </li>
+      <li>
+        <a href="#hwItW" style={styleMenu}> 
+          {TextKey.menu.hwItW}
+        </a>
+      </li>
+      <li>
+        <label to="/contact" style={styleMenu} onClick={()=> {
+          setShowContact(true);
+          console.log(showContact);
+          }}>
+          {TextKey.menu.contact}
+        </label>
+      </li>
       {showContact?<ModalAnswers modalOpen={showContact} closeModal={closeModal}/>:null}
-    </nav>
+    
+    </ul>               
+    
   );
 }
 export default Menu;

@@ -15,7 +15,7 @@ const widthScreen = (taille) =>  {
         position:'relative',
          color:'white',
          'backgroundColor':styler,
-         'borderRadius':widthScreen(50),
+         'borderRadius':50,
          paddingTop: heightScreen(18),
          paddingBottom: heightScreen(15),
          paddingRight:widthScreen(props.paddingHorizontal?props.paddingHorizontal:56),

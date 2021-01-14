@@ -197,7 +197,7 @@ const gaugeStyle ={
 
 const container = {
   paddingTop:heightScreen(74),
-  backgroundColor:'#d3d3d3'
+  backgroundColor:'#d3d3d3',
 };
 
 const sousContainer = {
@@ -224,7 +224,7 @@ const navName = {
 const displayName = firebaseService.auth().currentUser?.displayName;
 return (
   <div style={container}  >
-    <div style={sousContainer} ref={photoRef}>
+    <div style={sousContainer} id="resultat" ref={photoRef}>
       <div  style={paddingName}> 
         <nav style={navName}>
           {displayName? displayName:""}
@@ -271,6 +271,7 @@ return (
           <label style={{paddingLeft:10,fontFamily:'Open Sans Bold',fontSize:widthScreen(20),}}> How to read this Report ?</label>
         </div>
       </div>
+
     </div>
     <div style={{
       position: 'relative',

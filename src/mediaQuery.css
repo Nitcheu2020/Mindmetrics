@@ -1,0 +1,403 @@
+* {
+  box-sizing: border-box;
+}
+
+.menu li img{
+    display: flex;
+align-items: flex-end;
+ justify-content: flex-end;
+  }
+
+
+.menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu li {
+  padding: 8px;
+  margin-bottom: 7px;
+  background-color: #33b5e5;
+  color: #ffffff;
+  box-shadow: 0 1px 3px #c3c3c3, 0 1px 2px #c3c3c3;
+}
+
+.menu li:hover {
+    background-color: #0099cc;
+  }
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+  align-items: center; justify-content: center;
+}
+
+[class*="col-"] {
+  float: left;
+  padding: 15px;
+}
+
+html {
+  font-family: "Lucida Sans", sans-serif;
+}
+/* #9933cc;*/
+.header {
+  background-color: gray;
+  color: #ffffff;
+  padding: 15px;
+}
+
+  
+.box {
+    height: 50px;
+    background: lightcoral;
+    border: 1px solid green;
+    margin: 5px 0;
+  }
+
+
+
+.aside {
+  background-color: #33b5e5;
+  padding: 15px;
+  color: #ffffff;
+  text-align: center;
+  font-size: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.footer {
+  background-color: #0099cc;
+  color: #ffffff;
+  text-align: center;
+  font-size: 12px;
+  padding: 15px;
+}
+
+/* For mobile phones: */
+[class*="col-"] {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  display:flex;
+  flex-direction: column;
+}
+
+/*
+.col- (extra small devices - screen width less than 576px)
+.col-sm- (small devices - screen width equal to or greater than 576px)
+.col-md- (medium devices - screen width equal to or greater than 768px)
+.col-lg- (large devices - screen width equal to or greater than 992px)
+.col-xl- (xlarge devices - screen width equal to or greater than 1200px)
+*/
+
+/*
+  @media only screen and (min-width: 500px) {
+   #index aside.col-lg-pull-9 {
+    right: 100% !important;
+   }
+   #index main.col-lg-push-3 {
+    left: 0% !important;
+   }
+   #index aside.col-lg-3 {
+    width: 0% !important;
+   }
+   #index main.col-lg-9 {
+    width: 100% !important;
+   }
+}
+*/
+
+@media screen and (max-width:599px) {
+    #personalitybars{
+        display: none;
+    }
+
+    .picture1{
+        display: none;
+      }
+   
+      .picture1{
+        display: block;
+      }
+
+    #writingSample{
+        margin-left: -20%;
+        margin-right: -20%;
+    }
+    #duplicatePeople{
+        margin-left: 5%;
+        text-align: center;
+        margin-right: 5%;
+    }
+    #mainText{
+        margin-left: 5%;
+        text-align: center;
+        margin-right: 5%;
+    }
+    #report {
+        padding-right:5%;
+        margin-left:5%;
+    }
+    #title{
+        color: #86207c;
+    }
+   table tr > *{
+        display: block;
+    }
+    table tr {
+        display: table-cell;
+    }
+
+    #questionnaire{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+}
+/*align-items: center; justify-content: center; display: flex;*/
+/*col3 align-items: center; justify-content: center; display: flex; */
+@media only screen and (min-width: 600px) {
+    #questionnaire{
+        align-items: center;
+        flex-direction: row;
+    }
+    #personalitybars{
+        border-style:'none';
+        display:'flex';
+        justify-content:'flex-end';
+        margin-left:'10em';
+    }
+
+    .image2{
+        display: block;
+      }
+    #grid1{
+        padding-right: 10%;
+        padding-left: 10%;
+    }
+   
+
+    /* For tablets: */
+    .col-s-1 {width: 8.33%;}
+    .col-s-2 {width: 16.66%;}
+    .col-s-3 {width: 25%;}
+    .col-s-4 {width: 33.33%;}
+    .col-s-5 {width: 41.66%;}
+    .col-s-6 {width: 50%;}
+    .col-s-7 {width: 58.33%;}
+    .col-s-8 {width: 66.66%;}
+    .col-s-9 {width: 75%;}
+    .col-s-10 {width: 83.33%;}
+    .col-s-11 {width: 91.66%;}
+    .col-s-12 {width: 100%;}
+  }
+
+  /*
+  paddingLeft:'20%',paddingRight:'15%',
+  */
+  /*@media only screen and (min-width: 768px) {
+
+  #main{
+    margin-right:-20%;
+    margin-left:5em;
+    background-color: pink;
+  }
+  #mainText{
+      margin-right: 15%;
+      background-color: purple;
+  }
+
+  }*/
+
+  /*
+   #main{
+        padding-left: 10%;
+        padding-right: -10%;
+    }
+    #mainText{
+       
+        padding-left: 10%;
+    }
+  */
+
+  @media only screen and (min-width: 1568px) {
+    #main{
+        padding-left: 20%;
+        margin-right: -5%;
+        justify-content: center;
+    }
+    #mainText{
+        text-align: start;
+        margin-right: 25%;
+    }
+    #duplicatePeople{
+        margin-left: 7.5%;
+        text-align: start;
+        margin-right: -5%;
+    }
+    #newImgPersonality{
+        margin-left: -10%;
+    }
+  }
+
+
+@media only screen and (min-width: 768px) {
+    
+    
+    /* For desktop: */
+
+  .menu ul {
+    display: flex;
+    list-style-type: none;
+
+    flex:1;
+    flex-direction:row;
+    justify-content:flex-end;
+    align-items: flex-end;
+    align-self:center;
+    background-color : #d3d3d3;
+  }
+
+
+
+  #report {
+    padding-right:31%;
+    margin-left:31%;
+ }
+
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}  
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+  #test  {
+    display: inline-block;
+    padding-left: 25%;
+    padding-right: 15%;
+    justify-content: center;
+    align-items: center;
+   }
+   #personality{
+    display: inline-block;
+    margin-left: 23%;
+    text-align: start;
+    /*padding-right: 15%;*/
+    justify-content: center;
+    align-items: flex-start;
+   }
+   #textPersonality{
+    padding-right: 20%;
+    text-align: start;
+   }
+
+   #imgPersonality{
+       padding-right: 20%;
+       display: none;
+   }
+}
+
+@media only screen and (max-width: 576px) {
+    #my-content { display: block; }  /* show it on small screens */
+    #my-content-big{display: none;}
+    #disagreeSmall{
+        display:flex;
+        color:#86207C;
+        font-family:'Open Sans Bold';
+        font-weight:bold;
+        text-align:flex-end;
+        margin-right:auto;
+    }
+    #disagreeBig{
+        display: none;
+    }
+  }
+  
+  @media only screen and (min-width: 577px) {
+      #disagreeSmall{
+          display: none;
+      }
+      #disagreeBig{
+        display:flex;
+        color:#86207C;
+        font-size:18;
+        font-family:'Open Sans Bold';
+        margin-right:41;
+      }
+    #my-content { display: none; }   /* hide it elsewhere */
+    #my-content-big{display: block;}
+  }
+  
+  .resultat{
+    display: flex;
+    gap:1em;
+    flex-wrap: wrap;
+}
+
+  /* the third one is the flexbasis and change when i change the value */
+  .resultat > *{
+      flex:1 1 15em; /* you can also use percentage instead of width em*/
+      gap:4em;
+     /* background-color: white;*/
+  }
+
+
+  .grid-ish {
+    display: flex;
+    gap:1em;
+    flex-wrap: wrap;
+}
+
+  /* the third one is the flexbasis and change when i change the value */
+  .grid-ish > *{
+      flex:1 1 15em; /* you can also use percentage instead of width em*/
+      gap:4em;
+     /* background-color: white;*/
+  }
+
+  .grid-ish1 {
+    display: flex;
+    flex-wrap: wrap;
+    background-color:#d3d3d3;
+    padding-top: 2em;
+    padding-bottom: 2em;
+   
+}
+
+  /* the third one is the flexbasis and change when i change the value */
+  .grid-ish1 > *{
+      flex:1 1 0em; /* you can also use percentage instead of width em*/
+      
+     /* background-color: white;*/
+  }
+
+ 
+
+
+  .content-sidebar {
+      display: flex;
+      gap:1em;
+      flex-wrap: wrap;
+  }
+
+  /*assurer la taille de l'enfant numero...*/
+  .content-sidebar > *:nth-child(1){
+      flex:1 1 70%;
+      gap:1em;
+  }
+
+  .content-sidebar > *:nth-child(2){
+    flex:1 1 25%;
+    gap:1em;
+    /*min-width: 30ch;*/
+}

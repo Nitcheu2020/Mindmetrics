@@ -20,7 +20,7 @@ const  Footer =(props)=>{
           {props.text?<div style={{backgroundColor:'#CDCDCD',justifyContent:'center',display:'flex',padding:'2%',alignSelf:'flex-end',flexDirection:'column',
             maringBottom:heightScreen(60)
           }}>
-              <label  style={{alignSelf:'center',fontSize:widthScreen(40),fontFamily:'Open Sans Light',paddingBottom:heightScreen(36)}}>{TextKey.footer.ask}</label>
+              <label  style={{alignSelf:'center',textAlign:'center',fontSize:38,fontFamily:'Open Sans Light',paddingBottom:heightScreen(36)}}>{TextKey.footer.ask}</label>
                 <div style={{alignSelf:'center'}}> 
                   <Blog url={props.url}/>
                 </div>

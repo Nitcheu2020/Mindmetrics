@@ -15,6 +15,8 @@ import firebase from "firebase/app";
 import TextKey from './text/TextKey';
 import Home from './Home';
 
+import MediaQuery from './MediaQuery';
+
 import {
   useLocation,
 } from "react-router-dom";
@@ -108,8 +110,9 @@ export default class App extends Component {
     });
   }
 
-
   render() {
+
+    const tesFunc = () =>console.log("Hello");
 return (
   <ErrorBoundary>
     <Router>
@@ -133,6 +136,23 @@ return (
             </Link>
           </>:null}
         </div>
+        
+        <div class="header">
+          <div class="row" style= {{display:'flex',alignItems:'center',justifyContent:'center'}}>
+            {this.state.openMenu?    
+              <div class="col-3 col-5 col-s-3 menu" onClick={() =>this.setState({openMenu:!this.state.openMenu})}>
+                <Menu/>
+              </div>:null}
+
+            {!this.state.openMenu?<h1 id="my-content"  class="col-5" onClick={() => this.setState({openMenu:!this.state.openMenu})}>Chania</h1>: null}
+            <img class="col-2" src= {logo} alt="Logo"/>
+
+            <div class="col-5" style={{display:'flex',justifyContent:'flex-end'}}>
+              <MindButton paddingHorizontal={30}func={tesFunc} textSize={20.5} text={"TAKE TEST"} />
+            </div>
+          </div>
+        </div>
+
       </div>
       <Switch>
       <Route path="/research">
@@ -143,6 +163,9 @@ return (
       </Route>
       <Route path="/canvas">
       <Canvas />
+      </Route>
+      <Route path="/MediaQuery">
+      <MediaQuery />
       </Route>
       <Route path="/login">
       <LoginForm />

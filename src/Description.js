@@ -419,6 +419,7 @@ if (this.state.hadTakenTest) return  <Resultat resultat1level={this.state.better
                                                resultat4level={this.state.betterthan3} 
                                                resultat5level={this.state.betterthan4}
                                       />;
+    //je dois revoir le background image et mettre le background-image : cover et le background-position center center 
  return (
   <ErrorBoundary>
     {!this.state.user ? <div style={{display:'flex',flexDirection:'column'}}> 
@@ -456,7 +457,7 @@ if (this.state.hadTakenTest) return  <Resultat resultat1level={this.state.better
       <div style={{justifyContent:'center'}}>
         <div style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',paddingTop:heightScreen(80)}}>
           <div style={{backgroundColor:'#DCDCDC',borderRadius:5,marginLeft:5,marginRight:widthScreen(39),alignItems:'center',alignSelf:'center',width:'30%', borderTop : "thin solid darkgray",}}>
-            <div style={{height:heightScreen(31),width:this.state.progressBar +"%",backgroundColor:'#86207C',borderRadius:5,display:'flex',flex:1}}/>
+            <div style={{height:31,width:this.state.progressBar +"%",backgroundColor:'#86207C',borderRadius:5,display:'flex',flex:1}}/>
           </div>
           <label style={{fontFamily:'Open Sans Bold', fontSize:24,color:'#86207C'}}> {this.state.progressBar +"%"}</label>
         </div>
@@ -474,13 +475,19 @@ if (this.state.hadTakenTest) return  <Resultat resultat1level={this.state.better
               <label style={styles.button,{display: 'flex',fontFamily:'Open Sans Regular',paddingBottom:heightScreen(30),paddingTop:heightScreen(80),fontSize:18}}>
                 {elemnt.val}
               </label>
-              <tr style={{justifyContent:'space-around',alignItems:'center',display:'flex'}}>
-                <label style={{display:'flex',color:'#86207C',fontSize:18,fontFamily:'Open Sans Bold',paddingRight:widthScreen(41),}}>{TextKey.testPage.disagree}</label>
-                  {
-                      qcm(elemnt.key)
+              <div  id="questionnaire" style={{justifyContent:'space-around',display:'flex'}}>
+                <label  id="disagreeBig" style={{paddingRight:41}}>{TextKey.testPage.disagree}</label>
+                <div style={{justifyContent:'space-around',alignItems:'center',display:'flex',flexDirection:'row'}}>
+                  {   
+                    qcm(elemnt.key)
                   }
-                  <label style={{display:'flex',color:'#41ac97',fontFamily:'Open Sans Bold',fontWeight:'bold'}}>{TextKey.testPage.agree}</label>
-              </tr>
+                  </div>
+                      <div style={{display:'flex',width:'100%'}}> 
+                      <label id="disagreeSmall">{TextKey.testPage.disagree}</label>
+                  <label style={{display:'flex',color:'#41ac97',fontFamily:'Open Sans Bold',fontWeight:'bold',textAlign:'flex-end'}}>{TextKey.testPage.agree}</label>
+
+                  </div>
+              </div>
             </div>
           ))}
         </div>
@@ -493,7 +500,7 @@ if (this.state.hadTakenTest) return  <Resultat resultat1level={this.state.better
   </> : null } 
     {nextQuestion.length ===5 && this.state.progressBar <100 ?
        <div style={{alignItems:'center',justifyContent:'center',alignSelf:'center',display:'flex'}}>
-       <MindButton paddingHorizontal={58} func={nextPage} textSize={widthScreen(30)} text="Next &rarr;" marginTop={heightScreen(50)} marginBottom={heightScreen(112)}/>
+       <MindButton paddingHorizontal={58} func={nextPage} textSize={30} text="Next &rarr;" marginTop={heightScreen(50)} marginBottom={heightScreen(112)}/>
        </div>: null
     }       
     <Footer text={true}/>
@@ -535,7 +542,7 @@ const styles = {
      'flexDirection':'column',
      alignItems:'center',
      borderBottom : "thin solid #DCDCDC",
-     width: '30%',
+    // width: '30%',
      alignSelf:'center'
    },
   buton:{
@@ -574,85 +581,85 @@ radioButtonClicked: {
   borderColor: 'pink',
 },
 radioButton1: {
-  width: widthScreen(68),
-  height: widthScreen(68),
+  width: 68,
+  height: 68,
   'border-radius': '50%',
   borderColor:'#86207C'
 },
 radioButtonClicked1: {
-width: widthScreen(68),
-height: widthScreen(68),
+width: 68,
+height: 68,
 'border-radius': '50%',
 backgroundColor: '#86207C',
 },
 radioButton2: {
-  width: widthScreen(50),
-  height: widthScreen(50),
+  width: 50,
+  height: 50,
   'border-radius': '50%',
   borderColor:'#86207C'
 },
 radioButtonClicked2: {
-width: widthScreen(50),
-height: widthScreen(50),
+width: 50,
+height: 50,
 'border-radius': '50%',
 backgroundColor:'#86207C',
 },
 radioButton3: {
-  width: widthScreen(42),
-  height: widthScreen(42),
+  width: 42,
+  height: 42,
   'border-radius': '50%',
   borderColor:'#86207C'
 },
 radioButtonClicked3: {
-width: widthScreen(42),
-height: widthScreen(42),
+width: 42,
+height: 42,
 'border-radius': '50%',
 backgroundColor:'#86207C',
 },
 radioButton4: {
-  width: widthScreen(34),
-  height: widthScreen(34),
+  width: 34,
+  height: 34,
   'border-radius': '50%',
 },
 radioButtonClicked4: {
-width: widthScreen(34),
-height: widthScreen(34),
+width: 34,
+height: 34,
 'border-radius': '50%',
 backgroundColor:'gray',
 },
 radioButton5: {
-  width: widthScreen(42),
-  height: widthScreen(42),
+  width: 42,
+  height: 42,
   'border-radius': '50%',
   borderColor:'#41ac97',
 },
 radioButtonClicked5: {
-width: widthScreen(42),
-height:widthScreen(42),
+width: 42,
+height:42,
 'border-radius': '50%',
 backgroundColor:'#41ac97',
 },
 radioButton6: {
-  width: widthScreen(52.25),
-  height: widthScreen(52.25),
+  width: 52.25,
+  height: 52.25,
   'border-radius': '50%',
   borderColor: '#41ac97',
 },
 radioButtonClicked6: {
-width: widthScreen(52.25),
-height: widthScreen(52.25),
+width: 52.25,
+height: 52.25,
 'border-radius': '50%',
 backgroundColor:'#41ac97',
 },
 radioButton7: {
-  width: widthScreen(68),
-  height: widthScreen(68),
+  width: 68,
+  height: 68,
   'border-radius': '50%',
   borderColor: '#41ac97',
 },
 radioButtonClicked7: {
-width: widthScreen(68),
-height: widthScreen(68),
+width: 68,
+height: 68,
 'border-radius': '50%',
 backgroundColor:'#41ac97',
 }
