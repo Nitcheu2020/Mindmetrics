@@ -4,8 +4,6 @@ import result from "./img/result.png";
 import results from "./img/results.png";
 import faces from './img/faces.png';
 
-import orangef from "./img/img_orange_flowers.jpg";
-
 import scheme_small from './img/scheme_small.png';
 import hand from './img/hand.png';
 import main from './img/main.png';
@@ -95,16 +93,6 @@ const  Home =(props) =>{
             </div>
           </div>
         </div>
-
-      
-        <img 
-            alt="image "
-            src= '/img_orange_flowers.jpg'
-            srcset="img_pink_flowers.jpg 240w, img_white_flower.jpg 300w, large.jpg 720w"
-            sizes="(min-width: 960px) 540px, 100vw"
-          />
-
-        <img src={"/img_orange_flowers.jpg"} />
 
 
       <div class="content flow"   style={{backgroundColor:'red',}}>
