@@ -7,7 +7,7 @@ import ModalAnswers from './ModalAnswers';
   const widthScreen = (taille) =>  {
   return taille * 100/2063 + 'vw';
 }
-const  fontSize = widthScreen(19);
+const  fontSize = 19;
 
 const styleMenu = { 
     textDecoration: 'none',

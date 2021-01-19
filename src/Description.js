@@ -52,14 +52,13 @@ var  fin = 5;
 const numberCircle ={
   display:'flex',
   flex:1,
-  width: 36,
   height: 36,
   color: '#666',
   'textAlign': 'center',
   alignSelf:'center',
   alignItems: 'center',
   flexDirection:'column',
-  cursor: 'pointer'
+  cursor: 'pointer',
 };
 
 class Description extends Component {
@@ -426,30 +425,35 @@ if (this.state.hadTakenTest) return  <Resultat resultat1level={this.state.better
       <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column',flex:1,position:'relative'}}>
         <div 
           style={{backgroundImage: `url(${bgHeader})`,
-            height:470,justifyContent:'center',display:'flex',flexDirection:'column',
+            height:470,justifyContent:'center',display:'flex',flexDirection:'column', 
+            WebkitBackgroundSize:'auto'
           }}
         >
-          <div>
-            <label style={{marginLeft:widthScreen(360),fontSize:widthScreen(46.5),fontFamily:'Open Sans Light',paddingBottom:heightScreen(29)}}>{TextKey.testPage.takeTest}</label>
+          <div  id="takeTest">
+            <label  style={{fontSize:46.5,fontFamily:'Open Sans Light',paddingBottom:29}}>{TextKey.testPage.takeTest} </label>
           </div>
-        <label style={{width:widthScreen(482.63),marginLeft:widthScreen(360),fontFamily:'Open Sans Light',fontSize:widthScreen(20)}} >{TextKey.testPage.paragraph}</label>
+        <label id="paragraph" style={{fontFamily:'Open Sans Light',fontSize:20}} >{TextKey.testPage.paragraph}</label>
         </div>
         <label style={{color:'red',alignSelf:'center'}}> 
           {this.state.message}
         </label>
       </div>
-      <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column',flex:1,}} >
-        <label style={{display:'flex',alignSelf:'center',padding:10,fontFamily:'Open Sans Regular',fontSize:widthScreen(27.5)}}>{TextKey.testPage.invitation}</label>
-        <form  style={numberCircle} onSubmit={handleSubmit}>
-          <input required type="text" value={this.state.firstName} onChange={this.setFirstName} placeholderStyle={{fontSize:widthScreen(22),fontFamily:'Open Sans Regular',paddingLeft:25}} style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3,marginBottom:heightScreen(22)}} placeholder="FIRST NAME" />
-          <input required type="text" value={this.state.lastName} onChange={this.setLastName} style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3,marginBottom:heightScreen(22)}} placeholder="LAST NAME" />
-          <input required type="email" value={this.state.email} onChange={this.setEmail} style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3,marginBottom:heightScreen(22)}} placeholder="EMAIL ADDRESS" />
-          <input required type="password"  value={this.state.password} onChange={this.setPassword}  style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3}} placeholder="PASSWORD"/>
-          <input type="submit"   id="submit" value="Begin The Exam &rarr;"  
-            style={styles.submit}
-        />
-        </form>
-      </div>
+      
+      
+        <div  style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column',flex:1,flexGrow:1, flexShrink:0,WebkitFlex:0}} >
+           <label style={{ minWidth: 'auto' ,display:'flex',alignSelf:'center',padding:10,fontFamily:'Open Sans Regular',fontSize:27.5,flex:1}}>{TextKey.testPage.invitation}</label>
+          
+          
+          <form  style={numberCircle} onSubmit={handleSubmit}>
+            <input required type="text" value={this.state.firstName} onChange={this.setFirstName} placeholderStyle={{fontSize:22,fontFamily:'Open Sans Regular',paddingLeft:25}} style={styles.inputStyle} placeholder="FIRST NAME" />
+            <input required type="text" value={this.state.lastName} onChange={this.setLastName} style={styles.inputStyle} placeholder="LAST NAME" />
+            <input required type="email" value={this.state.email} onChange={this.setEmail} style={styles.inputStyle}placeholder="EMAIL ADDRESS" />
+            <input required type="password"  value={this.state.password} onChange={this.setPassword}  style={styles.inputStyle} placeholder="PASSWORD"/>
+            <input type="submit"   id="submit" value="Begin The Exam &rarr;"  
+              style={styles.submit}
+          />
+          </form>
+        </div>
     </div> : null}
       
   {this.state.user ? 
@@ -494,21 +498,29 @@ if (this.state.hadTakenTest) return  <Resultat resultat1level={this.state.better
       </div>
       <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
         { this.state.progressBar >=100?
-        <MindButton paddingHorizontal={30} func={submit} textSize={widthScreen(40)} text="Submit Answers" marginTop={heightScreen(50)} marginBottom={heightScreen(112)}/>
+        <MindButton paddingHorizontal={30} func={submit} textSize={40} text="Submit Answers" marginTop={50} marginBottom={112}/>
         :null}
     </div> 
   </> : null } 
     {nextQuestion.length ===5 && this.state.progressBar <100 ?
        <div style={{alignItems:'center',justifyContent:'center',alignSelf:'center',display:'flex'}}>
-       <MindButton paddingHorizontal={58} func={nextPage} textSize={30} text="Next &rarr;" marginTop={heightScreen(50)} marginBottom={heightScreen(112)}/>
+       <MindButton paddingHorizontal={58} func={nextPage} textSize={30} text="Next &rarr;" marginTop={50} marginBottom={112}/>
        </div>: null
-    }       
-    <Footer text={true}/>
+    }  
+    
+    <Footer   text={true}/>
+    
+
+
   </ErrorBoundary>
     );
   }
 }
 const styles = {
+  inputStyle:{width:'35em',paddingTop:24,paddingBottom:20 ,borderColor:'transparent',borderRadius:'0.5em',marginBottom:22,flexGrow:1,
+  backgroundColor:'red'
+},
+
   butonSubmit:{
     display:'flex',
     alignSelf:'center',
@@ -528,11 +540,11 @@ const styles = {
     color:'white',
     'backgroundColor':'#F49608',
     'borderRadius':50,
-    fontSize:widthScreen(22),
+    fontSize:22,
     fontFamily:'Open Sans Light',
-    padding: heightScreen(20),
-    marginTop:heightScreen(31),
-    marginBottom:heightScreen(60),
+    padding: 20,
+    marginTop:31,
+    marginBottom:60,
     borderColor:'transparent'
   },
   questionnaire:{

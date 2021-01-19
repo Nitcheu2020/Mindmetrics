@@ -11,6 +11,9 @@ import Resultat from './Resultat';
 import Footer from './Footer';
 import Gauge from './Gauge';
 import Menu from './Menu';
+
+import menuImage from './img/menu-close.svg';
+
 import firebase from "firebase/app";
 import TextKey from './text/TextKey';
 import Home from './Home';
@@ -137,18 +140,20 @@ return (
           </>:null}
         </div>
         
-        <div class="header">
+        <div class="header" style={{backgroundColor:'white'}}>
           <div class="row" style= {{display:'flex',alignItems:'center',justifyContent:'center'}}>
             {this.state.openMenu?    
               <div class="col-3 col-5 col-s-3 menu" onClick={() =>this.setState({openMenu:!this.state.openMenu})}>
                 <Menu/>
               </div>:null}
 
-            {!this.state.openMenu?<h1 id="my-content"  class="col-5" onClick={() => this.setState({openMenu:!this.state.openMenu})}>Chania</h1>: null}
+            {!this.state.openMenu? 
+            <img  id="my-content"  class="col-5" onClick={() => this.setState({openMenu:!this.state.openMenu})} src ={menuImage}  style={{backgroundColor:'white'}}/>
+            : null}
             <img class="col-2" src= {logo} alt="Logo"/>
 
             <div class="col-5" style={{display:'flex',justifyContent:'flex-end'}}>
-              <MindButton paddingHorizontal={30}func={tesFunc} textSize={20.5} text={"TAKE TEST"} />
+              <MindButton paddingHorizontal={30}  func={tesFunc} textSize={20.5} text={"TAKE TEST"} />
             </div>
           </div>
         </div>

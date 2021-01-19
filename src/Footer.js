@@ -16,7 +16,7 @@ const heightScreen = (taille) =>  {
 
 const  Footer =(props)=>{
     return (
-        <div style={{maxWidth:'100%',backgroundColor:'white', backgroundImage: `url(${imgbackground})`}}>
+        <div  id="footer" style={{maxWidth:'100%',backgroundColor:'white', backgroundImage: `url(${imgbackground})`}}>
           {props.text?<div style={{backgroundColor:'#CDCDCD',justifyContent:'center',display:'flex',padding:'2%',alignSelf:'flex-end',flexDirection:'column',
             maringBottom:heightScreen(60)
           }}>

@@ -49,6 +49,18 @@ Modal.setAppElement('#root');
 
 
 const Resultat = (props) => {
+
+
+const [showResult, SetShowResult] = useState(false);
+const [progress, SetProgress] = useState(0);
+const [counting, setCounting] = useState(true);
+const [error,setError] = useState(null);
+const [isLoaded,setIsLoaded] = useState(false);
+const [items,setItems] = useState([]);
+const [ imgSrc, setImgSrc] = useState(null);
+const [ url, setUrl] = useState(null);
+
+
   const photoRef = useRef(null);
   const outputRef = useRef(null);
   useEffect(() => {
@@ -77,9 +89,10 @@ const Resultat = (props) => {
           let image = new Image();
           image.src = canvas.toDataURL();
           setImgSrc(image.src);
-          const imageRef = firebaseService.storage().ref('images').child(id)
-          imageRef.putString(image.src, 'data_url').then(function(snapshot) {
-          }).then(() => imageRef.getDownloadURL())
+          const imageRef = firebaseService.storage().ref('images').child(id)   
+          imageRef.putString(image.src, 'data_url')
+        //  .then(function(snapshot) { })
+          .then(() => imageRef.getDownloadURL())
         .then(url =>{
           console.log('Finally getting the URL...',url);
           setUrl(url);
@@ -91,14 +104,6 @@ const Resultat = (props) => {
 }, [])
 
 let location = useLocation();
-const [showResult, SetShowResult] = useState(false);
-const [progress, SetProgress] = useState(0);
-const [counting, setCounting] = useState(true);
-const [error,setError] = useState(null);
-const [isLoaded,setIsLoaded] = useState(false);
-const [items,setItems] = useState([]);
-const [ imgSrc, setImgSrc] = useState(null);
-const [ url, setUrl] = useState(null);
 
 let background = location.state && location.state.progress;
 
@@ -179,44 +184,17 @@ const savingPremium = () =>{
   alert("You have successfully been added to the Wait List for the premium Test. we will contact you soon ")
 }
 
-const gaugeStyle ={
-  justifyContent:'center',
-  margingLeft:widthScreen(95),
-  paddingLeft:widthScreen(52),
-  paddingRight:widthScreen(62),
-  paddingTop:heightScreen(50),
-  paddingBottom:heightScreen(70),
-  marginBottom: heightScreen(91),
-  alignItems:'center',
-  width:widthScreen(621),
-  backgroundColor:'white',
-  boxShadow: '1px 1px 1px 1px  #d3d3d3',
-  borderTop:'1px',
-  borderColor:'#d3d3d3'
-};
 
 const container = {
-  paddingTop:heightScreen(74),
+ // paddingTop:74,
   backgroundColor:'#d3d3d3',
 };
 
-const sousContainer = {
-  display:'flex',
-  flexDirection:'row',
-  backgroundColor:'#d3d3d3',
-  justifyContent:'space-between',
-  paddingLeft: widthScreen(360), 
-  paddingRight: widthScreen(360)
-};
-const paddingName = {
-  width:'25.7vw', 
-  paddingTop: heightScreen(8)
-};
 const navName = {
-  fontSize:widthScreen(35),
+  fontSize:35,
   paddingBottom:heightScreen(33), 
   borderBottom: '2px solid 	#c0c0c0',
-  width:'100%',
+  //width:'80%',
   marginBottom:heightScreen(33),
   fontFamily:'Open Sans Bold',
 };
@@ -224,18 +202,21 @@ const navName = {
 const displayName = firebaseService.auth().currentUser?.displayName;
 return (
   <div style={container}  >
-    <div style={sousContainer} id="resultat" ref={photoRef}>
-      <div  style={paddingName}> 
+
+<div class="content flow"   style={{padding:'10%'}}>
+          <div class="grid-ish"  ref={photoRef}   style={{display:'flex',alignItems:'center',}}>
+            <div style={{ border: '2px solid white',borderStyle:'none',textAlign:'flex-start',paddingBottom:100}} id="resultText" class="col"> 
+            <div > 
         <nav style={navName}>
           {displayName? displayName:""}
         </nav>
         <nav>
-            <label style={{fontSize:widthScreen(26),fontFamily:'Open Sans Italic'}}>{TextKey.resultPage.youAre}</label> 
+            <label style={{fontSize:26,fontFamily:'Open Sans Italic'}}>{TextKey.resultPage.youAre}</label> 
         </nav>
-        <label style={{fontSize:widthScreen(38),fontFamily:'Open Sans Italic',paddingBottom:heightScreen(29)}}>{title}</label> 
-        <nav style={{width:'25.7vw',display:'flex',paddingRight:'5vw'}}>
-          <label style={{ borderBottom: '2px solid 	#c0c0c0',paddingBottom:'1vw',fontSize:widthScreen(22),fontFamily:'Open Sans Light'}}>
-            {text1}
+        <label style={{fontSize:38,fontFamily:'Open Sans Italic',paddingBottom:heightScreen(29)}}>{title}</label> 
+        <nav id="em8" style={{display:'flex'}}>
+          <label style={{ borderBottom: '2px solid 	#c0c0c0',paddingBottom:'1vw',fontSize:22,fontFamily:'Open Sans Light'}}>
+            {text1} 
             {<br/>} {<br/>}
             {text2}
             {<br/>} {<br/>}
@@ -247,32 +228,58 @@ return (
           </label>
         </nav>
         <div style={{paddingTop:heightScreen(40),flexDirection:'row',display:'flex',justifyContent:'flex-start', alignItems:'center',}}>
-          <label style={{display:'flex',fontSize:'1vw',paddingRight:'0.5vw',marginTop:-18,fontFamily:'Open Sans Bold'}}>
+          <label style={{display:'flex',fontSize:20,paddingRight:'0.5vw',marginTop:-18,fontFamily:'Open Sans Bold'}}>
             {TextKey.resultPage.shareResult} 
           </label>
           {url? <Blog url={url}/>:null}
         </div>
       </div>
-      <div  style={gaugeStyle}> 
-        <Gauge level ={resultat1level} title="Extraversion" color="#ff0f33"/>
-        <Gauge level ={resultat2level} title="Agreeableness" color="#41ac97"/>
-        <Gauge level ={resultat3level} title="Conscientiousness" color="#cb0c86"/>
-        <Gauge level ={resultat4level} title="Emotional" color="#04b2ca"/>
-        <Gauge level ={resultat5level} title="Stability/Intellect" color="#2c719d"/>
-        <div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-          <img  
-          src={ico_discuss} 
-            style={{
-              width: '10%',
-              height: 'auto',
-            }} 
-            alt="ico_discuss"
-          />  
-          <label style={{paddingLeft:10,fontFamily:'Open Sans Bold',fontSize:widthScreen(20),}}> How to read this Report ?</label>
+
+
+
+            </div>
+            <div  class="col"  id="em9" style={{borderStyle:'none',display:'flex',justifyContent:'flex-start'}} > 
+               
+
+              <div style={{flexDirection:'column',justifyContent:'flex-start',
+              
+             paddingLeft:widthScreen(52),
+             paddingRight:widthScreen(62),
+             paddingTop:heightScreen(50),
+             paddingBottom:heightScreen(70),
+             marginBottom: heightScreen(91),
+             alignItems:'center',
+             flexGrow:1,
+             //width:'35em',
+             backgroundColor:'white',
+             boxShadow: '1px 1px 1px 1px  #d3d3d3',
+             borderTop:'1px',
+             borderColor:'#d3d3d3'
+            
+              }}>
+                <Gauge level ={resultat1level} title="Extraversion" color="#ff0f33"/>
+                <Gauge level ={resultat2level} title="Agreeableness" color="#41ac97"/>
+                <Gauge level ={resultat3level} title="Conscientiousness" color="#cb0c86"/>
+                <Gauge level ={resultat4level} title="Emotional" color="#04b2ca"/>
+              <Gauge level ={resultat5level} title="Stability/Intellect" color="#2c719d"/>  
+
+              <div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+                <img  
+                src={ico_discuss} 
+                  style={{
+                    width: '10%',
+                    height: 'auto',
+                  }} 
+                  alt="ico_discuss"
+                />  
+                <label style={{paddingLeft:10,fontFamily:'Open Sans Bold',fontSize:20,}}> How to read this Report ?</label>
+              </div>
+
+            </div>
+          </div>
         </div>
       </div>
 
-    </div>
     <div style={{
       position: 'relative',
       width: '100%',
@@ -285,12 +292,13 @@ return (
           height: 'auto',
         }} 
         alt="Reportblurred"
-      />  
+      /> 
+
 
       <div 
         style={premiumButtonStyle}
       >
-        <MindButton paddingHorizontal={30}func={savingPremium} textSize={widthScreen(20.5)} marginBottom={50}  text={TextKey.resultPage.premiumReport} />
+        <MindButton paddingHorizontal={30}func={savingPremium} textSize={20.5} marginBottom={50}  text={TextKey.resultPage.premiumReport} />
         <img  
         src={getpremiumillustration} 
           style={{

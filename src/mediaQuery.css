@@ -321,9 +321,39 @@ html {
     #disagreeBig{
         display: none;
     }
+    #paragraph{
+        padding-left: 1em;
+        padding-right: 1em;
+    }
+
+    #takeTest{
+        margin-left:1em;
+      }
+      #footer{
+        display: none;
+    }
   }
   
   @media only screen and (min-width: 577px) {
+      #paragraph{
+       /* padding-right:48em;*/
+        margin-left:14em;
+        padding-right:51em;
+      }
+      #takeTest{
+          margin-left:17.5em;
+      }
+
+      #resultText{
+        padding-left:8em;
+      }
+      #em8{
+        padding-right:0em;
+      }
+      #em9{
+        margin-right:6em;
+        margin-left:4em;
+      }
       #disagreeSmall{
           display: none;
       }
