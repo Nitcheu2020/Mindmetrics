@@ -52,18 +52,18 @@ var  fin = 5;
 const numberCircle ={
   display:'flex',
   flex:1,
-  width: 36,
   height: 36,
   color: '#666',
   'textAlign': 'center',
   alignSelf:'center',
   alignItems: 'center',
   flexDirection:'column',
-  cursor: 'pointer'
+  cursor: 'pointer',
 };
 
 class Description extends Component {
   constructor (props){
+    props.func("description");
     super(props);
     this.state = {
       selected: "",
@@ -419,36 +419,42 @@ if (this.state.hadTakenTest) return  <Resultat resultat1level={this.state.better
                                                resultat4level={this.state.betterthan3} 
                                                resultat5level={this.state.betterthan4}
                                       />;
+    //je dois revoir le background image et mettre le background-image : cover et le background-position center center 
  return (
   <ErrorBoundary>
     {!this.state.user ? <div style={{display:'flex',flexDirection:'column'}}> 
       <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column',flex:1,position:'relative'}}>
         <div 
           style={{backgroundImage: `url(${bgHeader})`,
-            height:470,justifyContent:'center',display:'flex',flexDirection:'column',
+            height:470,justifyContent:'center',display:'flex',flexDirection:'column', 
+            WebkitBackgroundSize:'auto'
           }}
         >
-          <div>
-            <label style={{marginLeft:widthScreen(360),fontSize:widthScreen(46.5),fontFamily:'Open Sans Light',paddingBottom:heightScreen(29)}}>{TextKey.testPage.takeTest}</label>
+          <div  id="takeTest">
+            <label  style={{fontSize:46.5,fontFamily:'Open Sans Light',paddingBottom:29}}>{TextKey.testPage.takeTest} </label>
           </div>
-        <label style={{width:widthScreen(482.63),marginLeft:widthScreen(360),fontFamily:'Open Sans Light',fontSize:widthScreen(20)}} >{TextKey.testPage.paragraph}</label>
+        <label id="paragraph" style={{fontFamily:'Open Sans Light',fontSize:20}} >{TextKey.testPage.paragraph}</label>
         </div>
         <label style={{color:'red',alignSelf:'center'}}> 
           {this.state.message}
         </label>
       </div>
-      <div style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column',flex:1,}} >
-        <label style={{display:'flex',alignSelf:'center',padding:10,fontFamily:'Open Sans Regular',fontSize:widthScreen(27.5)}}>{TextKey.testPage.invitation}</label>
-        <form  style={numberCircle} onSubmit={handleSubmit}>
-          <input required type="text" value={this.state.firstName} onChange={this.setFirstName} placeholderStyle={{fontSize:widthScreen(22),fontFamily:'Open Sans Regular',paddingLeft:25}} style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3,marginBottom:heightScreen(22)}} placeholder="FIRST NAME" />
-          <input required type="text" value={this.state.lastName} onChange={this.setLastName} style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3,marginBottom:heightScreen(22)}} placeholder="LAST NAME" />
-          <input required type="email" value={this.state.email} onChange={this.setEmail} style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3,marginBottom:heightScreen(22)}} placeholder="EMAIL ADDRESS" />
-          <input required type="password"  value={this.state.password} onChange={this.setPassword}  style={{width:widthScreen(580),paddingTop:heightScreen(24),paddingBottom:heightScreen(24) ,borderColor:'transparent',borderRadius:3}} placeholder="PASSWORD"/>
-          <input type="submit"   id="submit" value="Begin The Exam &rarr;"  
-            style={styles.submit}
-        />
-        </form>
-      </div>
+      
+      
+        <div  style={{backgroundColor:'#D3D3D3',display:'flex',flexDirection:'column',flex:1,flexGrow:1, flexShrink:0,WebkitFlex:0}} >
+           <label style={{ minWidth: 'auto' ,display:'flex',alignSelf:'center',padding:10,fontFamily:'Open Sans Regular',fontSize:27.5,flex:1}}>{TextKey.testPage.invitation}</label>
+          
+          
+          <form  style={numberCircle} onSubmit={handleSubmit}>
+            <input required type="text" value={this.state.firstName} onChange={this.setFirstName} placeholderStyle={{fontSize:22,fontFamily:'Open Sans Regular',paddingLeft:25}} style={styles.inputStyle} placeholder="FIRST NAME" />
+            <input required type="text" value={this.state.lastName} onChange={this.setLastName} style={styles.inputStyle} placeholder="LAST NAME" />
+            <input required type="email" value={this.state.email} onChange={this.setEmail} style={styles.inputStyle}placeholder="EMAIL ADDRESS" />
+            <input required type="password"  value={this.state.password} onChange={this.setPassword}  style={styles.inputStyle} placeholder="PASSWORD"/>
+            <input type="submit"   id="submit" value="Begin The Exam &rarr;"  
+              style={styles.submit}
+          />
+          </form>
+        </div>
     </div> : null}
       
   {this.state.user ? 
@@ -456,7 +462,7 @@ if (this.state.hadTakenTest) return  <Resultat resultat1level={this.state.better
       <div style={{justifyContent:'center'}}>
         <div style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',paddingTop:heightScreen(80)}}>
           <div style={{backgroundColor:'#DCDCDC',borderRadius:5,marginLeft:5,marginRight:widthScreen(39),alignItems:'center',alignSelf:'center',width:'30%', borderTop : "thin solid darkgray",}}>
-            <div style={{height:heightScreen(31),width:this.state.progressBar +"%",backgroundColor:'#86207C',borderRadius:5,display:'flex',flex:1}}/>
+            <div style={{height:31,width:this.state.progressBar +"%",backgroundColor:'#86207C',borderRadius:5,display:'flex',flex:1}}/>
           </div>
           <label style={{fontFamily:'Open Sans Bold', fontSize:24,color:'#86207C'}}> {this.state.progressBar +"%"}</label>
         </div>
@@ -474,34 +480,48 @@ if (this.state.hadTakenTest) return  <Resultat resultat1level={this.state.better
               <label style={styles.button,{display: 'flex',fontFamily:'Open Sans Regular',paddingBottom:heightScreen(30),paddingTop:heightScreen(80),fontSize:18}}>
                 {elemnt.val}
               </label>
-              <tr style={{justifyContent:'space-around',alignItems:'center',display:'flex'}}>
-                <label style={{display:'flex',color:'#86207C',fontSize:18,fontFamily:'Open Sans Bold',paddingRight:widthScreen(41),}}>{TextKey.testPage.disagree}</label>
-                  {
-                      qcm(elemnt.key)
+              <div  id="questionnaire" style={{justifyContent:'space-around',display:'flex'}}>
+                <label  id="disagreeBig" style={{paddingRight:41}}>{TextKey.testPage.disagree}</label>
+                <div style={{justifyContent:'space-around',alignItems:'center',display:'flex',flexDirection:'row'}}>
+                  {   
+                    qcm(elemnt.key)
                   }
-                  <label style={{display:'flex',color:'#41ac97',fontFamily:'Open Sans Bold',fontWeight:'bold'}}>{TextKey.testPage.agree}</label>
-              </tr>
+                  </div>
+                      <div style={{display:'flex',width:'100%'}}> 
+                      <label id="disagreeSmall">{TextKey.testPage.disagree}</label>
+                  <label style={{display:'flex',color:'#41ac97',fontFamily:'Open Sans Bold',fontWeight:'bold',textAlign:'flex-end'}}>{TextKey.testPage.agree}</label>
+
+                  </div>
+              </div>
             </div>
           ))}
         </div>
       </div>
       <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
         { this.state.progressBar >=100?
-        <MindButton paddingHorizontal={30} func={submit} textSize={widthScreen(40)} text="Submit Answers" marginTop={heightScreen(50)} marginBottom={heightScreen(112)}/>
+        <MindButton paddingHorizontal={30} func={submit} textSize={40} text="Submit Answers" marginTop={50} marginBottom={112}/>
         :null}
     </div> 
   </> : null } 
     {nextQuestion.length ===5 && this.state.progressBar <100 ?
        <div style={{alignItems:'center',justifyContent:'center',alignSelf:'center',display:'flex'}}>
-       <MindButton paddingHorizontal={58} func={nextPage} textSize={widthScreen(30)} text="Next &rarr;" marginTop={heightScreen(50)} marginBottom={heightScreen(112)}/>
+       <MindButton paddingHorizontal={58} func={nextPage} textSize={30} text="Next &rarr;" marginTop={50} marginBottom={112}/>
        </div>: null
-    }       
-    <Footer text={true}/>
+    }  
+    
+    <Footer   text={true}/>
+    
+
+
   </ErrorBoundary>
     );
   }
 }
 const styles = {
+  inputStyle:{width:'35em',paddingTop:24,paddingBottom:20 ,borderColor:'transparent',borderRadius:'0.5em',marginBottom:22,flexGrow:1,
+  backgroundColor:'red'
+},
+
   butonSubmit:{
     display:'flex',
     alignSelf:'center',
@@ -521,11 +541,11 @@ const styles = {
     color:'white',
     'backgroundColor':'#F49608',
     'borderRadius':50,
-    fontSize:widthScreen(22),
+    fontSize:22,
     fontFamily:'Open Sans Light',
-    padding: heightScreen(20),
-    marginTop:heightScreen(31),
-    marginBottom:heightScreen(60),
+    padding: 20,
+    marginTop:31,
+    marginBottom:60,
     borderColor:'transparent'
   },
   questionnaire:{
@@ -535,7 +555,7 @@ const styles = {
      'flexDirection':'column',
      alignItems:'center',
      borderBottom : "thin solid #DCDCDC",
-     width: '30%',
+    // width: '30%',
      alignSelf:'center'
    },
   buton:{
@@ -574,85 +594,85 @@ radioButtonClicked: {
   borderColor: 'pink',
 },
 radioButton1: {
-  width: widthScreen(68),
-  height: widthScreen(68),
+  width: 68,
+  height: 68,
   'border-radius': '50%',
   borderColor:'#86207C'
 },
 radioButtonClicked1: {
-width: widthScreen(68),
-height: widthScreen(68),
+width: 68,
+height: 68,
 'border-radius': '50%',
 backgroundColor: '#86207C',
 },
 radioButton2: {
-  width: widthScreen(50),
-  height: widthScreen(50),
+  width: 50,
+  height: 50,
   'border-radius': '50%',
   borderColor:'#86207C'
 },
 radioButtonClicked2: {
-width: widthScreen(50),
-height: widthScreen(50),
+width: 50,
+height: 50,
 'border-radius': '50%',
 backgroundColor:'#86207C',
 },
 radioButton3: {
-  width: widthScreen(42),
-  height: widthScreen(42),
+  width: 42,
+  height: 42,
   'border-radius': '50%',
   borderColor:'#86207C'
 },
 radioButtonClicked3: {
-width: widthScreen(42),
-height: widthScreen(42),
+width: 42,
+height: 42,
 'border-radius': '50%',
 backgroundColor:'#86207C',
 },
 radioButton4: {
-  width: widthScreen(34),
-  height: widthScreen(34),
+  width: 34,
+  height: 34,
   'border-radius': '50%',
 },
 radioButtonClicked4: {
-width: widthScreen(34),
-height: widthScreen(34),
+width: 34,
+height: 34,
 'border-radius': '50%',
 backgroundColor:'gray',
 },
 radioButton5: {
-  width: widthScreen(42),
-  height: widthScreen(42),
+  width: 42,
+  height: 42,
   'border-radius': '50%',
   borderColor:'#41ac97',
 },
 radioButtonClicked5: {
-width: widthScreen(42),
-height:widthScreen(42),
+width: 42,
+height:42,
 'border-radius': '50%',
 backgroundColor:'#41ac97',
 },
 radioButton6: {
-  width: widthScreen(52.25),
-  height: widthScreen(52.25),
+  width: 52.25,
+  height: 52.25,
   'border-radius': '50%',
   borderColor: '#41ac97',
 },
 radioButtonClicked6: {
-width: widthScreen(52.25),
-height: widthScreen(52.25),
+width: 52.25,
+height: 52.25,
 'border-radius': '50%',
 backgroundColor:'#41ac97',
 },
 radioButton7: {
-  width: widthScreen(68),
-  height: widthScreen(68),
+  width: 68,
+  height: 68,
   'border-radius': '50%',
   borderColor: '#41ac97',
 },
 radioButtonClicked7: {
-width: widthScreen(68),
-height: widthScreen(68),
+width: 68,
+height: 68,
 'border-radius': '50%',
 backgroundColor:'#41ac97',
 }

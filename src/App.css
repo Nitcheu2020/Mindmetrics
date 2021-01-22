@@ -51,3 +51,13 @@ label span {
   float: left;
   margin: 5px 10px 5px 0;
 }
+
+@media only screen and (min-width: 900px) {
+  .footer
+  .column
+  .social-column-container
+  .logo {
+     display: none;
+  }
+}
+
