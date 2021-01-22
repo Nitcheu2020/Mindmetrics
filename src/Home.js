@@ -1,8 +1,11 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import './mediaQuery.css';
 import result from "./img/result.png";
 import results from "./img/results.png";
 import faces from './img/faces.png';
+import {
+  useLocation,
+} from "react-router-dom";
 
 import scheme_small from './img/scheme_small.png';
 import hand from './img/hand.png';
@@ -38,6 +41,15 @@ const  Home =(props) =>{
     //title => style={{fontSize:46.5,fontFamily:'Open Sans Light',paddingTop:heightScreen(64),paddingBottom:heightScreen(29)}}
     //label after title... style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column'}}
     //paddingRight:'10%',marginLeft:'10%',
+    var location = useLocation();
+    useEffect(() => {
+      props.func(location.pathname);  
+      console.log("DANS LE USE EFFECT USEEFFCET USEEFFCET ");
+     /* alert("Your screen resolution is: " + window.innerWidth + "x" + window.innerHeight);*/
+    },[]);
+
+   
+      console.log("aadadsasd???????",location.pathname);
     return (
     <>
       <div style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column',maxWidth:'100%',backgroundImage: `url(${imgbackground})`}}>
@@ -76,7 +88,7 @@ const  Home =(props) =>{
         <div class="content flow"   style={{padding:'10%'}}>
           <div class="grid-ish"  id="duplicatePeople" style={{display:'flex',alignItems:'center'}}>
             <div style={{ border: '2px solid white',borderStyle:'none',textAlign:'flex-start',paddingLeft:'10%',paddingRight:'10%',paddingBottom:100,paddingTop:116}} class="col"> 
-                <nav  style={{fontFamily:'Open Sans Light',fontSize:40,paddingBottom:10}}>{TextKey.home.dataDriven}</nav>
+                <nav id="hwItW" style={{fontFamily:'Open Sans Light',fontSize:40,paddingBottom:10}}>{TextKey.home.dataDriven}</nav>
                 <nav style={{fontFamily:'Open Sans Light',fontSize:22,marginBottom:30}} > {TextKey.home.usingData}</nav>
                 <div style={{textAlign:'center'}}>
                   <Link  to="/description" transition="glide-right" style={{ textDecoration: 'none',}}>

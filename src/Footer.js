@@ -32,19 +32,21 @@ const  Footer =(props)=>{
               flexDirection:'row',
               justifyContent:'center',
               alignItems:'center',
-              marginLeft:'15%',
-              paddingBottom:heightScreen(39),
-              paddingRight:widthScreen(360),
-              paddingTop:heightScreen(60)
+              paddingBottom:39,
+              paddingRight:310,
+              paddingTop:60
             //  maxWidth:'100%',
             }}
           >
-            <Menu/>
-            <img
-              style={{display: 'flex',alignSelf:'flex-end',width: '10%',
-              height: 'auto',}}
-              src={social_icons} alt="social_icons" 
-            />
+              <div   class="col-3 col-5 col-s-3 menu"  style={{display:'flex',alignSelf:'flex-start',alignItems:'flex-start',justifyContent:'flex-start',}}>
+                <Menu/>
+              </div>
+              <div style={{marginLeft:'auto',display:'flex',marginTop:-25}}>
+                <img
+                    src={social_icons} alt="social_icons" 
+                  />
+              </div>
+              
           </div>
   
           <div style={{ display: 'flex',

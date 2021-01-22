@@ -14,7 +14,9 @@ const styleMenu = {
     paddingRight:'2%',
     display:'flex',
     fontSize:fontSize,
-    fontFamily: 'Open Sans Light'
+    fontFamily: 'Open Sans Light',
+    color:'blue',
+    backgroundColor:'tranparent'
 };
 
 const  Menu = (props) => {
@@ -27,6 +29,8 @@ const  Menu = (props) => {
     justifyContent:props.justifyContent,
     alignItems:'flex-end',
     alignSelf:'center',
+    backgroundColor:'red',
+    listStyleType: 'none',
   };
 //{props.showContact? <ModalAnswers/>:null}
 

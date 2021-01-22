@@ -63,6 +63,7 @@ const numberCircle ={
 
 class Description extends Component {
   constructor (props){
+    props.func("description");
     super(props);
     this.state = {
       selected: "",

@@ -87,7 +87,8 @@ export default class App extends Component {
     super(props);
     this.state = {
       list: [],
-      text: ""
+      text: "",
+      location:'',
     };
   }
 
@@ -105,6 +106,12 @@ export default class App extends Component {
   }
 
 
+
+  setLocation = loc => {
+      this.setState({location:loc});
+  }
+
+
    logOut = () => {
     firebase.auth().signOut().then(function() {
     // Sign-out successful.
@@ -115,46 +122,39 @@ export default class App extends Component {
 
   render() {
 
-    const tesFunc = () =>console.log("Hello");
+    const tesFunc = () => this.setState({openMenu:!this.state.openMenu});
 return (
   <ErrorBoundary>
     <Router>
       <div >
-        <div style={divStyle}>
-          <Link to="/" style={{ textDecoration: 'none' }}>
-            <button style={{backgroundColor:'transparent',borderColor:'transparent'}} onClick={() => this.logOut()}>
-              <img  
-                style={{
-                  display: 'flex',paddingTop:heightScreen(14),paddingBottom:heightScreen(14),
-                }} 
-              src={logo} alt="logo"
-              />
-            </button>
-          </Link>
-          {!this.state.user?
-          <>
-            <Menu justifyContent='flex-end'/> 
-            <Link to="/description" style={{textDecoration: 'none',}} transition="glide-right">
-              <MindButton paddingHorizontal='30'  textSize={fontSize} text={TextKey.button.takeTest} />
-            </Link>
-          </>:null}
-        </div>
-        
         <div class="header" style={{backgroundColor:'white'}}>
           <div class="row" style= {{display:'flex',alignItems:'center',justifyContent:'center'}}>
             {this.state.openMenu?    
               <div class="col-3 col-5 col-s-3 menu" onClick={() =>this.setState({openMenu:!this.state.openMenu})}>
                 <Menu/>
               </div>:null}
-
             {!this.state.openMenu? 
             <img  id="my-content"  class="col-5" onClick={() => this.setState({openMenu:!this.state.openMenu})} src ={menuImage}  style={{backgroundColor:'white'}}/>
             : null}
-            <img class="col-2" src= {logo} alt="Logo"/>
 
-            <div class="col-5" style={{display:'flex',justifyContent:'flex-end'}}>
-              <MindButton paddingHorizontal={30}  func={tesFunc} textSize={20.5} text={"TAKE TEST"} />
+            <div class="col-2"> 
+              <Link to="/" style={{ textDecoration: 'none' }}>
+              <button style={{backgroundColor:'transparent',borderColor:'transparent'}} onClick={() => this.logOut()}>
+                <img  src= {logo} alt="Logo"/>
+              </button>
+              </Link>
             </div>
+            {this.state.location !== "description" ?    
+              <div  id="Menusup" class="col-3 col-5 col-s-3 menu" >
+                <Menu/>
+              </div>:null}
+              
+            
+            {this.state.location !== "description" ? <div  style={{display:'flex',justifyContent:'flex-end'}}>
+              <Link to="/description" style={{textDecoration: 'none',}} transition="glide-right">
+                <MindButton   func={tesFunc} textSize={20.5} text={"TAKE TEST"} />
+              </Link>
+            </div> : null}
           </div>
         </div>
 
@@ -176,13 +176,13 @@ return (
       <LoginForm />
       </Route>
       <Route path="/description">
-      <Description />
+      <Description func= {this.setLocation}/>
       </Route>
       <Route path="/blog">
       <Blog />
       </Route>
       <Route path="/">
-      <Home />
+      <Home func= {this.setLocation}/>
       </Route>
       <Route path="/footer">
       <Footer />

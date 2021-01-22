@@ -1,13 +1,5 @@
 import React,{useState} from 'react';
-
-const widthScreen = (taille) =>  {
-    return taille * 100/2063 + 'vw';
-  }
-  const heightScreen = (taille) =>  {
-    return taille * 100/2610 + 'vw';
-  } 
-  const  fontSize = widthScreen(19);
-
+ 
   const MindButton = (props) => {
     const [styler,setStyler] = useState('#F49608');
     return (
@@ -16,10 +8,10 @@ const widthScreen = (taille) =>  {
          color:'white',
          'backgroundColor':styler,
          'borderRadius':50,
-         paddingTop: heightScreen(18),
-         paddingBottom: heightScreen(15),
-         paddingRight:widthScreen(props.paddingHorizontal?props.paddingHorizontal:56),
-         paddingLeft:widthScreen(props.paddingHorizontal?props.paddingHorizontal:56),
+         paddingTop: 18,
+         paddingBottom: 15,
+         paddingRight:props.paddingHorizontal?props.paddingHorizontal:56,
+         paddingLeft:props.paddingHorizontal?props.paddingHorizontal:56,
          borderColor:'transparent',
          fontFamily:'Open Sans Light',
          fontSize:props.textSize,
@@ -28,6 +20,7 @@ const widthScreen = (taille) =>  {
          cursor: 'pointer'
        }} 
        onMouseEnter= {() => setStyler('red')}
+       onMouseLeave={() => setStyler('#F49608')}
        onClick={props.func?props.func: console.log('button' + props.text + 'clicked')}
     >
         {props.text}
