@@ -1,0 +1,18 @@
+<svg id="menu-close.svg" xmlns="http://www.w3.org/2000/svg" width="49" height="43" viewBox="0 0 49 43">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #616161;
+        stroke-width: 1px;
+      }
+
+      .cls-2 {
+        fill: #616161;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <rect id="frame" class="cls-1" x="0.5" y="0.5" width="48" height="42" rx="4" ry="4"/>
+  <path id="menu" class="cls-2" d="M513.92,27.58H497.646a1.841,1.841,0,1,0,0,3.675H513.92A1.841,1.841,0,1,0,513.92,27.58Zm0,6.738H497.646a1.842,1.842,0,1,0,0,3.676H513.92A1.842,1.842,0,1,0,513.92,34.317Zm0,6.74H497.646a1.842,1.842,0,1,0,0,3.677H513.92A1.842,1.842,0,1,0,513.92,41.058Z" transform="translate(-481.5 -14.5)"/>
+</svg>

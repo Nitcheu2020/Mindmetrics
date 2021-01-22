@@ -1,8 +1,12 @@
-import React from 'react';
-
+import React,{useEffect} from 'react';
+import './mediaQuery.css';
 import result from "./img/result.png";
 import results from "./img/results.png";
 import faces from './img/faces.png';
+import {
+  useLocation,
+} from "react-router-dom";
+
 import scheme_small from './img/scheme_small.png';
 import hand from './img/hand.png';
 import main from './img/main.png';
@@ -34,16 +38,25 @@ const widthScreen = (taille) =>  {
   const padding = widthScreen(12);
 
 const  Home =(props) =>{
+    //title => style={{fontSize:46.5,fontFamily:'Open Sans Light',paddingTop:heightScreen(64),paddingBottom:heightScreen(29)}}
+    //label after title... style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column'}}
+    //paddingRight:'10%',marginLeft:'10%',
+    var location = useLocation();
+    useEffect(() => {
+      props.func(location.pathname);  
+      console.log("DANS LE USE EFFECT USEEFFCET USEEFFCET ");
+     /* alert("Your screen resolution is: " + window.innerWidth + "x" + window.innerHeight);*/
+    },[]);
+
+   
+      console.log("aadadsasd???????",location.pathname);
     return (
     <>
       <div style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column',maxWidth:'100%',backgroundImage: `url(${imgbackground})`}}>
-        <label style={{fontSize:widthScreen(46.5),fontFamily:'Open Sans Light',paddingTop:heightScreen(64),paddingBottom:heightScreen(29)}}> {TextKey.home.title}</label>
-          <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column'}}>
-          <label style={{fontSize:widthScreen(22),fontFamily:'Open Sans Light'}}> {TextKey.home.writing}</label>
-          <label style={{fontSize:widthScreen(22),fontFamily:'Open Sans Light',paddingBottom:heightScreen(29)}} > {TextKey.home.report}</label>
-        </label>
+        <label id="title" style={{fontSize:28.5,paddingRight:'20%',paddingLeft:'20%',paddingTop:64,paddingBottom:30,textAlign:'center',fontFamily:'Open Sans Light'}}> {TextKey.home.title}</label>
+          <label  id="report" style={{fontSize:22,fontFamily:'Open Sans Light',textAlign:'center',paddingBottom:30,}}> {TextKey.home.writing} {TextKey.home.report}</label>
         <Link to="/description" transition="glide-right" style={{ textDecoration: 'none',}}>
-          <MindButton  textSize={widthScreen(22)} text={TextKey.button.freeAnalysis} marginBottom={heightScreen(53)}/>
+          <MindButton  textSize={22} text={TextKey.button.freeAnalysis} marginBottom={53}/>
         </Link>
         <img
           style={{
@@ -59,54 +72,92 @@ const  Home =(props) =>{
           src={faces} 
           alt="faces"
         />
-        <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','fontSize':widthScreen(40),fontFamily:'Open Sans Light',paddingBottom:heightScreen(51)}}>
+        <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','fontSize':40,fontFamily:'Open Sans Light',paddingBottom:51}}>
           <label>  {TextKey.home.words}</label>
           <label>{TextKey.home.about}</label>
         </label>
-        <label style={{justifyContent:'center',display:'flex','flexDirection':'column',alignItems:'center',fontSize:widthScreen(22),fontFamily:'Open Sans Light'}}>
+        <label id="writingSample" style={{ paddingRight:'21%',paddingLeft:'21%',justifyContent:'center',display:'flex','flexDirection':'column',textAlign:'center',alignItems:'center',fontSize:22,fontFamily:'Open Sans Light'}}>
           <label> {TextKey.home.writingSample} </label>
-        <label>{TextKey.home.wordAndPersonality}</label>
-          <label>{TextKey.home.exactly}</label>
+        <label>{TextKey.home.wordAndPersonality} {TextKey.home.exactly}</label>
           <Link to="/description" transition="glide-right" style={{ textDecoration: 'none',}}>
             <label style={{color:'#ba097d','marginTop':heightScreen(10),alignSelf:'center',paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}>{TextKey.home.findOrMore} &gt; </label>
           </Link>
         </label>
-        <nav style={{display:'flex','flexDirection':'row',width:'100%',alignItems:'center',justifyContent:'center',borderTop: '1px solid #d3d3d3',marginTop:heightScreen(86)}}>
-          <label style={{display: 'flex','flexDirection':'column'}}>
-            <a style={{fontSize:widthScreen(40), fontFamily:'Open Sans Light',width:widthScreen(298.47)}} name="hwItW"> {TextKey.home.dataDriven} </a>
-            <label style={{fontSize:widthScreen(22), fontFamily:'Open Sans Light',width:widthScreen(298.47)}}>{TextKey.home.usingData}</label>
-            <Link to="/description" transition="glide-right" style={{ textDecoration: 'none',}}>
-              <label style={{color:'#ba097d','marginTop':heightScreen(10),paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}>{TextKey.home.findOrMore} &gt;</label>
-            </Link>
-          </label>
-          <img
-            style={{maxWidth:'100%'}}
-            src={duplicatePeople} alt="duplicatePeople" 
-          />
-        </nav>
-        <nav style={{display:'flex','flexDirection':'row',backgroundColor:'#d3d3d3',width:'100%',paddingTop:heightScreen(50),paddingBottom:heightScreen(50),alignItems:'center',justifyContent:'center'}}>
-          <img
-            style={{display: 'flex',maxWidth: widthScreen(503), maxHeight: 'auto',alignSelf:'flex-end',paddingRight:widthScreen(50)}}
-            src={main} alt="hand"
-          />
-          <label style={{display: 'flex','justifyContent':'center','flexDirection':'column',width:widthScreen(300)}}>
-            <label style={{fontFamily:'Open Sans Light',fontSize:widthScreen(40),paddingBottom:heightScreen(30),marginBottom:heightScreen(33)}}>{TextKey.home.easyToUse}</label>
-        <label style={{fontFamily:'Open Sans Light',fontSize:widthScreen(22)}}> {TextKey.home.faster}</label>
-            <Link to="/description" transition="glide-right" style={{ textDecoration: 'none',}}>
-              <label style={{color:'#ba097d','marginTop':heightScreen(10),alignSelf:'center',paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}> {TextKey.home.tryOut} &gt; </label>
-            </Link>
-          </label>
-        </nav>
-        <nav style={{display:'flex','flexDirection':'row',paddingBottom:heightScreen(100),paddingTop:heightScreen(116),justifyContent:'center',alignItems:'center',marginLeft:widthScreen(515)}}>
-          <label style={{display: 'flex','flexDirection':'column'}}>
-            <label style={{fontFamily:'Open Sans Light',fontSize:widthScreen(40),paddingBottom:heightScreen(30),marginBottom:heightScreen(33)}}>{TextKey.home.detailedPersonality}</label>
-            <label style={{fontFamily:'Open Sans Light',fontSize:widthScreen(22),width:'80%',display:'flex',}}>{TextKey.home.freeReport} </label>
-            <Link to="/description" transition="glide-right" style={{ textDecoration: 'none',}}>
-              <label style={{color:'#ba097d','marginTop':heightScreen(10),paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}>{TextKey.home.tryOut}&gt; </label>
-            </Link>
-          </label>
-            <img  style={{maxWidth:'100%',maxHeight:'auto',paddingRight:widthScreen(380)}} src={personalitybars}/>
-        </nav>
+
+
+        <div class="content flow"   style={{padding:'10%'}}>
+          <div class="grid-ish"  id="duplicatePeople" style={{display:'flex',alignItems:'center'}}>
+            <div style={{ border: '2px solid white',borderStyle:'none',textAlign:'flex-start',paddingLeft:'10%',paddingRight:'10%',paddingBottom:100,paddingTop:116}} class="col"> 
+                <nav id="hwItW" style={{fontFamily:'Open Sans Light',fontSize:40,paddingBottom:10}}>{TextKey.home.dataDriven}</nav>
+                <nav style={{fontFamily:'Open Sans Light',fontSize:22,marginBottom:30}} > {TextKey.home.usingData}</nav>
+                <div style={{textAlign:'center'}}>
+                  <Link  to="/description" transition="glide-right" style={{ textDecoration: 'none',}}>
+                      <label  style={{color:'#ba097d',fontFamily:'Open Sans Light'}}> {TextKey.home.findOrMore} &gt; </label>
+                  </Link>
+                </div>
+            </div>
+            <div id="newImgPersonality" class="col" style={{borderStyle:'none',display:'flex',justifyContent:'flex-end',maginLeft:'10em'}} > 
+                <img
+                id="imgPersonality"
+                style={{display: 'flex',maxWidth: 'auto', maxHeight: 'auto'}}
+                src={duplicatePeople} alt="duplicatePeople"
+              />
+            </div>
+          </div>
+        </div>
+
+
+      <div class="content flow"   style={{backgroundColor:'red',}}>
+          <div class="grid-ish1" id="grid1" style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
+
+          <div class="col" id="main" style={{borderStyle:'none',display:'flex',justifyContent:'center'}} > 
+                <img
+                id="imgPersonality"
+                style={{display: 'flex',maxWidth: 'auto', maxHeight: 'auto'}}
+                src={main} alt="main"
+              />
+            </div>
+            
+            <div id="mainText" style={{ border: '2px solid white',borderStyle:'none',textAlign:'center'}} class="col"> 
+              
+                <nav  style={{fontFamily:'Open Sans Light',fontSize:40,paddingBottom:10}}>{TextKey.home.easyToUse}</nav>
+                <nav style={{fontFamily:'Open Sans Light',fontSize:22,marginBottom:30}} > {TextKey.home.faster}</nav>
+                <div>
+                  <Link  to="/description" transition="glide-right" style={{ textDecoration: 'none'}}>
+                      <label  style={{color:'#ba097d',fontFamily:'Open Sans Light'}}> {TextKey.home.tryOut} &gt; </label>
+                  </Link>
+                </div>
+            </div>
+           
+          </div>
+        </div>      
+        
+       
+
+       <div class="content flow"   style={{padding:'10%'}}>
+         <div  style={{display:'flex',alignSelf:'center',alignItems:'center',justifyContent:'center'}}>
+          <img id="my-content" src={ico_chart} alt="ico_chart" />
+         </div>
+          <div class="grid-ish" style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
+            <div style={{ border: '2px solid white',borderStyle:'none',textAlign:'center',paddingLeft:'10%',paddingRight:'10%'}} class="col"> 
+                <nav  style={{fontFamily:'Open Sans Light',fontSize:40,paddingBottom:10}}>{TextKey.home.detailedPersonality}</nav>
+                <nav style={{fontFamily:'Open Sans Light',fontSize:22,marginBottom:30}} > {TextKey.home.freeReport}</nav>
+                <div>
+                  <Link  to="/description" transition="glide-right" style={{ textDecoration: 'none'}}>
+                      <label  style={{color:'#ba097d',fontFamily:'Open Sans Light'}}> {TextKey.home.tryOut} &gt; </label>
+                  </Link>
+                </div>
+            </div>
+            <div  id="personalitybars" > 
+                <img
+                style={{display: 'flex',maxWidth: 'auto', maxHeight: 'auto'}}
+                src={personalitybars} alt="personalitybars"
+              />
+            </div>
+          </div>
+        </div>
+        
+
         <div 
           style ={{display: 'flex',
             'alignItems':'center',
@@ -118,12 +169,15 @@ const  Home =(props) =>{
             paddingTop:20
           }}
         >
-          <label style ={{'fontSize':widthScreen(40),'fontFamily':'Open Sans Light',paddingBottom:heightScreen(22)}}>{TextKey.home.discover}</label>
+          <label style ={{'fontSize':40,'fontFamily':'Open Sans Light',paddingBottom:22}}>{TextKey.home.discover}</label>
           <Link to="/description" transition="glide-right" style={{ textDecoration: 'none',}}>
-            <MindButton  textSize={widthScreen(22)} text={TextKey.button.freeAnalysis} />
+            <MindButton  textSize={22} text={TextKey.button.freeAnalysis} />
           </Link>
         </div>
-      </div>
+
+
+
+      </div>          
       <Footer/>
     </>
     );

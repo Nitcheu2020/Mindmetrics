@@ -7,14 +7,16 @@ import ModalAnswers from './ModalAnswers';
   const widthScreen = (taille) =>  {
   return taille * 100/2063 + 'vw';
 }
-const  fontSize = widthScreen(19);
+const  fontSize = 19;
 
 const styleMenu = { 
     textDecoration: 'none',
     paddingRight:'2%',
     display:'flex',
     fontSize:fontSize,
-    fontFamily: 'Open Sans Light'
+    fontFamily: 'Open Sans Light',
+    color:'blue',
+    backgroundColor:'tranparent'
 };
 
 const  Menu = (props) => {
@@ -27,28 +29,39 @@ const  Menu = (props) => {
     justifyContent:props.justifyContent,
     alignItems:'flex-end',
     alignSelf:'center',
+    backgroundColor:'red',
+    listStyleType: 'none',
   };
 //{props.showContact? <ModalAnswers/>:null}
 
 function closeModal(){
   setShowContact(false);
 }
+//style={container}
+/** */
 
   return (
-    <nav style={container}>
-      <Link to="/" style={styleMenu}>
+    <ul  style={{container}}>
+      <li><Link to="/" style={styleMenu}>
         {TextKey.menu.home}</Link>
-      <a href="#hwItW" style={styleMenu}> 
-        {TextKey.menu.hwItW}
-      </a>
-      <label to="/contact" style={styleMenu} onClick={()=> {
-        setShowContact(true);
-        console.log(showContact);
-        }}>
-        {TextKey.menu.contact}
-      </label>
+      </li>
+      <li>
+        <a href="#hwItW" style={styleMenu}> 
+          {TextKey.menu.hwItW}
+        </a>
+      </li>
+      <li>
+        <label to="/contact" style={styleMenu} onClick={()=> {
+          setShowContact(true);
+          console.log(showContact);
+          }}>
+          {TextKey.menu.contact}
+        </label>
+      </li>
       {showContact?<ModalAnswers modalOpen={showContact} closeModal={closeModal}/>:null}
-    </nav>
+    
+    </ul>               
+    
   );
 }
 export default Menu;

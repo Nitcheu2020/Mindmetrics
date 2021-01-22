@@ -16,11 +16,11 @@ const heightScreen = (taille) =>  {
 
 const  Footer =(props)=>{
     return (
-        <div style={{maxWidth:'100%',backgroundColor:'white', backgroundImage: `url(${imgbackground})`}}>
+        <div  id="footer" style={{maxWidth:'100%',backgroundColor:'white', backgroundImage: `url(${imgbackground})`}}>
           {props.text?<div style={{backgroundColor:'#CDCDCD',justifyContent:'center',display:'flex',padding:'2%',alignSelf:'flex-end',flexDirection:'column',
             maringBottom:heightScreen(60)
           }}>
-              <label  style={{alignSelf:'center',fontSize:widthScreen(40),fontFamily:'Open Sans Light',paddingBottom:heightScreen(36)}}>{TextKey.footer.ask}</label>
+              <label  style={{alignSelf:'center',textAlign:'center',fontSize:38,fontFamily:'Open Sans Light',paddingBottom:heightScreen(36)}}>{TextKey.footer.ask}</label>
                 <div style={{alignSelf:'center'}}> 
                   <Blog url={props.url}/>
                 </div>
@@ -32,19 +32,21 @@ const  Footer =(props)=>{
               flexDirection:'row',
               justifyContent:'center',
               alignItems:'center',
-              marginLeft:'15%',
-              paddingBottom:heightScreen(39),
-              paddingRight:widthScreen(360),
-              paddingTop:heightScreen(60)
+              paddingBottom:39,
+              paddingRight:310,
+              paddingTop:60
             //  maxWidth:'100%',
             }}
           >
-            <Menu/>
-            <img
-              style={{display: 'flex',alignSelf:'flex-end',width: '10%',
-              height: 'auto',}}
-              src={social_icons} alt="social_icons" 
-            />
+              <div   class="col-3 col-5 col-s-3 menu"  style={{display:'flex',alignSelf:'flex-start',alignItems:'flex-start',justifyContent:'flex-start',}}>
+                <Menu/>
+              </div>
+              <div style={{marginLeft:'auto',display:'flex',marginTop:-25}}>
+                <img
+                    src={social_icons} alt="social_icons" 
+                  />
+              </div>
+              
           </div>
   
           <div style={{ display: 'flex',

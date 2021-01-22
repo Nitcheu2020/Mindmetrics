@@ -1,0 +1,9 @@
+ text-align: right;
+  /* media queries */
+  @media (max-width: 767px) {
+    text-align: center;
+  }
+  @media (max-width: 400px) {
+    text-align: left;
+  }
+}
