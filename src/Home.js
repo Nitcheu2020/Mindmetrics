@@ -90,7 +90,7 @@ const  Home =(props) =>{
 
         <div class="content flow"  id= "smallParagraph" style={{padding:'5%'}}>
           <div class="grid-ish" onClick={() => setText1(!text1)} id="duplicatePeople" style={{display:'flex',alignItems:'center'}}>
-          { (widthSize <= 775 &&  text1) ?<div style={{ border: '2px solid white',borderStyle:'none',textAlign:'flex-start',paddingLeft:'10%',paddingRight:'10%',paddingBottom:100,paddingTop:116}} class="col"> 
+          { (widthSize >= 775 ||  text1) ?<div style={{ border: '2px solid white',borderStyle:'none',textAlign:'flex-start',paddingLeft:'10%',paddingRight:'10%',paddingBottom:100,paddingTop:116}} class="col"> 
                 <nav id="hwItW" style={{fontFamily:'Open Sans Light',fontSize:40,paddingBottom:10}}>{TextKey.home.dataDriven}</nav>
                 <nav style={{fontFamily:'Open Sans Light',fontSize:22,marginBottom:30}} > {TextKey.home.usingData}</nav>
                 <div style={{textAlign:'center'}}>
@@ -121,7 +121,7 @@ const  Home =(props) =>{
               />
             </div>
             
-            { widthSize <= 775 &&  text2 ?<div id="mainText" style={{ border: '2px solid white',borderStyle:'none',textAlign:'center'}} class="col"> 
+            { widthSize >= 775 ||  text2 ?<div id="mainText" style={{ border: '2px solid white',borderStyle:'none',textAlign:'center'}} class="col"> 
               
                 <nav  style={{fontFamily:'Open Sans Light',fontSize:40,paddingBottom:10}}>{TextKey.home.easyToUse}</nav>
                 <nav style={{fontFamily:'Open Sans Light',fontSize:22,marginBottom:30}} > {TextKey.home.faster}</nav>
@@ -142,7 +142,7 @@ const  Home =(props) =>{
           <img id="my-content" src={ico_chart} alt="ico_chart" />
          </div>
           <div class="grid-ish" style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
-          { widthSize <= 775 &&  text3 ?<div style={{ border: '2px solid white',borderStyle:'none',textAlign:'center',paddingLeft:'10%',paddingRight:'10%'}} class="col"> 
+          { widthSize >= 775 ||   text3 ?<div style={{ border: '2px solid white',borderStyle:'none',textAlign:'center',paddingLeft:'10%',paddingRight:'10%'}} class="col"> 
                 <nav  style={{fontFamily:'Open Sans Light',fontSize:40,paddingBottom:10}}>{TextKey.home.detailedPersonality}</nav>
                 <nav style={{fontFamily:'Open Sans Light',fontSize:22,marginBottom:30}} > {TextKey.home.freeReport}</nav>
                 <div>
