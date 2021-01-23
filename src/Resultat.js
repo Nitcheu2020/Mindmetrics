@@ -243,18 +243,19 @@ return (
 
               <div style={{flexDirection:'column',justifyContent:'flex-start',
               
-             paddingLeft:widthScreen(52),
-             paddingRight:widthScreen(62),
-             paddingTop:heightScreen(50),
-             paddingBottom:heightScreen(70),
-             marginBottom: heightScreen(91),
+             paddingLeft:52,
+             paddingRight:62,
+             paddingTop:50,
+             paddingBottom:70,
+             marginBottom: 91,
              alignItems:'center',
              flexGrow:1,
              //width:'35em',
              backgroundColor:'white',
              boxShadow: '1px 1px 1px 1px  #d3d3d3',
              borderTop:'1px',
-             borderColor:'#d3d3d3'
+             borderColor:'#d3d3d3',
+             aspectRatio:1/5,
             
               }}>
                 <Gauge level ={resultat1level} title="Extraversion" color="#ff0f33"/>

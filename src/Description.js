@@ -517,9 +517,15 @@ if (this.state.hadTakenTest) return  <Resultat resultat1level={this.state.better
   }
 }
 const styles = {
-  inputStyle:{width:'35em',paddingTop:24,paddingBottom:20 ,borderColor:'transparent',borderRadius:'0.5em',marginBottom:22,flexGrow:1,
-  backgroundColor:'red'
-},
+  inputStyle:{
+    width:'35em',
+    paddingTop:24,
+    paddingBottom:20 ,
+    borderColor:'transparent',
+    borderRadius:'0.5em',
+    marginBottom:22,
+    flexGrow:1
+  },
 
   butonSubmit:{
     display:'flex',
