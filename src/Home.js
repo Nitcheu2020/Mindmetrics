@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import './mediaQuery.css';
 import result from "./img/result.png";
 import results from "./img/results.png";
@@ -12,6 +12,7 @@ import hand from './img/hand.png';
 import main from './img/main.png';
 import people from './img/people.png';
 import imgbackground from './img/imgbackground.png';
+import checkmarksmall from './img/checkmarksmall.png';
 import Gauge from './Gauge';
 import duplicatePeople from  './img/duplicatePeople.png';
 import personalitybars from './img/personalitybars.png';
@@ -29,13 +30,23 @@ import {
   } from "react-router-dom";
   
 const  Home =(props) =>{
+    const [text1,setText1] = useState(false);
+    const [text2,setText2] = useState(false);
+    const [text3,setText3] = useState(false);
+    const [widthSize,setwidthSize] = useState(window.innerWidth);
     //title => style={{fontSize:46.5,fontFamily:'Open Sans Light',paddingTop:heightScreen(64),paddingBottom:heightScreen(29)}}
     //label after title... style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column'}}
     //paddingRight:'10%',marginLeft:'10%',
     var location = useLocation();
     useEffect(() => {
       props.func(location.pathname);  
-      console.log("DANS LE USE EFFECT USEEFFCET USEEFFCET ");
+      //console.log("DANS LE USE EFFECT USEEFFCET USEEFFCET ");
+      
+
+      window.addEventListener("resize", function() {
+       // return window.innerWidth;
+        setwidthSize(window.innerWidth);
+      });
      /* alert("Your screen resolution is: " + window.innerWidth + "x" + window.innerHeight);*/
     },[]);
 
@@ -78,8 +89,8 @@ const  Home =(props) =>{
 
 
         <div class="content flow"  id= "smallParagraph" style={{padding:'5%'}}>
-          <div class="grid-ish"  id="duplicatePeople" style={{display:'flex',alignItems:'center'}}>
-            <div style={{ border: '2px solid white',borderStyle:'none',textAlign:'flex-start',paddingLeft:'10%',paddingRight:'10%',paddingBottom:100,paddingTop:116}} class="col"> 
+          <div class="grid-ish" onClick={() => setText1(!text1)} id="duplicatePeople" style={{display:'flex',alignItems:'center'}}>
+          { (widthSize <= 775 &&  text1) ?<div style={{ border: '2px solid white',borderStyle:'none',textAlign:'flex-start',paddingLeft:'10%',paddingRight:'10%',paddingBottom:100,paddingTop:116}} class="col"> 
                 <nav id="hwItW" style={{fontFamily:'Open Sans Light',fontSize:40,paddingBottom:10}}>{TextKey.home.dataDriven}</nav>
                 <nav style={{fontFamily:'Open Sans Light',fontSize:22,marginBottom:30}} > {TextKey.home.usingData}</nav>
                 <div style={{textAlign:'center'}}>
@@ -87,7 +98,7 @@ const  Home =(props) =>{
                       <label  style={{color:'#ba097d',fontFamily:'Open Sans Light'}}> {TextKey.home.findOrMore} &gt; </label>
                   </Link>
                 </div>
-            </div>
+            </div> : null}
             <div id="newImgPersonality" class="col" style={{borderStyle:'none',display:'flex',justifyContent:'flex-end',maginLeft:'10em'}} > 
                 <img
                 id="imgPersonality"
@@ -100,7 +111,7 @@ const  Home =(props) =>{
 
 
       <div class="content flow"   id= "smallParagraph" style={{backgroundColor:'red',}}>
-          <div class="grid-ish1" id="grid1" style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
+          <div  onClick={() => setText2(!text2)}  class="grid-ish1" id="grid1" style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
 
           <div class="col" id="main" style={{borderStyle:'none',display:'flex',justifyContent:'center'}} > 
                 <img
@@ -110,7 +121,7 @@ const  Home =(props) =>{
               />
             </div>
             
-            <div id="mainText" style={{ border: '2px solid white',borderStyle:'none',textAlign:'center'}} class="col"> 
+            { widthSize <= 775 &&  text2 ?<div id="mainText" style={{ border: '2px solid white',borderStyle:'none',textAlign:'center'}} class="col"> 
               
                 <nav  style={{fontFamily:'Open Sans Light',fontSize:40,paddingBottom:10}}>{TextKey.home.easyToUse}</nav>
                 <nav style={{fontFamily:'Open Sans Light',fontSize:22,marginBottom:30}} > {TextKey.home.faster}</nav>
@@ -119,7 +130,7 @@ const  Home =(props) =>{
                       <label  style={{color:'#ba097d',fontFamily:'Open Sans Light'}}> {TextKey.home.tryOut} &gt; </label>
                   </Link>
                 </div>
-            </div>
+            </div>:null}
            
           </div>
         </div>      
@@ -127,11 +138,11 @@ const  Home =(props) =>{
        
 
        <div class="content flow"  id= "smallParagraph"   style={{padding:'3%'}}>
-         <div  style={{display:'flex',alignSelf:'center',alignItems:'center',justifyContent:'center'}}>
+         <div  onClick={() => setText3(!text3)}   style={{display:'flex',alignSelf:'center',alignItems:'center',justifyContent:'center'}}>
           <img id="my-content" src={ico_chart} alt="ico_chart" />
          </div>
           <div class="grid-ish" style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
-            <div style={{ border: '2px solid white',borderStyle:'none',textAlign:'center',paddingLeft:'10%',paddingRight:'10%'}} class="col"> 
+          { widthSize <= 775 &&  text3 ?<div style={{ border: '2px solid white',borderStyle:'none',textAlign:'center',paddingLeft:'10%',paddingRight:'10%'}} class="col"> 
                 <nav  style={{fontFamily:'Open Sans Light',fontSize:40,paddingBottom:10}}>{TextKey.home.detailedPersonality}</nav>
                 <nav style={{fontFamily:'Open Sans Light',fontSize:22,marginBottom:30}} > {TextKey.home.freeReport}</nav>
                 <div>
@@ -139,7 +150,7 @@ const  Home =(props) =>{
                       <label  style={{color:'#ba097d',fontFamily:'Open Sans Light'}}> {TextKey.home.tryOut} &gt; </label>
                   </Link>
                 </div>
-            </div>
+            </div>:null}
             <div  id="personalitybars" > 
                 <img
                 style={{display: 'flex',maxWidth: 'auto', maxHeight: 'auto'}}
