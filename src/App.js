@@ -89,10 +89,16 @@ export default class App extends Component {
       list: [],
       text: "",
       location:'',
+      windowSize:0,
     };
   }
 
   componentDidMount() {
+    window.addEventListener("resize", ()=> {
+      // return window.innerWidth;
+       this.setState({windowSize:window.innerWidth});
+       console.log("This is the value of the window",this.state.windowSize);
+     });
     this.authSubscription = firebaseService.auth().onAuthStateChanged((user) => {
       this.setState({
         loading: false,
@@ -121,7 +127,7 @@ export default class App extends Component {
   }
 
   render() {
-
+    const {windowSize} = this.state;
     const tesFunc = () => this.setState({openMenu:!this.state.openMenu});
 return (
   <ErrorBoundary>
@@ -134,7 +140,7 @@ return (
                 <Menu/>
               </div>:null}
             {!this.state.openMenu? 
-            <img  id="my-content"  class="col-5" onClick={() => this.setState({openMenu:!this.state.openMenu})} src ={menuImage}  style={{backgroundColor:'white'}}/>
+            <img  id="my-content"  class="col-5" onClick={() => this.setState({openMenu:!this.state.openMenu})} src ={menuImage}  style={{backgroundColor:'white',paddingLeft:'5%'}}/>
             : null}
 
             <div class="col-2"> 
@@ -152,7 +158,7 @@ return (
             
             {this.state.location !== "description" ? <div  style={{display:'flex',justifyContent:'flex-end'}}>
               <Link to="/description" style={{textDecoration: 'none',}} transition="glide-right">
-                <MindButton   func={tesFunc} textSize={20.5} text={"TAKE TEST"} />
+                <MindButton   paddingTop={windowSize<=775 ? 1:null} paddingBottom={windowSize <=775 ?1:null} paddingHorizontal={windowSize <=775 ? 36 :null}  func={tesFunc} textSize={20.5} text={"TAKE TEST"} />
               </Link>
             </div> : null}
           </div>
