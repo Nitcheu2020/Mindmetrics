@@ -7,20 +7,14 @@ import imgbackground from './img/imgbackground.png';
 import Menu from './Menu';
 import Blog from './Blog';
 import TextKey from './text/TextKey';
-const widthScreen = (taille) =>  {
-  return taille * 100/2063 + 'vw';
-}
-const heightScreen = (taille) =>  {
-  return taille * 100/2610 + 'vw';
-} 
 
 const  Footer =(props)=>{
     return (
         <div  id="footer" style={{maxWidth:'100%',backgroundColor:'white', backgroundImage: `url(${imgbackground})`}}>
           {props.text?<div style={{backgroundColor:'#CDCDCD',justifyContent:'center',display:'flex',padding:'2%',alignSelf:'flex-end',flexDirection:'column',
-            maringBottom:heightScreen(60)
+            maringBottom:60
           }}>
-              <label  style={{alignSelf:'center',textAlign:'center',fontSize:38,fontFamily:'Open Sans Light',paddingBottom:heightScreen(36)}}>{TextKey.footer.ask}</label>
+              <label  style={{alignSelf:'center',textAlign:'center',fontSize:38,fontFamily:'Open Sans Light',paddingBottom:36}}>{TextKey.footer.ask}</label>
                 <div style={{alignSelf:'center'}}> 
                   <Blog url={props.url}/>
                 </div>
@@ -33,7 +27,7 @@ const  Footer =(props)=>{
               justifyContent:'center',
               alignItems:'center',
               paddingBottom:39,
-              paddingRight:310,
+              paddingRight:360,
               paddingTop:60
             //  maxWidth:'100%',
             }}
@@ -81,7 +75,7 @@ const  Footer =(props)=>{
               <label style={{display:'flex',padding:10,color:'#CDC'}}>{TextKey.footer.right}</label>
             </nav>
             <img
-              style={{display: 'flex',transform: [{ rotate: '14deg' }],alignSelf:'flex-end',paddingRight:widthScreen(360)}}
+              style={{display: 'flex',transform: [{ rotate: '14deg' }],alignSelf:'flex-end',paddingRight:360}}
               src={logo_footer} alt="logo_footer" 
             />
           </div>
