@@ -217,9 +217,9 @@ html {
         margin-right: 25%;
     }
     #duplicatePeople{
-        margin-left: 7.5%;
+       /* margin-left: 7.5%;*/
         text-align: start;
-        margin-right: -5%;
+       /* margin-right: -5%;*/
     }
     #newImgPersonality{
         margin-left: -10%;

@@ -91,7 +91,7 @@ const  Home =(props) =>{
         </label>
 
 
-        <div class="content flow"  id= "smallParagraph" style={{padding:'5%'}}>
+        <div class="content flow"  id= "smallParagraph">
           <div class="grid-ish"  id="duplicatePeople" style={{display:'flex',alignItems:'center'}}>
           { (widthSize >= 775 ||  text1) ?<div style={{ border: '2px solid white',borderStyle:'none',textAlign:'flex-start',paddingLeft:'10%',paddingRight:'10%',paddingBottom:100,paddingTop:116}} class="col"> 
                 <nav id="hwItW" style={{fontFamily:'Open Sans Light',fontSize:40,paddingBottom:10}}>{TextKey.home.dataDriven}</nav>
