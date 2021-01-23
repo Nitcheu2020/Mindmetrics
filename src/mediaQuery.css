@@ -410,6 +410,9 @@ html {
       }
     #my-content { display: none; }   /* hide it elsewhere */
     #my-content-big{display: block;}
+    #plusCross {
+    display: none;
+    }
   }
   
   .resultat{

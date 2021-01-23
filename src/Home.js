@@ -10,6 +10,9 @@ import {
 import scheme_small from './img/scheme_small.png';
 import hand from './img/hand.png';
 import main from './img/main.png';
+import plus  from './img/plus.png';
+import cross  from './img/cross.jpg';
+
 import people from './img/people.png';
 import imgbackground from './img/imgbackground.png';
 import checkmarksmall from './img/checkmarksmall.png';
@@ -89,7 +92,7 @@ const  Home =(props) =>{
 
 
         <div class="content flow"  id= "smallParagraph" style={{padding:'5%'}}>
-          <div class="grid-ish" onClick={() => setText1(!text1)} id="duplicatePeople" style={{display:'flex',alignItems:'center'}}>
+          <div class="grid-ish"  id="duplicatePeople" style={{display:'flex',alignItems:'center'}}>
           { (widthSize >= 775 ||  text1) ?<div style={{ border: '2px solid white',borderStyle:'none',textAlign:'flex-start',paddingLeft:'10%',paddingRight:'10%',paddingBottom:100,paddingTop:116}} class="col"> 
                 <nav id="hwItW" style={{fontFamily:'Open Sans Light',fontSize:40,paddingBottom:10}}>{TextKey.home.dataDriven}</nav>
                 <nav style={{fontFamily:'Open Sans Light',fontSize:22,marginBottom:30}} > {TextKey.home.usingData}</nav>
@@ -106,12 +109,16 @@ const  Home =(props) =>{
                 src={duplicatePeople} alt="duplicatePeople"
               />
             </div>
+            <div>
+              {!text1 ?<img src={plus}  id="plusCross" style={{width:'25%',height:'25%',flexGrow:0,alignSelf:'center'}}  onClick={() => setText1(!text1)} />: null}
+              {text1?<img src={cross}   id="plusCross" style={{width:'5%',height:'5%',flexGrow:0}} onClick={() => setText1(!text1)}  />:null}
+            </div>
           </div>
         </div>
 
 
       <div class="content flow"   id= "smallParagraph" style={{backgroundColor:'red',}}>
-          <div  onClick={() => setText2(!text2)}  class="grid-ish1" id="grid1" style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
+          <div    class="grid-ish1" id="grid1" style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
 
           <div class="col" id="main" style={{borderStyle:'none',display:'flex',justifyContent:'center'}} > 
                 <img
@@ -129,16 +136,17 @@ const  Home =(props) =>{
                   <Link  to="/description" transition="glide-right" style={{ textDecoration: 'none'}}>
                       <label  style={{color:'#ba097d',fontFamily:'Open Sans Light'}}> {TextKey.home.tryOut} &gt; </label>
                   </Link>
+                  
                 </div>
+                {text2?<img src={cross}   id="plusCross" style={{width:'5%',height:'5%',flexGrow:0,paddingTop:'2%'}} onClick={() => setText2(!text2)}  />:null}
             </div>:null}
-           
+            {!text2 ?<img src={plus}  id="plusCross" style={{width:'25%',height:'25%',flexGrow:0}}  onClick={() => setText2(!text2)} />: null}
           </div>
         </div>      
         
-       
-
+          
        <div class="content flow"  id= "smallParagraph"   style={{padding:'3%'}}>
-         <div  onClick={() => setText3(!text3)}   style={{display:'flex',alignSelf:'center',alignItems:'center',justifyContent:'center'}}>
+         <div    style={{display:'flex',alignSelf:'center',alignItems:'center',justifyContent:'center'}}>
           <img id="my-content" src={ico_chart} alt="ico_chart" />
          </div>
           <div class="grid-ish" style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
@@ -156,6 +164,10 @@ const  Home =(props) =>{
                 style={{display: 'flex',maxWidth: 'auto', maxHeight: 'auto'}}
                 src={personalitybars} alt="personalitybars"
               />
+            </div>
+            <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
+              {!text3 ?<img src={plus}  id="plusCross" style={{width:'25%',height:'25%',flexGrow:0}}  onClick={() => setText3(!text3)} />: null}
+              {text3?<img src={cross}   id="plusCross" style={{width:'5%',height:'5%',flexGrow:0}} onClick={() => setText3(!text3)}  />:null}
             </div>
           </div>
         </div>
