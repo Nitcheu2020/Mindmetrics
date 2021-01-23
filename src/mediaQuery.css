@@ -110,6 +110,11 @@ html {
 */
 
 @media screen and (max-width:774px) {
+    #smallParagraph{
+        background-color:#d3d3d3;
+        margin-bottom: 0.5em;
+        margin-top: 0.5em;
+    }
     #personalitybars{
         display: none;
     }
@@ -123,9 +128,20 @@ html {
       }
 
     #writingSample{
-        margin-left: -20%;
-        margin-right: -20%;
+        display: none;
+        /*margin-left: -20%;
+        margin-right: -20%;*/
     }
+    #wordSayBoutU {
+        display: none;
+    } 
+    #faceImage {
+        display: none;
+    }
+    #resultImage {
+        display: none;
+    }
+
     #duplicatePeople{
         margin-left: 5%;
         text-align: center;
@@ -212,7 +228,18 @@ html {
 
 
 @media only screen and (min-width: 775px) {
-
+    #writingSample{
+        display:flex;
+    }
+    #wordSayBoutU {
+        display: flex;
+    } 
+    #faceImage {
+        display: flex;
+    }
+    #resultImage {
+        display: flex;
+    }
     ul{
         display: flex;
         flex-direction: row;

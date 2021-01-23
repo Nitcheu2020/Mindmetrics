@@ -27,16 +27,7 @@ import ModalAnswers from './ModalAnswers';
 import {
     Link
   } from "react-router-dom";
-
-const widthScreen = (taille) =>  {
-    return taille * 100/2063 + 'vw';
-  }
-  const heightScreen = (taille) =>  {
-    return taille * 100/2610 + 'vw';
-  } 
-  const  fontSize = widthScreen(19);
-  const padding = widthScreen(12);
-
+  
 const  Home =(props) =>{
     //title => style={{fontSize:46.5,fontFamily:'Open Sans Light',paddingTop:heightScreen(64),paddingBottom:heightScreen(29)}}
     //label after title... style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column'}}
@@ -59,33 +50,34 @@ const  Home =(props) =>{
           <MindButton  textSize={22} text={TextKey.button.freeAnalysis} marginBottom={53}/>
         </Link>
         <img
+          id="resultImage"
           style={{
-            display: 'flex',
             maxWidth: '100%', maxHeight: '100%',
           }}
           src={results} alt="results" 
         />
         <img
+          id="faceImage"
           style={{
-            display: 'flex',maxWidth: '100%', maxHeight: 'auto',paddingBottom:heightScreen(70)
+            maxWidth: '100%', maxHeight: 'auto',paddingBottom:70
           }}
           src={faces} 
           alt="faces"
         />
-        <label style={{display: 'flex','alignItems':'center','justifyContent':'center','flexDirection':'column','fontSize':40,fontFamily:'Open Sans Light',paddingBottom:51}}>
+        <label  id="wordSayBoutU" style={{'alignItems':'center','justifyContent':'center','flexDirection':'column','fontSize':40,fontFamily:'Open Sans Light',paddingBottom:51}}>
           <label>  {TextKey.home.words}</label>
           <label>{TextKey.home.about}</label>
         </label>
-        <label id="writingSample" style={{ paddingRight:'21%',paddingLeft:'21%',justifyContent:'center',display:'flex','flexDirection':'column',textAlign:'center',alignItems:'center',fontSize:22,fontFamily:'Open Sans Light'}}>
+        <label id="writingSample" style={{ paddingRight:'21%',paddingLeft:'21%',justifyContent:'center','flexDirection':'column',textAlign:'center',alignItems:'center',fontSize:22,fontFamily:'Open Sans Light'}}>
           <label> {TextKey.home.writingSample} </label>
-        <label>{TextKey.home.wordAndPersonality} {TextKey.home.exactly}</label>
+        <label id="findMore" >{TextKey.home.wordAndPersonality} {TextKey.home.exactly}</label>
           <Link to="/description" transition="glide-right" style={{ textDecoration: 'none',}}>
-            <label style={{color:'#ba097d','marginTop':heightScreen(10),alignSelf:'center',paddingBottom:heightScreen(86),fontFamily:'Open Sans Light'}}>{TextKey.home.findOrMore} &gt; </label>
+            <label style={{color:'#ba097d','marginTop':10,alignSelf:'center',paddingBottom:86,fontFamily:'Open Sans Light'}}>{TextKey.home.findOrMore} &gt; </label>
           </Link>
         </label>
 
 
-        <div class="content flow"   style={{padding:'10%'}}>
+        <div class="content flow"  id= "smallParagraph" style={{padding:'5%'}}>
           <div class="grid-ish"  id="duplicatePeople" style={{display:'flex',alignItems:'center'}}>
             <div style={{ border: '2px solid white',borderStyle:'none',textAlign:'flex-start',paddingLeft:'10%',paddingRight:'10%',paddingBottom:100,paddingTop:116}} class="col"> 
                 <nav id="hwItW" style={{fontFamily:'Open Sans Light',fontSize:40,paddingBottom:10}}>{TextKey.home.dataDriven}</nav>
@@ -107,7 +99,7 @@ const  Home =(props) =>{
         </div>
 
 
-      <div class="content flow"   style={{backgroundColor:'red',}}>
+      <div class="content flow"   id= "smallParagraph" style={{backgroundColor:'red',}}>
           <div class="grid-ish1" id="grid1" style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
 
           <div class="col" id="main" style={{borderStyle:'none',display:'flex',justifyContent:'center'}} > 
@@ -134,7 +126,7 @@ const  Home =(props) =>{
         
        
 
-       <div class="content flow"   style={{padding:'10%'}}>
+       <div class="content flow"  id= "smallParagraph"   style={{padding:'3%'}}>
          <div  style={{display:'flex',alignSelf:'center',alignItems:'center',justifyContent:'center'}}>
           <img id="my-content" src={ico_chart} alt="ico_chart" />
          </div>
