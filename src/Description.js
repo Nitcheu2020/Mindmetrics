@@ -52,7 +52,6 @@ var  fin = 5;
 const numberCircle ={
   display:'flex',
   flex:1,
-  height: 36,
   color: '#666',
   'textAlign': 'center',
   alignSelf:'center',
