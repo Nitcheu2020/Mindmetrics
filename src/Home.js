@@ -91,7 +91,7 @@ const  Home =(props) =>{
         </label>
 
 
-        <div class="content flow"  id= "smallParagraph">
+        <div class="content flow"  id= "smallParagraph" >
           <div class="grid-ish"  id="duplicatePeople" style={{display:'flex',alignItems:'center'}}>
           { (widthSize >= 775 ||  text1) ?<div style={{ border: '2px solid white',borderStyle:'none',textAlign:'flex-start',paddingLeft:'10%',paddingRight:'10%',paddingBottom:100,paddingTop:116}} class="col"> 
                 <nav id="hwItW" style={{fontFamily:'Open Sans Light',fontSize:40,paddingBottom:10}}>{TextKey.home.dataDriven}</nav>
@@ -117,7 +117,7 @@ const  Home =(props) =>{
         </div>
 
 
-      <div class="content flow"   id= "smallParagraph" style={{backgroundColor:'red',}}>
+      <div class="content flow"   id= "smallParagraph" >
           <div    class="grid-ish1" id="grid1" style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
 
           <div class="col" id="main" style={{borderStyle:'none',display:'flex',justifyContent:'center'}} > 
@@ -150,11 +150,11 @@ const  Home =(props) =>{
           <img id="my-content" src={ico_chart} alt="ico_chart" />
          </div>
           <div class="grid-ish" style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
-          { widthSize >= 775 ||   text3 ?<div style={{ border: '2px solid white',borderStyle:'none',textAlign:'center',paddingLeft:'10%',paddingRight:'10%'}} class="col"> 
+          { widthSize >= 775 ||   text3 ?<div id="detailParagraph" style={{ border: '2px solid white',borderStyle:'none',textAlign:'flex-start',paddingLeft:'10%',paddingRight:'5%'}} class="col"> 
                 <nav  style={{fontFamily:'Open Sans Light',fontSize:40,paddingBottom:10}}>{TextKey.home.detailedPersonality}</nav>
                 <nav style={{fontFamily:'Open Sans Light',fontSize:22,marginBottom:30}} > {TextKey.home.freeReport}</nav>
                 <div>
-                  <Link  to="/description" transition="glide-right" style={{ textDecoration: 'none'}}>
+                  <Link  to="/description" transition="glide-right" style={{ textDecoration: 'none',textAlign:'center'}}>
                       <label  style={{color:'#ba097d',fontFamily:'Open Sans Light'}}> {TextKey.home.tryOut} &gt; </label>
                   </Link>
                 </div>
