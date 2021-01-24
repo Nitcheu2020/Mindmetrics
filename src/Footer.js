@@ -20,22 +20,21 @@ const  Footer =(props)=>{
                 </div>
               </div>:null
           }
-          <div style={{
+          <div id="footerItem" style={{
               display: 'flex',
               flex:1,
-              flexDirection:'row',
               justifyContent:'center',
               alignItems:'center',
               paddingBottom:39,
-              paddingRight:360,
-              paddingTop:60
+              paddingTop:60,
+             // backgroundColor:'red'
             //  maxWidth:'100%',
             }}
           >
-              <div   class="col-3 col-5 col-s-3 menu"  style={{display:'flex',alignSelf:'flex-start',alignItems:'flex-start',justifyContent:'flex-start',}}>
+              <div   class="col-3 col-5 col-s-3 menuFooter"  style={{display:'flex',alignSelf:'flex-start',alignItems:'flex-start',justifyContent:'flex-start',}}>
                 <Menu/>
               </div>
-              <div style={{marginLeft:'auto',display:'flex',marginTop:-25}}>
+              <div id="socialIcon" style={{display:'flex',marginTop:-25}}>
                 <img
                     src={social_icons} alt="social_icons" 
                   />
@@ -43,12 +42,13 @@ const  Footer =(props)=>{
               
           </div>
   
-          <div style={{ display: 'flex',
-            flexDirection:'row',
-            justifyContent:'center',
-            alignItems:'center',
-            paddingLeft:'15%',
-            paddingBottom:'1%'
+          <div  
+            id="footerItem" 
+              style={{ 
+              display: 'flex',
+              justifyContent:'center',
+              alignItems:'center',
+              paddingBottom:'1%',
             }}
           >
             <nav style={{
@@ -59,6 +59,7 @@ const  Footer =(props)=>{
                 justifyContent:'flex-start',
                 alignItems:'center',
                 alignSelf:'flex-start',
+                
                 //display:'inline-flex',
               }}>
               <label 
@@ -66,16 +67,17 @@ const  Footer =(props)=>{
                     background: '#fff',
                     border: '1px solid #CDC',
                     borderRadius:'50%',
-                    padding: '0.5%',
+                    padding: 1,
                     color:'#CDC'
                 }}
               >
                    R
               </label>
-              <label style={{display:'flex',padding:10,color:'#CDC'}}>{TextKey.footer.right}</label>
+              <label style={{display:'flex',padding:1,color:'#CDC'}}>{TextKey.footer.right}</label>
             </nav>
             <img
-              style={{display: 'flex',transform: [{ rotate: '14deg' }],alignSelf:'flex-end',paddingRight:360}}
+              id="logoFooter"
+              style={{display: 'flex',transform: [{ rotate: '14deg' }]}}
               src={logo_footer} alt="logo_footer" 
             />
           </div>

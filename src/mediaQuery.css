@@ -26,6 +26,34 @@ align-items: flex-end;
     background-color:#c3c3c3;
   }
 
+
+  /////
+
+
+  .menuFooter li img{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+
+
+.menuFooter ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menuFooter li {
+  padding: 8px;
+  margin-bottom: 7px;
+  color: #ffffff;
+  /*box-shadow: 0 1px 3px #c3c3c3, 0 1px 2px #751212;*/
+}
+
+.menuFooter li:hover {
+    background-color:#c3c3c3;
+  }
+  
 .row::after {
   content: "";
   clear: both;
@@ -83,7 +111,19 @@ html {
 
 
 @media screen and (max-width:774px) {
+    
+    #socialIcon{
+        margin-bottom: auto;
+    }
 
+   #footerItem{
+       display: flex;
+       flex-direction: column;
+       text-align: center;
+   }
+   #logoFooter{
+       align-self: center;
+   }
     #detailParagraph{
         text-align: center;
     }
@@ -180,6 +220,18 @@ html {
 
 
 @media only screen and (min-width: 775px) {
+    #footerItem{
+        flex-direction: row;
+        display: flex;
+        justify-content: center;
+        align-self: center;
+        align-items: center;
+        padding-right:22.5em;
+        padding-left: 22.5em;
+    }
+    #logoFooter{
+        align-self: flex-end;
+    }
     #writingSample{
         display:flex;
     }
@@ -250,8 +302,6 @@ html {
     justify-content: center;
   }
 
-
-
   #report {
     padding-right:31%;
     margin-left:31%;
@@ -296,6 +346,7 @@ html {
 }
 
 @media only screen and (max-width: 576px) {
+   
     #Menusup{display: none;}
     #my-content { display: block; }  /* show it on small screens */
     #my-content-big{display: none;}
@@ -332,6 +383,9 @@ html {
   }
   
   @media only screen and (min-width: 577px) {
+    #socialIcon{
+        margin-left:auto;
+    }
       #paragraph{
        /* padding-right:48em;*/
         margin-left:14em;
@@ -430,4 +484,15 @@ html {
     flex:1 1 25%;
     gap:1em;
     /*min-width: 30ch;*/
+}
+
+.menuFooter ul{
+    display: flex;
+    list-style-type: none;
+    flex:1;
+    flex-direction:row;
+    /*background-color : #d3d3d3;*/
+    text-align: center;
+    justify-content: space-between;
+    margin-left: -1.5em;
 }
